@@ -1,0 +1,9 @@
+{
+  "name": "rishi-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rishi Jha — Software Developer Portfolio (HTML, CSS, Vanilla JS)",
+  "scripts": {
+    "start": "python3 -m http.server 4321"
+  }
+}
