@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <linearGradient id="rj-cyber-grad" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00D9E8" />
+      <stop offset="50%" stop-color="#2878ED" />
+      <stop offset="100%" stop-color="#7952E8" />
+    </linearGradient>
+  </defs>
+  <!-- Left Outer Ring + Continuous R-to-J Monogram -->
+  <path d="M 242 56 A 200 200 0 0 0 242 456" stroke="url(#rj-cyber-grad)" stroke-width="44" stroke-linecap="butt" />
+  <!-- Right Outer Ring -->
+  <path d="M 270 56 A 200 200 0 0 1 270 456" stroke="url(#rj-cyber-grad)" stroke-width="44" stroke-linecap="butt" />
+  <!-- Integrated RJ Core Symbol -->
+  <path d="M 82 172 H 236 A 54 54 0 0 1 236 280 H 158 V 364" stroke="url(#rj-cyber-grad)" stroke-width="46" stroke-linecap="butt" stroke-linejoin="round" />
+  <path d="M 218 280 L 254 334 A 64 64 0 0 0 368 294 V 164" stroke="url(#rj-cyber-grad)" stroke-width="46" stroke-linecap="butt" stroke-linejoin="round" />
+</svg>

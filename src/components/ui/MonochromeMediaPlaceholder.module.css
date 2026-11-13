@@ -1,0 +1,81 @@
+.frame {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(0.9rem, 2vw, 1.25rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.04), transparent 68%),
+    var(--bg-surface);
+  overflow: hidden;
+}
+
+.aspectPortrait {
+  aspect-ratio: 4 / 5;
+}
+
+.aspectLandscape {
+  aspect-ratio: 4 / 3;
+}
+
+.aspectWide {
+  aspect-ratio: 16 / 9;
+}
+
+.aspectSquare {
+  aspect-ratio: 1 / 1;
+}
+
+.metaRow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.statusTag {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-inset);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.visualStage {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-block: 1rem;
+  color: var(--text-muted);
+}
+
+.graphic {
+  width: min(210px, 65%);
+  height: auto;
+}
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .metaRow {
+    flex-wrap: wrap;
+    font-size: 0.625rem;
+  }
+}
+

@@ -1,0 +1,193 @@
+.pageHeader {
+  padding-block: clamp(2.25rem, 4.5vw, 3.5rem) clamp(1.5rem, 3vw, 2.25rem);
+  background-color: var(--bg-canvas);
+}
+
+.pageMain {
+  padding-block: clamp(2rem, 4vw, 3.25rem) clamp(3.5rem, 7vw, 5.5rem);
+  border-top: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-canvas);
+}
+
+.embeddedWrap {
+  container-type: inline-size;
+  padding: clamp(1.25rem, 3cqw, 1.85rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.headerBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.linuxDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-linux);
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5.4vw, 3.85rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.embeddedWrap .pageTitle {
+  font-size: clamp(1.95rem, 4.6cqw, 2.85rem);
+}
+
+.pageSubtitle {
+  margin-top: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 56ch;
+}
+
+/* 4-Category Responsive Grid */
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.categoryCard {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: var(--border-thin) solid var(--glass-border);
+  background-color: var(--bg-surface);
+  box-shadow: var(--neu-shadow-raised-sm), var(--glass-highlight);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: border-color var(--transition-fast);
+}
+
+.categoryCard:hover {
+  border-color: var(--accent-linux-border);
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-thin) solid var(--border-subtle);
+}
+
+.categoryTitleWrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cardIndex {
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  color: var(--accent-linux);
+  flex-shrink: 0;
+}
+
+.domainTitle {
+  font-family: var(--font-sans);
+  font-size: 0.96875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.itemCount {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.skillList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skillRow {
+  padding: 9px 12px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid rgba(255, 255, 255, 0.04);
+  background-color: var(--bg-inset);
+  box-shadow: var(--neu-shadow-inset-xs);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.skillRow:hover {
+  border-color: var(--accent-linux-border);
+  background-color: var(--bg-elevated);
+}
+
+.skillName {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.contextPill {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  font-family: var(--font-mono);
+  font-size: 0.65625rem;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.contextPillLearning {
+  background-color: var(--accent-linux-soft);
+  border-color: var(--accent-linux-border);
+  color: var(--accent-linux);
+}
+
+@media (max-width: 820px) {
+  .categoriesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container (max-width: 640px) {
+  .categoriesGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,109 @@
+.grid {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  bottom: calc(var(--os-dock-clearance) + var(--space-3));
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: clamp(6px, 1.1vh, 10px);
+  pointer-events: none;
+}
+
+.iconTile {
+  pointer-events: auto;
+  width: 84px;
+  padding: 8px 6px 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid transparent;
+  background-color: transparent;
+  color: var(--text-secondary);
+  text-align: center;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.iconTile:hover {
+  background-color: rgba(23, 34, 53, 0.66);
+  border-color: var(--glass-border);
+  backdrop-filter: var(--glass-blur-subtle);
+  -webkit-backdrop-filter: var(--glass-blur-subtle);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.iconTile:focus-visible {
+  background-color: rgba(23, 34, 53, 0.76);
+  border-color: var(--glass-border-strong);
+}
+
+.iconTileActive {
+  background-color: rgba(85, 199, 232, 0.14);
+  border-color: var(--accent-linux-border);
+  backdrop-filter: var(--glass-blur-subtle);
+  -webkit-backdrop-filter: var(--glass-blur-subtle);
+  color: var(--text-primary);
+}
+
+.iconVisual {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid var(--glass-border);
+  background: linear-gradient(155deg, rgba(36, 52, 74, 0.88), rgba(17, 25, 40, 0.90));
+  backdrop-filter: var(--glass-blur-subtle);
+  -webkit-backdrop-filter: var(--glass-blur-subtle);
+  color: var(--accent-linux);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8px 20px rgba(4, 8, 17, 0.50),
+    inset 0 1px 0 rgba(234, 242, 250, 0.10);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.iconTileActive .iconVisual,
+.iconTile:hover .iconVisual {
+  border-color: var(--accent-linux-border);
+  color: var(--accent-secondary);
+  box-shadow:
+    0 8px 22px rgba(4, 8, 17, 0.58),
+    0 0 14px rgba(85, 199, 232, 0.18),
+    inset 0 1px 0 rgba(234, 242, 250, 0.14);
+}
+
+.iconLabel {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+  text-shadow: 0 1px 6px rgba(4, 10, 8, 0.85);
+}
+
+.iconSub {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.1;
+  color: var(--text-secondary);
+  text-shadow: 0 1px 6px rgba(4, 10, 8, 0.85);
+}
+
+@media (max-width: 767px),
+(max-height: 500px) {
+  .grid {
+    display: none;
+  }
+}

@@ -1,0 +1,333 @@
+/* ===================================================================== */
+/* RISHI OS — Midnight Blue + Cyan Soft Glass Design System              */
+/* Navy Surfaces (#111827–#24344A) · Glass Depth · Cyan Accent (#55C7E8) */
+/* ===================================================================== */
+
+:root {
+  /* Core Dark Navy Surfaces */
+  --bg-canvas: #111827;
+  --bg-secondary: #172235;
+  --bg-surface: #1c293d;
+  --bg-elevated: #24344a;
+  --bg-inset: #0d1420;
+  --bg-deep: #090e18;
+  --bg-overlay: rgba(8, 13, 24, 0.78);
+  --bg-panel: rgba(23, 34, 53, 0.88);
+
+  /* Soft Frosted Glassmorphism Tokens */
+  --glass-bg: rgba(18, 28, 46, 0.78);
+  --glass-bg-strong: rgba(14, 22, 37, 0.88);
+  --glass-bg-subtle: rgba(24, 38, 60, 0.56);
+  --glass-bg-inactive: rgba(14, 22, 37, 0.80);
+  --glass-border: rgba(121, 221, 243, 0.22);
+  --glass-border-strong: rgba(121, 221, 243, 0.40);
+  --glass-highlight: inset 0 1px 0 rgba(234, 242, 250, 0.14);
+  --glass-blur: blur(26px) saturate(145%);
+  --glass-blur-subtle: blur(18px) saturate(130%);
+
+  /* RISHI OS Surface Aliases */
+  --os-desktop-bg: #111827;
+  --os-window-bg: rgba(15, 24, 40, 0.87);
+  --os-window-inactive-bg: rgba(13, 21, 35, 0.80);
+  --os-titlebar-bg: rgba(21, 33, 54, 0.90);
+  --os-titlebar-inactive-bg: rgba(15, 24, 40, 0.84);
+  --os-dock-bg: rgba(18, 28, 46, 0.62);
+  --os-panel-bg: rgba(14, 22, 37, 0.66);
+  --os-panel-height: 44px;
+  --os-dock-clearance: 86px;
+
+  /* Dual Soft UI Light / Dark Shadow Components */
+  --neu-light: rgba(121, 221, 243, 0.065);
+  --neu-light-strong: rgba(121, 221, 243, 0.10);
+  --neu-dark: rgba(4, 8, 17, 0.58);
+  --neu-dark-strong: rgba(3, 6, 14, 0.74);
+
+  /* Reusable Depth Tokens — Raised, Glass, Inset, and Flat */
+  --neu-shadow-raised-xs:
+    -2px -2px 5px var(--neu-light),
+    3px 3px 8px var(--neu-dark);
+  --neu-shadow-raised-sm:
+    -3px -3px 10px var(--neu-light),
+    6px 6px 16px var(--neu-dark);
+  --neu-shadow-raised-md:
+    -5px -5px 14px var(--neu-light),
+    10px 10px 24px rgba(3, 6, 14, 0.62);
+  --neu-shadow-raised-lg:
+    0 22px 54px rgba(3, 6, 14, 0.70),
+    0 0 0 1px rgba(85, 199, 232, 0.14),
+    var(--glass-highlight);
+  --neu-shadow-inactive:
+    0 12px 30px rgba(3, 6, 14, 0.50),
+    var(--glass-highlight);
+
+  --neu-shadow-inset-xs:
+    inset 2px 2px 5px rgba(4, 8, 17, 0.64),
+    inset -1px -1px 4px rgba(121, 221, 243, 0.045);
+  --neu-shadow-inset-sm:
+    inset 3px 3px 7px rgba(4, 8, 17, 0.66),
+    inset -2px -2px 6px rgba(121, 221, 243, 0.045);
+  --neu-shadow-inset: var(--neu-shadow-inset-sm);
+  --neu-shadow-inset-md:
+    inset 4px 4px 12px rgba(3, 6, 14, 0.70),
+    inset -3px -3px 8px rgba(121, 221, 243, 0.045);
+
+  --neu-shadow-flat: none;
+  --shadow-glass:
+    0 20px 50px rgba(3, 7, 16, 0.62),
+    var(--glass-highlight);
+  --shadow-dock:
+    0 18px 42px rgba(3, 7, 16, 0.68),
+    0 0 0 1px rgba(85, 199, 232, 0.18),
+    var(--glass-highlight);
+
+  /* Subtle Blue / Cyan Surface Bevel Hairlines */
+  --border: rgba(85, 199, 232, 0.16);
+  --border-subtle: rgba(165, 181, 200, 0.09);
+  --border-strong: rgba(121, 221, 243, 0.32);
+
+  /* Soft Radii */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  /* Typography & Ink (WCAG AA Checked on Navy Surfaces) */
+  --text-primary: #eaf2fa;
+  --text-secondary: #a5b5c8;
+  --text-muted: #8fa2b8;
+
+  /* Midnight Cyan Accent System */
+  --accent: #eaf2fa;
+  --accent-hover: #f6fbff;
+  --accent-soft: rgba(234, 242, 250, 0.09);
+  --accent-ink: #091321;
+  --accent-linux: #55c7e8;
+  --accent-secondary: #79ddf3;
+  --accent-gradient: linear-gradient(135deg, #79ddf3 0%, #3cb5da 100%);
+  --accent-linux-soft: rgba(85, 199, 232, 0.14);
+  --accent-linux-border: rgba(85, 199, 232, 0.36);
+  --accent-linux-glow: rgba(85, 199, 232, 0.24);
+  --accent-warn: #eab676;
+  --accent-warn-soft: rgba(234, 182, 118, 0.14);
+  --accent-warn-border: rgba(234, 182, 118, 0.38);
+  --accent-close-hover: rgba(232, 112, 128, 0.22);
+  --accent-close-border: rgba(232, 112, 128, 0.44);
+  --accent-close-text: #f3b5be;
+
+  /* Font Families (Injected via next/font/google) */
+  --font-display: var(--font-barlow-condensed), 'Arial Narrow', Impact, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* 4px / 8px Spacing Scale */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-7: 1.75rem;  /* 28px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-24: 6rem;    /* 96px */
+
+  /* Border Widths */
+  --border-thin: 1px;
+  --border-thick: 2px;
+
+  /* Layout & Geometry */
+  --container-max: 1240px;
+  --gutter: clamp(1.25rem, 3vw, 2.5rem);
+  --top-bar-height: 58px;
+  --section-space: clamp(3.5rem, 6vw, 5.5rem);
+
+  /* 3-Tier Navigation Panel Layout Tokens (>1180px, 901-1180px, <=900px) */
+  --nav-panel-width: 300px;
+  --nav-clearance: 0px;
+
+  /* Elevation & Smooth Transitions (150-220ms) */
+  --shadow-panel: var(--neu-shadow-raised-lg);
+  --shadow-window-active: var(--neu-shadow-raised-lg);
+  --shadow-window-inactive: var(--neu-shadow-inactive);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-fast: 160ms var(--ease-out);
+  --transition-base: 210ms var(--ease-out);
+
+  /* Transitional Compatibility Aliases */
+  --bp-bg-canvas: var(--bg-canvas);
+  --bp-bg-surface: var(--bg-surface);
+  --bp-bg-elevated: var(--bg-elevated);
+  --bp-bg-inset: var(--bg-inset);
+  --bp-bg-glass: var(--bg-panel);
+  --bp-border: var(--border);
+  --bp-border-subtle: var(--border-subtle);
+  --bp-border-strong: var(--border-strong);
+  --bp-text-primary: var(--text-primary);
+  --bp-text-secondary: var(--text-secondary);
+  --bp-text-muted: var(--text-muted);
+  --bp-accent: var(--accent);
+  --bp-accent-hover: var(--accent-hover);
+  --bp-accent-soft: var(--accent-soft);
+  --bp-accent-glow: rgba(85, 199, 232, 0.18);
+  --bp-accent-ink: var(--accent-ink);
+  --bp-container-max: var(--container-max);
+  --bp-gutter: var(--gutter);
+  --bp-header-height: var(--top-bar-height);
+  --bp-section-space: var(--section-space);
+  --bp-radius-xs: var(--radius-xs);
+  --bp-radius-sm: var(--radius-sm);
+  --bp-radius-md: var(--radius-md);
+  --bp-radius-lg: var(--radius-lg);
+  --bp-radius-xl: var(--radius-lg);
+  --bp-radius-pill: var(--radius-pill);
+  --bp-shadow-panel: var(--shadow-panel);
+  --bp-shadow-card: var(--neu-shadow-raised-sm);
+  --bp-ease-out: var(--ease-out);
+  --bp-transition-fast: var(--transition-fast);
+  --bp-transition-base: var(--transition-base);
+}
+
+/* Compact Desktop / Tablet (901px - 1180px) */
+@media (min-width: 901px) and (max-width: 1180px) {
+  :root {
+    --nav-panel-width: 248px;
+    --nav-clearance: 0px;
+  }
+}
+
+/* Mobile (<= 900px) */
+@media (max-width: 900px) {
+  :root {
+    --nav-panel-width: min(320px, 88vw);
+    --nav-clearance: 0px;
+  }
+}
+
+[data-nav-collapsed='true'] {
+  --nav-clearance: 0px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+main {
+  flex: 1;
+}
+
+::selection {
+  background-color: var(--accent-linux);
+  color: var(--accent-ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-linux);
+  outline-offset: 2px;
+}
+
+/* Shared Dark Emerald Glass & Soft UI Surface Utility Classes */
+.neu-raised {
+  background-color: var(--bg-surface);
+  box-shadow: var(--neu-shadow-raised-md);
+  border: var(--border-thin) solid var(--border-subtle);
+}
+
+.neu-raised-sm {
+  background-color: var(--bg-surface);
+  box-shadow: var(--neu-shadow-raised-sm);
+  border: var(--border-thin) solid var(--border-subtle);
+}
+
+.neu-inset {
+  background-color: var(--bg-inset);
+  box-shadow: var(--neu-shadow-inset-md);
+  border: var(--border-thin) solid rgba(5, 11, 9, 0.32);
+}
+
+.neu-inset-sm {
+  background-color: var(--bg-inset);
+  box-shadow: var(--neu-shadow-inset-sm);
+  border: var(--border-thin) solid rgba(5, 11, 9, 0.28);
+}
+
+.neu-flat {
+  background-color: var(--bg-canvas);
+  box-shadow: var(--neu-shadow-flat);
+}
+
+.glass-surface {
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--border-thin) solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 999;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--neu-shadow-raised-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

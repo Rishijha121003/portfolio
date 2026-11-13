@@ -1,0 +1,221 @@
+.section {
+  width: 100%;
+  padding-block: var(--space-8) var(--space-12);
+  border-top: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-canvas);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.viewport {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000000 7%,
+    #000000 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000000 7%,
+    #000000 93%,
+    transparent 100%
+  );
+}
+
+.viewport:focus-visible {
+  outline: var(--border-thick) solid var(--text-primary);
+  outline-offset: -2px;
+}
+
+.track {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  will-change: transform;
+}
+
+.trackLtr {
+  --marquee-gap: var(--space-6);
+  animation: marqueeLtr 46s linear infinite;
+}
+
+.trackRtl {
+  --marquee-gap: var(--space-8);
+  animation: marqueeRtl 36s linear infinite;
+}
+
+/* Pause corresponding track on hover or keyboard focus */
+.viewport:hover .track,
+.viewport:focus-within .track {
+  animation-play-state: paused;
+}
+
+.group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+}
+
+.visualTile {
+  flex-shrink: 0;
+  width: clamp(235px, 24vw, 350px);
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-inset);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.visualTile:hover {
+  border-color: var(--border-strong);
+}
+
+.tileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: grayscale(100%) contrast(1.08) brightness(0.84);
+  transition:
+    filter var(--transition-base),
+    transform 420ms var(--ease-out);
+}
+
+.visualTile:hover .tileImage {
+  filter: grayscale(100%) contrast(1.12) brightness(0.96);
+  transform: scale(1.025);
+}
+
+.wordItem {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--marquee-gap);
+}
+
+.wordText {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3.4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.wordTextAccent {
+  color: var(--text-primary);
+}
+
+.wordItem:hover .wordText {
+  color: var(--text-primary);
+}
+
+.wordDivider {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+@keyframes marqueeLtr {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes marqueeRtl {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .trackLtr {
+    --marquee-gap: var(--space-4);
+    animation-duration: 38s;
+  }
+
+  .trackRtl {
+    --marquee-gap: var(--space-6);
+    animation-duration: 30s;
+  }
+
+  .visualTile {
+    width: clamp(200px, 28vw, 260px);
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .section {
+    padding-block: var(--space-6) var(--space-8);
+    gap: var(--space-4);
+  }
+
+  .trackLtr {
+    --marquee-gap: var(--space-3);
+    animation-duration: 30s;
+  }
+
+  .trackRtl {
+    --marquee-gap: var(--space-4);
+    animation-duration: 24s;
+  }
+
+  .visualTile {
+    width: 185px;
+  }
+
+  .wordText {
+    font-size: 1.5rem;
+  }
+}
+
+/* Automatic disable & static fallback when reduced motion is preferred */
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+    padding-inline: var(--gutter);
+  }
+
+  .track {
+    animation: none !important;
+    transform: none !important;
+    width: 100%;
+  }
+
+  .groupClone,
+  .repeatFill {
+    display: none;
+  }
+
+  .group {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+  }
+}
+

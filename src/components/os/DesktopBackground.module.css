@@ -1,0 +1,119 @@
+.stageRoot {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: var(--os-desktop-bg);
+}
+
+/* Subtle dark midnight navy atmospheric readability scrim over all wallpapers */
+.stageRoot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 95% 75% at 50% 45%, rgba(17, 24, 39, 0.08) 0%, rgba(8, 13, 24, 0.44) 100%),
+    linear-gradient(180deg, rgba(9, 14, 26, 0.34) 0%, transparent 18%, transparent 78%, rgba(8, 13, 24, 0.46) 100%);
+}
+
+.surface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition:
+    background-color 280ms ease,
+    opacity 280ms ease;
+}
+
+/* 1. Default Charcoal — Midnight Blue Mountain & Pine Horizon with Cyan Glow */
+.surface[data-wallpaper='default-charcoal'] {
+  background-color: #111827;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900' preserveAspectRatio='xMidYMax slice'%3E%3Cdefs%3E%3CradialGradient id='moonGlow' cx='80%25' cy='30%25' r='34%25'%3E%3Cstop offset='0%25' stop-color='%23e8f8ff' stop-opacity='0.66'/%3E%3Cstop offset='28%25' stop-color='%2355c7e8' stop-opacity='0.22'/%3E%3Cstop offset='100%25' stop-color='%23111827' stop-opacity='0'/%3E%3C/radialGradient%3E%3ClinearGradient id='mist' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%2355c7e8' stop-opacity='0'/%3E%3Cstop offset='56%25' stop-color='%233f8eb5' stop-opacity='0.14'/%3E%3Cstop offset='100%25' stop-color='%230c1322' stop-opacity='0.82'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1440' height='900' fill='url(%23moonGlow)'/%3E%3Ccircle cx='1152' cy='272' r='44' fill='%23eaf7ff' fill-opacity='0.74'/%3E%3Ccircle cx='1152' cy='272' r='98' fill='%2355c7e8' fill-opacity='0.13'/%3E%3Cpath d='M0 540 L185 430 L365 505 L590 360 L785 470 L980 390 L1190 485 L1440 395 L1440 900 L0 900 Z' fill='%231c293d' fill-opacity='0.82'/%3E%3Cpath d='M0 615 L220 490 L445 585 L685 435 L915 570 L1145 470 L1340 545 L1440 505 L1440 900 L0 900 Z' fill='%23152033' fill-opacity='0.90'/%3E%3Crect y='460' width='1440' height='440' fill='url(%23mist)'/%3E%3Cpath d='M0 700 L140 610 L290 680 L480 570 L665 660 L880 545 L1085 655 L1265 565 L1440 645 L1440 900 L0 900 Z' fill='%230e1726'/%3E%3Cpath d='M0 760 L24 720 L48 760 L74 705 L100 760 L122 726 L146 760 L176 688 L206 760 L236 718 L266 760 L1170 760 L1198 712 L1226 760 L1260 682 L1294 760 L1324 714 L1354 760 L1388 674 L1422 760 L1440 730 L1440 900 L0 900 Z' fill='%2309101c'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 72% 55% at 50% 24%, rgba(85, 199, 232, 0.14), transparent 72%),
+    linear-gradient(175deg, #172235 0%, #111827 52%, #0b111d 100%);
+  background-repeat: no-repeat;
+  background-size: cover, 100% 100%, 100% 100%;
+  background-position: center bottom, center, center;
+}
+
+/* 2. Midnight Gradient — Deep Navy-to-Obsidian Ambient Fade */
+.surface[data-wallpaper='midnight-gradient'] {
+  background-color: #0b101b;
+  background-image:
+    radial-gradient(ellipse 80% 55% at 75% 15%, rgba(85, 199, 232, 0.16), transparent 65%),
+    radial-gradient(ellipse 60% 45% at 20% 80%, rgba(56, 118, 178, 0.14), transparent 60%),
+    linear-gradient(155deg, #1b2840 0%, #111827 48%, #070b14 100%);
+}
+
+/* 3. Sage Aurora — Cyan & Teal Polar Aurora Ribbons over Deep Navy */
+.surface[data-wallpaper='sage-aurora'] {
+  background-color: #0e1624;
+  background-image:
+    radial-gradient(ellipse 75% 42% at 68% 22%, rgba(85, 199, 232, 0.26), transparent 68%),
+    radial-gradient(ellipse 62% 38% at 32% 46%, rgba(121, 221, 243, 0.18), transparent 72%),
+    radial-gradient(ellipse 85% 50% at 52% 84%, rgba(64, 152, 196, 0.14), transparent 70%),
+    linear-gradient(135deg, #152238 0%, #0f1726 55%, #090e18 100%);
+}
+
+/* 4. Deep Space — Minimal Dark Navy Cosmos with Subtle Starlight */
+.surface[data-wallpaper='deep-space'] {
+  background-color: #090e18;
+  background-image:
+    radial-gradient(ellipse 60% 42% at 70% 28%, rgba(85, 199, 232, 0.12), transparent 66%),
+    radial-gradient(ellipse 52% 40% at 26% 72%, rgba(62, 128, 184, 0.12), transparent 64%),
+    radial-gradient(1px 1px at 14% 22%, rgba(234, 242, 250, 0.65), transparent 100%),
+    radial-gradient(1px 1px at 31% 14%, rgba(234, 242, 250, 0.45), transparent 100%),
+    radial-gradient(1.5px 1.5px at 56% 19%, rgba(85, 199, 232, 0.7), transparent 100%),
+    radial-gradient(1px 1px at 78% 12%, rgba(234, 242, 250, 0.5), transparent 100%),
+    radial-gradient(1px 1px at 88% 36%, rgba(234, 242, 250, 0.4), transparent 100%),
+    radial-gradient(1px 1px at 22% 58%, rgba(234, 242, 250, 0.45), transparent 100%),
+    radial-gradient(1.5px 1.5px at 63% 62%, rgba(234, 242, 250, 0.55), transparent 100%),
+    radial-gradient(1px 1px at 43% 79%, rgba(121, 221, 243, 0.5), transparent 100%),
+    radial-gradient(1px 1px at 82% 81%, rgba(234, 242, 250, 0.45), transparent 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Ccircle cx='28' cy='40' r='0.9' fill='%23eaf2fa' fill-opacity='0.38'/%3E%3Ccircle cx='96' cy='18' r='0.7' fill='%2355c7e8' fill-opacity='0.5'/%3E%3Ccircle cx='164' cy='62' r='1.1' fill='%23eaf2fa' fill-opacity='0.42'/%3E%3Ccircle cx='54' cy='128' r='0.8' fill='%23eaf2fa' fill-opacity='0.34'/%3E%3Ccircle cx='138' cy='154' r='0.7' fill='%2355c7e8' fill-opacity='0.4'/%3E%3Ccircle cx='196' cy='190' r='1' fill='%23eaf2fa' fill-opacity='0.38'/%3E%3Ccircle cx='14' cy='198' r='0.7' fill='%23eaf2fa' fill-opacity='0.32'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 220px 220px;
+}
+
+/* 5. Mountain Night — Nocturnal Alpine Peaks Under Cyan Starlight */
+.surface[data-wallpaper='mountain-night'] {
+  background-color: #0e1523;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 720' preserveAspectRatio='xMidYMax slice'%3E%3Ccircle cx='890' cy='140' r='34' fill='%23eaf2fa' fill-opacity='0.18'/%3E%3Ccircle cx='890' cy='140' r='70' fill='%2355c7e8' fill-opacity='0.08'/%3E%3Cpath d='M0 510 L175 375 L340 465 L540 315 L745 450 L945 330 L1110 420 L1200 375 L1200 720 L0 720 Z' fill='%231c293d'/%3E%3Cpath d='M0 565 L230 440 L435 535 L665 390 L895 520 L1075 430 L1200 495 L1200 720 L0 720 Z' fill='%23152032'/%3E%3Cpath d='M0 625 L195 525 L415 610 L620 490 L860 615 L1085 525 L1200 580 L1200 720 L0 720 Z' fill='%230c1320'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 75% 40% at 50% 48%, rgba(85, 199, 232, 0.14), transparent 68%),
+    linear-gradient(180deg, #172235 0%, #111827 52%, #0a101b 100%);
+  background-repeat: no-repeat;
+  background-size: cover, 100% 100%, 100% 100%;
+  background-position: center bottom, center, center;
+}
+
+/* 6. Abstract Geometry — Architectural Navy & Cyan Facets */
+.surface[data-wallpaper='abstract-geometry'] {
+  background-color: #121b2c;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cpolygon points='0,160 160,0 320,160 160,320' fill='none' stroke='%2355c7e8' stroke-opacity='0.14' stroke-width='1'/%3E%3Cpolygon points='80,80 240,80 240,240 80,240' fill='none' stroke='%23eaf2fa' stroke-opacity='0.055' stroke-width='1'/%3E%3Ccircle cx='160' cy='160' r='92' fill='none' stroke='%2355c7e8' stroke-opacity='0.11' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='320' y2='320' stroke='%23ffffff' stroke-opacity='0.035' stroke-width='1'/%3E%3C/svg%3E"),
+    radial-gradient(circle at 72% 28%, rgba(85, 199, 232, 0.13), transparent 60%),
+    linear-gradient(145deg, #19253a 0%, #101726 100%);
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-size: 240px 240px, 100% 100%, 100% 100%;
+}
+
+/* 7. Minimal Grid — Low-Contrast Navy Architectural Grid */
+.surface[data-wallpaper='minimal-grid'] {
+  background-color: #111827;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(85, 199, 232, 0.24) 1.25px, transparent 0),
+    linear-gradient(to right, rgba(121, 221, 243, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(121, 221, 243, 0.045) 1px, transparent 1px),
+    radial-gradient(ellipse 68% 54% at 50% 42%, rgba(85, 199, 232, 0.08), transparent 72%);
+  background-size: 48px 48px, 48px 48px, 48px 48px, 100% 100%;
+}
+
+/* 8. Pure Black — Clean OLED Obsidian Black Workspace */
+.surface[data-wallpaper='pure-black'] {
+  background-color: #06080c;
+  background-image: linear-gradient(180deg, #090c12 0%, #05070a 100%);
+}

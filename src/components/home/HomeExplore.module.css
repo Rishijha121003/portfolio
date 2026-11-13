@@ -1,0 +1,203 @@
+.section {
+  padding-block: clamp(4.5rem, 8.5vw, 7rem);
+  border-top: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-canvas);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.eyebrowRule {
+  width: 24px;
+  height: 1px;
+  background-color: var(--text-muted);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.4vw, 3.25rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.dirHint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.linuxDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-linux);
+  flex-shrink: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  border-top: var(--border-thin) solid var(--border-subtle);
+}
+
+.rowLink {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(9.5rem, 15rem) minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 64px;
+  padding: var(--space-6) var(--space-2);
+  border-bottom: var(--border-thin) solid var(--border-subtle);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.rowLink:hover,
+.rowLink:focus-visible {
+  background-color: rgba(255, 255, 255, 0.025);
+  border-bottom-color: var(--border-strong);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.rowLink:hover .index,
+.rowLink:focus-visible .index {
+  color: var(--accent-linux);
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  transition: color var(--transition-fast);
+}
+
+.rowLink:hover .label,
+.rowLink:focus-visible .label {
+  color: var(--text-primary);
+}
+
+.description {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.rowLink:hover .description,
+.rowLink:focus-visible .description {
+  color: var(--text-primary);
+}
+
+.pathLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.rowLink:hover .pathLabel,
+.rowLink:focus-visible .pathLabel {
+  color: var(--accent-linux);
+}
+
+.arrow {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--text-muted);
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.rowLink:hover .arrow,
+.rowLink:focus-visible .arrow {
+  color: var(--accent-linux);
+  transform: translate(3px, -2px);
+}
+
+@media (max-width: 900px) {
+  .rowLink {
+    grid-template-columns: 3rem minmax(8rem, 11.5rem) minmax(0, 1fr) auto;
+    padding-block: var(--space-4);
+  }
+
+  .pathLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding-block: var(--space-12);
+  }
+
+  .rowLink {
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-4) var(--space-1);
+  }
+
+  .description {
+    grid-column: 2 / 3;
+    font-size: 0.84375rem;
+  }
+
+  .pathLabel {
+    display: inline-block;
+    grid-column: 2 / 3;
+    font-size: 0.6875rem;
+    margin-top: var(--space-1);
+  }
+
+  .arrow {
+    grid-row: 1;
+    grid-column: 3;
+  }
+}

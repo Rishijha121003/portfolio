@@ -1,0 +1,208 @@
+.page {
+  background-color: var(--bg-canvas);
+}
+
+.pageHeader {
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.pageBody {
+  padding-block: clamp(2.25rem, 4.5vw, 4rem) clamp(4rem, 7vw, 6rem);
+  border-top: var(--border-thin) solid var(--border-subtle);
+}
+
+.embeddedWrap {
+  container-type: inline-size;
+  padding: clamp(1.25rem, 3cqw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.backLink:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid var(--accent-linux-border);
+  background-color: var(--accent-linux-soft);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.linuxDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-linux);
+  flex-shrink: 0;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) 260px;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.title {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.summary {
+  margin-top: var(--space-3);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 58ch;
+}
+
+.pillList {
+  margin-top: var(--space-4);
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.specPill {
+  padding: 4px 9px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid var(--border-subtle);
+  background-color: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+}
+
+.thumbWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid var(--glass-border);
+  background-color: var(--bg-inset);
+  overflow: hidden;
+}
+
+.thumbImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(18%) contrast(1.06) brightness(0.95);
+}
+
+.sectionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.sectionCard {
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  box-shadow: var(--neu-shadow-raised-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sectionCode {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--accent-linux);
+}
+
+.sectionHeading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sectionBody {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.schematicFrame {
+  min-height: 200px;
+}
+
+@media (max-width: 780px) {
+  .heroGrid,
+  .sectionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .thumbWrap {
+    max-width: 240px;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@container (max-width: 600px) {
+  .heroGrid,
+  .sectionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .thumbWrap {
+    max-width: 220px;
+    aspect-ratio: 4 / 3;
+  }
+}

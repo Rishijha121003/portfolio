@@ -1,0 +1,101 @@
+.headerArea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.techNote {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) dashed var(--border-subtle);
+  background-color: var(--bg-inset);
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  color: var(--text-muted);
+  max-width: 66ch;
+}
+
+.bulletList {
+  margin-top: 6px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.twoColList {
+  margin-top: 6px;
+  padding-left: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 6px 20px;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.roadmapGrid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.roadmapCard {
+  padding: 10px 12px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid rgba(255, 255, 255, 0.06);
+  background-color: var(--bg-inset);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.roadmapTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.roadmapTitle {
+  font-family: var(--font-sans);
+  font-size: 0.84375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stageBadge {
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: var(--border-thin) solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.59375rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stageCompleted {
+  border-color: var(--accent-linux-border);
+  background-color: var(--accent-linux-soft);
+  color: var(--accent-linux);
+}
+
+.linksBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.linksEmptyNote {
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  color: var(--text-muted);
+}
+

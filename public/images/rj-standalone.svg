@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <linearGradient id="rj-standalone-grad" x1="110" y1="110" x2="402" y2="402" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00D9E8" />
+      <stop offset="50%" stop-color="#2878ED" />
+      <stop offset="100%" stop-color="#7952E8" />
+    </linearGradient>
+  </defs>
+  <!-- R Bowl & Vertical Stem -->
+  <path d="M 116 134 H 246 A 68 68 0 0 1 246 270 H 146 V 378" stroke="url(#rj-standalone-grad)" stroke-width="56" stroke-linecap="butt" stroke-linejoin="round" />
+  <!-- R Diagonal Leg Sweeping into J Curve & Stem -->
+  <path d="M 222 270 L 264 336 A 76 76 0 0 0 396 286 V 134" stroke="url(#rj-standalone-grad)" stroke-width="56" stroke-linecap="butt" stroke-linejoin="round" />
+</svg>

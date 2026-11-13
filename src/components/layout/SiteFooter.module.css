@@ -1,0 +1,67 @@
+.footer {
+  border-top: var(--border-thin) solid var(--border-subtle);
+  background-color: var(--bg-canvas);
+  padding-block: var(--space-6);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.left {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.footerLogoMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+
+.footer:hover .footerLogoMark {
+  opacity: 1;
+}
+
+.footerLogoImg {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+}
+
+.brandInitials {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.slash {
+  color: var(--text-muted);
+}
+
+.right {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.marker {
+  width: 6px;
+  height: 6px;
+  border: var(--border-thin) solid var(--text-secondary);
+  flex-shrink: 0;
+}
