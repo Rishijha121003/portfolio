@@ -16,6 +16,7 @@ import { AboutOsDialog } from '@/components/os/AboutOsDialog';
 import { DesktopProvider, useDesktop } from '@/components/os/DesktopContext';
 import { DesktopDock } from '@/components/os/DesktopDock';
 import { DesktopIcons } from '@/components/os/DesktopIcons';
+import { DesktopHud } from '@/components/os/DesktopHud';
 import { DesktopWindow } from '@/components/os/DesktopWindow';
 import { LoginScreen } from '@/components/os/LoginScreen';
 import { LogoutDialog } from '@/components/os/LogoutDialog';
@@ -119,6 +120,7 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
         </div>
         <DesktopBackground />
         <DesktopIcons />
+        <DesktopHud />
 
         <div ref={windowsLayerRef} className={styles.windowsLayer}>
           {!isKnownRoute ? (
