@@ -10,6 +10,7 @@ import { useRef, useState } from 'react';
 import {
   clampWindowRect,
   useDesktop,
+  type SnapLayout,
   type WindowRect,
 } from '@/components/os/DesktopContext';
 import { OsAppIcon, WindowControlIcon } from '@/components/os/OsIcons';
@@ -65,12 +66,16 @@ export function DesktopWindow({ appId, stageRef, children }: DesktopWindowProps)
     toggleMaximizeApp,
     updateWindowRect,
     setMobileAllAppsOpen,
+    snapWindow,
+    unsnapWindow,
+    setSnapPreview,
   } = useDesktop();
 
   const winState = windows[appId];
   const config = OS_APPS[appId];
   const windowRef = useRef<HTMLElement | null>(null);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [snapMenuOpen, setSnapMenuOpen] = useState(false);
 
   if (!winState.isOpen) return null;
 
@@ -87,6 +92,11 @@ export function DesktopWindow({ appId, stageRef, children }: DesktopWindowProps)
     const winEl = windowRef.current;
     const stageEl = stageRef.current;
     focusApp(appId);
+
+    if (winState.snapLayout && winState.snapLayout !== 'none') {
+      unsnapWindow(appId);
+    }
+
     const startRect = winState.rect ?? measureRectInStage(winEl, stageEl);
     if (!startRect) return;
 
@@ -99,6 +109,7 @@ export function DesktopWindow({ appId, stageRef, children }: DesktopWindowProps)
     const startClientX = e.clientX;
     const startClientY = e.clientY;
     let latestRect = startRect;
+    let pendingSnap: SnapLayout | null = null;
 
     const onPointerMove = (moveEvent: PointerEvent) => {
       const dx = moveEvent.clientX - startClientX;
@@ -113,6 +124,37 @@ export function DesktopWindow({ appId, stageRef, children }: DesktopWindowProps)
         config.minSize
       );
       applyRectToElement(winEl, latestRect);
+
+      // Snap zones calculation against stage element
+      if (stageEl) {
+        const stageBox = stageEl.getBoundingClientRect();
+        const relX = moveEvent.clientX - stageBox.left;
+        const relY = moveEvent.clientY - stageBox.top;
+        const edgeThresh = 32;
+        const cornerThresh = 90;
+
+        if (relY <= edgeThresh) {
+          if (relX <= cornerThresh) pendingSnap = 'top-left';
+          else if (relX >= stageBox.width - cornerThresh) pendingSnap = 'top-right';
+          else pendingSnap = 'maximize';
+        } else if (relY >= stageBox.height - edgeThresh) {
+          if (relX <= cornerThresh) pendingSnap = 'bottom-left';
+          else if (relX >= stageBox.width - cornerThresh) pendingSnap = 'bottom-right';
+          else pendingSnap = 'bottom-half';
+        } else if (relX <= edgeThresh) {
+          if (relY <= cornerThresh) pendingSnap = 'top-left';
+          else if (relY >= stageBox.height - cornerThresh) pendingSnap = 'bottom-left';
+          else pendingSnap = 'left-half';
+        } else if (relX >= stageBox.width - edgeThresh) {
+          if (relY <= cornerThresh) pendingSnap = 'top-right';
+          else if (relY >= stageBox.height - cornerThresh) pendingSnap = 'bottom-right';
+          else pendingSnap = 'right-half';
+        } else {
+          pendingSnap = null;
+        }
+
+        setSnapPreview(pendingSnap);
+      }
     };
 
     const onPointerUp = () => {
@@ -121,7 +163,13 @@ export function DesktopWindow({ appId, stageRef, children }: DesktopWindowProps)
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerUp);
       setIsInteracting(false);
-      updateWindowRect(appId, latestRect);
+      setSnapPreview(null);
+
+      if (pendingSnap) {
+        snapWindow(appId, pendingSnap);
+      } else {
+        updateWindowRect(appId, latestRect);
+      }
     };
 
     window.addEventListener('pointermove', onPointerMove);
@@ -316,6 +364,155 @@ export function DesktopWindow({ appId, stageRef, children }: DesktopWindowProps)
           >
             <WindowControlIcon kind="minimize" />
           </button>
+
+          <div className={styles.snapControlWrapper}>
+            <button
+              type="button"
+              className={`${styles.controlBtn} ${styles.desktopOnlyControl}`}
+              aria-label={`Snap layouts for ${config.shortLabel}`}
+              title="Snap Layouts"
+              onClick={() => setSnapMenuOpen((prev) => !prev)}
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M12 3v18M3 12h18" />
+              </svg>
+            </button>
+
+            {snapMenuOpen ? (
+              <div
+                className={styles.snapMenu}
+                data-os-chrome="true"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className={styles.snapMenuTitle}>Snap Window</div>
+                <div className={styles.snapGrid}>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'left-half');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Left Half"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconLeft}`}
+                    />
+                    <span>Left</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'right-half');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Right Half"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconRight}`}
+                    />
+                    <span>Right</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'top-half');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Top Half"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconTop}`}
+                    />
+                    <span>Top</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'bottom-half');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Bottom Half"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconBottom}`}
+                    />
+                    <span>Bottom</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'top-left');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Top-Left"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconTopLeft}`}
+                    />
+                    <span>TL</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'top-right');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Top-Right"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconTopRight}`}
+                    />
+                    <span>TR</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'bottom-left');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Bottom-Left"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconBottomLeft}`}
+                    />
+                    <span>BL</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.snapGridBtn}
+                    onClick={() => {
+                      snapWindow(appId, 'bottom-right');
+                      setSnapMenuOpen(false);
+                    }}
+                    title="Snap Bottom-Right"
+                  >
+                    <span
+                      className={`${styles.snapIconPreview} ${styles.snapIconBottomRight}`}
+                    />
+                    <span>BR</span>
+                  </button>
+                </div>
+              </div>
+            ) : null}
+          </div>
 
           <button
             type="button"

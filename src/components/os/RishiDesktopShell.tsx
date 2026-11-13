@@ -13,15 +13,21 @@ import { SkillsAppView } from '@/components/os/apps/SkillsAppView';
 import { TerminalApp } from '@/components/os/apps/TerminalApp';
 import { DesktopBackground } from '@/components/os/DesktopBackground';
 import { AboutOsDialog } from '@/components/os/AboutOsDialog';
+import { AltTabSwitcher } from '@/components/os/AltTabSwitcher';
 import { DesktopProvider, useDesktop } from '@/components/os/DesktopContext';
 import { DesktopDock } from '@/components/os/DesktopDock';
 import { DesktopIcons } from '@/components/os/DesktopIcons';
 import { DesktopHud } from '@/components/os/DesktopHud';
 import { DesktopWindow } from '@/components/os/DesktopWindow';
+import { GlobalSearchDialog } from '@/components/os/GlobalSearchDialog';
 import { LoginScreen } from '@/components/os/LoginScreen';
 import { LogoutDialog } from '@/components/os/LogoutDialog';
+import { NotificationCenter } from '@/components/os/NotificationCenter';
 import { OsBootTransition } from '@/components/os/OsBootTransition';
 import { OsAppIcon, RishiOsBrandIcon } from '@/components/os/OsIcons';
+import { QuickSettingsPanel } from '@/components/os/QuickSettingsPanel';
+import { ShortcutsHelpDialog } from '@/components/os/ShortcutsHelpDialog';
+import { SnapPreviewOverlay } from '@/components/os/SnapPreviewOverlay';
 import { TopSystemPanel } from '@/components/os/TopSystemPanel';
 import { SITE_IDENTITY } from '@/data/portfolio';
 import type { OsAppId } from '@/data/rishiOs';
@@ -60,8 +66,12 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
     liveAnnouncement,
     setStageBounds,
     openApp,
+    themeId,
+    previewThemeId,
+    simulatedBrightness,
   } = useDesktop();
 
+  const effectiveThemeId = previewThemeId ?? themeId;
   const windowsLayerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -104,10 +114,19 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
     (mobileAllAppsOpen || !activeAppId || windows[activeAppId]?.isMinimized);
 
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-rishi-theme={effectiveThemeId}>
       <TopSystemPanel />
 
-      <main id="main-content" className={styles.stage}>
+      <main
+        id="main-content"
+        className={styles.stage}
+        style={{
+          filter:
+            simulatedBrightness !== 100
+              ? `brightness(${simulatedBrightness}%)`
+              : undefined,
+        }}
+      >
         <h1 className={styles.srOnly}>RISHI OS Workspace</h1>
         <div
           id="rishi-os-live-status"
@@ -123,6 +142,7 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
         <DesktopHud />
 
         <div ref={windowsLayerRef} className={styles.windowsLayer}>
+          <SnapPreviewOverlay />
           {!isKnownRoute ? (
             <div className={styles.notFoundWindow} data-os-window="true">
               {routeFallback}
@@ -185,6 +205,11 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
       <DesktopDock />
       <AboutOsDialog />
       <LogoutDialog />
+      <GlobalSearchDialog />
+      <QuickSettingsPanel />
+      <NotificationCenter />
+      <ShortcutsHelpDialog />
+      <AltTabSwitcher />
     </div>
   );
 }

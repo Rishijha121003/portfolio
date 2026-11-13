@@ -110,7 +110,7 @@ export function DesktopHud() {
             </span>
 
             <span className={styles.specLabel}>Location</span>
-            <span className={styles.specValue}>New Delhi / NCR (Open to Relocate)</span>
+            <span className={styles.specValue}>Darbhanga, Bihar (Open to Relocate)</span>
 
             <span className={styles.specLabel}>Featured</span>
             <span className={styles.specValue}>DormiQ, LifeOS, AssignFlow</span>
@@ -200,7 +200,23 @@ export function DesktopHud() {
             className={styles.contextItem}
             onClick={() => {
               closeContextMenu();
-              openSettings('appearance');
+              openSettings('appearance', 'theme');
+            }}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a10 10 0 0 1 10 10 4 4 0 0 1-4 4h-2a2 2 0 0 0-2 2v2a2 2 0 0 1-2 2" />
+            </svg>
+            <span>Change Color Theme...</span>
+          </button>
+
+          <button
+            type="button"
+            role="menuitem"
+            className={styles.contextItem}
+            onClick={() => {
+              closeContextMenu();
+              openSettings('appearance', 'wallpaper');
             }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

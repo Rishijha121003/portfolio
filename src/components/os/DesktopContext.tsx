@@ -22,6 +22,12 @@ import {
   resolveRouteLaunch,
   VIRTUAL_ROOT,
 } from '@/data/rishiOs';
+import type { ThemeId } from '@/data/rishiThemes';
+import {
+  DEFAULT_THEME_ID,
+  getThemeConfig,
+  isValidThemeId,
+} from '@/data/rishiThemes';
 
 export interface WindowRect {
   x: number;
@@ -30,10 +36,24 @@ export interface WindowRect {
   height: number;
 }
 
+export type SnapLayout =
+  | 'none'
+  | 'left-half'
+  | 'right-half'
+  | 'top-half'
+  | 'bottom-half'
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'maximize';
+
 export interface WindowInstanceState {
   isOpen: boolean;
   isMinimized: boolean;
   isMaximized: boolean;
+  snapLayout?: SnapLayout;
+  restoreRect?: WindowRect | null;
   zIndex: number;
   hasCustomRect: boolean;
   rect: WindowRect | null;
@@ -53,13 +73,29 @@ export interface OpenAppOptions {
 
 export type OsSessionPhase = 'login' | 'authenticating' | 'desktop' | 'portfolio';
 export type SettingsTab = 'appearance' | 'system';
+export type AppearanceSubTab = 'theme' | 'wallpaper';
 type PersistedSessionMode = 'portfolio' | 'desktop' | 'none';
+
+export interface OsNotification {
+  id: string;
+  title: string;
+  message: string;
+  timestamp: string;
+  category: 'welcome' | 'system' | 'projects' | 'portfolio';
+  read: boolean;
+  actionLabel?: string;
+  actionAppId?: OsAppId;
+  actionOptions?: OpenAppOptions;
+  actionSettingsTab?: SettingsTab;
+  actionAppearanceSubTab?: AppearanceSubTab;
+}
 
 interface OsStoreState {
   sessionPhase: 'login' | 'authenticating' | 'desktop';
   logoutDialogOpen: boolean;
   aboutOsOpen: boolean;
   settingsTab: SettingsTab;
+  appearanceSubTab: AppearanceSubTab;
   liveAnnouncement: string;
   windows: Record<OsAppId, WindowInstanceState>;
   activeAppId: OsAppId | null;
@@ -67,6 +103,15 @@ interface OsStoreState {
   filesTargetPath: string;
   launcherOpen: boolean;
   mobileAllAppsOpen: boolean;
+  quickSettingsOpen: boolean;
+  notificationCenterOpen: boolean;
+  shortcutsHelpOpen: boolean;
+  altTabOpen: boolean;
+  altTabIndex: number;
+  simulatedBrightness: number;
+  simulatedSoundMuted: boolean;
+  notifications: OsNotification[];
+  snapPreview: SnapLayout | null;
   topZ: number;
   nextCascade: number;
   observedPathname: string;
@@ -77,7 +122,10 @@ interface DesktopContextValue {
   logoutDialogOpen: boolean;
   aboutOsOpen: boolean;
   settingsTab: SettingsTab;
+  appearanceSubTab: AppearanceSubTab;
   wallpaperId: WallpaperId;
+  themeId: ThemeId;
+  previewThemeId: ThemeId | null;
   liveAnnouncement: string;
   windows: Record<OsAppId, WindowInstanceState>;
   activeAppId: OsAppId | null;
@@ -85,6 +133,16 @@ interface DesktopContextValue {
   filesTargetPath: string;
   launcherOpen: boolean;
   mobileAllAppsOpen: boolean;
+  quickSettingsOpen: boolean;
+  notificationCenterOpen: boolean;
+  shortcutsHelpOpen: boolean;
+  altTabOpen: boolean;
+  altTabIndex: number;
+  simulatedBrightness: number;
+  simulatedSoundMuted: boolean;
+  notifications: OsNotification[];
+  unreadNotificationsCount: number;
+  snapPreview: SnapLayout | null;
   isMobile: boolean;
   isKnownRoute: boolean;
   stageBounds: StageBounds;
@@ -101,11 +159,27 @@ interface DesktopContextValue {
   closeLogoutDialog: () => void;
   confirmLogout: () => void;
   setAboutOsOpen: (open: boolean) => void;
-  openSettings: (tab?: SettingsTab) => void;
+  openSettings: (tab?: SettingsTab, subTab?: AppearanceSubTab) => void;
+  setAppearanceSubTab: (subTab: AppearanceSubTab) => void;
   setWallpaperId: (id: WallpaperId, announce?: boolean) => void;
+  setThemeId: (id: ThemeId, announce?: boolean) => void;
+  setPreviewThemeId: (id: ThemeId | null) => void;
   setStageBounds: (bounds: StageBounds) => void;
   setLauncherOpen: (open: boolean) => void;
   setMobileAllAppsOpen: (open: boolean) => void;
+  setQuickSettingsOpen: (open: boolean) => void;
+  setNotificationCenterOpen: (open: boolean) => void;
+  setShortcutsHelpOpen: (open: boolean) => void;
+  setAltTabOpen: (open: boolean) => void;
+  setAltTabIndex: (index: number) => void;
+  setSimulatedBrightness: (val: number) => void;
+  setSimulatedSoundMuted: (muted: boolean) => void;
+  dismissNotification: (id: string) => void;
+  clearAllNotifications: () => void;
+  markAllNotificationsRead: () => void;
+  setSnapPreview: (snap: SnapLayout | null) => void;
+  snapWindow: (appId: OsAppId, layout: SnapLayout) => void;
+  unsnapWindow: (appId: OsAppId) => void;
   setProjectsSubView: (view: ProjectsSubView, syncUrl?: boolean) => void;
   setFilesTargetPath: (path: string) => void;
   openApp: (appId: OsAppId, options?: OpenAppOptions) => void;
@@ -121,8 +195,10 @@ interface DesktopContextValue {
 const MOBILE_MEDIA_QUERY = '(max-width: 767px), (max-height: 500px)';
 const SESSION_MODE_KEY = 'rishi-os-mode';
 const WALLPAPER_STORAGE_KEY = 'rishi-os-wallpaper';
+const THEME_STORAGE_KEY = 'rishi-os-theme';
 const sessionModeListeners = new Set<() => void>();
 const wallpaperListeners = new Set<() => void>();
+const themeListeners = new Set<() => void>();
 
 function subscribeWallpaper(listener: () => void): () => void {
   wallpaperListeners.add(listener);
@@ -156,6 +232,40 @@ function writePersistedWallpaper(id: WallpaperId): void {
     // Ignore storage unavailability
   }
   wallpaperListeners.forEach((cb) => cb());
+}
+
+function subscribeTheme(listener: () => void): () => void {
+  themeListeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === THEME_STORAGE_KEY) listener();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    themeListeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
+}
+
+function getThemeSnapshot(): ThemeId {
+  try {
+    const val = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return isValidThemeId(val) ? val : DEFAULT_THEME_ID;
+  } catch {
+    return DEFAULT_THEME_ID;
+  }
+}
+
+function getThemeServerSnapshot(): ThemeId {
+  return DEFAULT_THEME_ID;
+}
+
+function writePersistedTheme(id: ThemeId): void {
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, id);
+  } catch {
+    // Ignore storage unavailability
+  }
+  themeListeners.forEach((cb) => cb());
 }
 
 function subscribeSessionMode(listener: () => void): () => void {
@@ -267,6 +377,75 @@ export function computeDefaultWindowRect(
   );
 }
 
+export function computeSnapRect(
+  layout: SnapLayout,
+  stage: StageBounds
+): WindowRect | null {
+  if (layout === 'none') return null;
+  const pad = 8;
+  const gap = 8;
+  const usableW = Math.max(320, stage.width - pad * 2);
+  const usableH = Math.max(240, stage.height - pad * 2);
+  const halfW = Math.max(280, Math.floor((usableW - gap) / 2));
+  const halfH = Math.max(180, Math.floor((usableH - gap) / 2));
+
+  switch (layout) {
+    case 'left-half':
+      return { x: pad, y: pad, width: halfW, height: usableH };
+    case 'right-half':
+      return { x: pad + halfW + gap, y: pad, width: halfW, height: usableH };
+    case 'top-half':
+      return { x: pad, y: pad, width: usableW, height: halfH };
+    case 'bottom-half':
+      return { x: pad, y: pad + halfH + gap, width: usableW, height: halfH };
+    case 'top-left':
+      return { x: pad, y: pad, width: halfW, height: halfH };
+    case 'top-right':
+      return { x: pad + halfW + gap, y: pad, width: halfW, height: halfH };
+    case 'bottom-left':
+      return { x: pad, y: pad + halfH + gap, width: halfW, height: halfH };
+    case 'bottom-right':
+      return { x: pad + halfW + gap, y: pad + halfH + gap, width: halfW, height: halfH };
+    case 'maximize':
+      return { x: pad, y: pad, width: usableW, height: usableH };
+  }
+}
+
+export const INITIAL_NOTIFICATIONS: readonly OsNotification[] = [
+  {
+    id: 'notif-welcome',
+    title: 'Welcome to RISHI OS',
+    message: 'Simulated developer workspace with soft glass neumorphic UI, virtual filesystem, and native shell.',
+    timestamp: 'Just now',
+    category: 'welcome',
+    read: false,
+    actionLabel: 'Explore Files',
+    actionAppId: 'files',
+  },
+  {
+    id: 'notif-appearance',
+    title: 'Appearance Customization Ready',
+    message: '8 preset color themes and 8 curated wallpapers are available in Appearance Settings.',
+    timestamp: '3m ago',
+    category: 'system',
+    read: false,
+    actionLabel: 'Customize Theme',
+    actionSettingsTab: 'appearance',
+    actionAppearanceSubTab: 'theme',
+  },
+  {
+    id: 'notif-dormiq',
+    title: 'DormiQ Case Study Featured',
+    message: 'Hostel room allocation architecture, resident dossiers & Cheque Mate Hackathon Top 3.',
+    timestamp: '8m ago',
+    category: 'projects',
+    read: false,
+    actionLabel: 'View Project',
+    actionAppId: 'projects',
+    actionOptions: { projectSubView: 'dormiq' },
+  },
+];
+
 function createInitialWindows(
   initialAppId: OsAppId | null
 ): Record<OsAppId, WindowInstanceState> {
@@ -278,6 +457,8 @@ function createInitialWindows(
       isOpen: isInitial,
       isMinimized: false,
       isMaximized: false,
+      snapLayout: 'none',
+      restoreRect: null,
       zIndex: isInitial ? 20 : 10 + idx,
       hasCustomRect: false,
       rect: null,
@@ -300,6 +481,7 @@ function createInitialStore(
     logoutDialogOpen: false,
     aboutOsOpen: false,
     settingsTab: 'appearance',
+    appearanceSubTab: 'theme',
     liveAnnouncement: '',
     windows: createInitialWindows(initialApp),
     activeAppId: initialApp,
@@ -307,6 +489,15 @@ function createInitialStore(
     filesTargetPath: VIRTUAL_ROOT,
     launcherOpen: false,
     mobileAllAppsOpen: false,
+    quickSettingsOpen: false,
+    notificationCenterOpen: false,
+    shortcutsHelpOpen: false,
+    altTabOpen: false,
+    altTabIndex: 0,
+    simulatedBrightness: 100,
+    simulatedSoundMuted: false,
+    notifications: [...INITIAL_NOTIFICATIONS],
+    snapPreview: null,
     topZ: 24,
     nextCascade: 1,
     observedPathname: pathname,
@@ -382,6 +573,14 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
     getWallpaperSnapshot,
     getWallpaperServerSnapshot
   );
+
+  const themeId = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getThemeServerSnapshot
+  );
+
+  const [previewThemeId, setPreviewThemeId] = useState<ThemeId | null>(null);
 
   const [store, setStore] = useState<OsStoreState>(() =>
     createInitialStore(pathname, 'login')
@@ -590,16 +789,27 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const setAboutOsOpen = useCallback((open: boolean) => {
+    if (!open) {
+      setPreviewThemeId(null);
+    }
     setStore((prev) => ({ ...prev, aboutOsOpen: open, launcherOpen: false }));
   }, []);
 
-  const openSettings = useCallback((tab: SettingsTab = 'appearance') => {
-    setStore((prev) => ({
-      ...prev,
-      aboutOsOpen: true,
-      settingsTab: tab,
-      launcherOpen: false,
-    }));
+  const openSettings = useCallback(
+    (tab: SettingsTab = 'appearance', subTab?: AppearanceSubTab) => {
+      setStore((prev) => ({
+        ...prev,
+        aboutOsOpen: true,
+        settingsTab: tab,
+        appearanceSubTab: subTab ?? prev.appearanceSubTab,
+        launcherOpen: false,
+      }));
+    },
+    []
+  );
+
+  const setAppearanceSubTab = useCallback((subTab: AppearanceSubTab) => {
+    setStore((prev) => ({ ...prev, appearanceSubTab: subTab }));
   }, []);
 
   const setWallpaperId = useCallback((id: WallpaperId, announce = true) => {
@@ -610,6 +820,19 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       setStore((prev) => ({
         ...prev,
         liveAnnouncement: `Wallpaper applied: ${name}`,
+      }));
+    }
+  }, []);
+
+  const setThemeId = useCallback((id: ThemeId, announce = true) => {
+    if (!isValidThemeId(id)) return;
+    writePersistedTheme(id);
+    setPreviewThemeId(null);
+    if (announce) {
+      const name = getThemeConfig(id).name;
+      setStore((prev) => ({
+        ...prev,
+        liveAnnouncement: `Color theme applied: ${name}`,
       }));
     }
   }, []);
@@ -858,19 +1081,344 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
     });
   }, [stageBounds]);
 
+  const setQuickSettingsOpen = useCallback((open: boolean) => {
+    setStore((prev) => ({
+      ...prev,
+      quickSettingsOpen: open,
+      notificationCenterOpen: open ? false : prev.notificationCenterOpen,
+      launcherOpen: open ? false : prev.launcherOpen,
+    }));
+  }, []);
+
+  const setNotificationCenterOpen = useCallback((open: boolean) => {
+    setStore((prev) => ({
+      ...prev,
+      notificationCenterOpen: open,
+      quickSettingsOpen: open ? false : prev.quickSettingsOpen,
+      launcherOpen: open ? false : prev.launcherOpen,
+    }));
+  }, []);
+
+  const setShortcutsHelpOpen = useCallback((open: boolean) => {
+    setStore((prev) => ({ ...prev, shortcutsHelpOpen: open }));
+  }, []);
+
+  const setAltTabOpen = useCallback((open: boolean) => {
+    setStore((prev) => ({ ...prev, altTabOpen: open }));
+  }, []);
+
+  const setAltTabIndex = useCallback((index: number) => {
+    setStore((prev) => ({ ...prev, altTabIndex: index }));
+  }, []);
+
+  const setSimulatedBrightness = useCallback((val: number) => {
+    const clamped = Math.min(120, Math.max(50, Math.round(val)));
+    setStore((prev) => ({ ...prev, simulatedBrightness: clamped }));
+  }, []);
+
+  const setSimulatedSoundMuted = useCallback((muted: boolean) => {
+    setStore((prev) => ({
+      ...prev,
+      simulatedSoundMuted: muted,
+      liveAnnouncement: muted
+        ? 'System audio muted (simulated)'
+        : 'System audio unmuted (simulated)',
+    }));
+  }, []);
+
+  const dismissNotification = useCallback((id: string) => {
+    setStore((prev) => ({
+      ...prev,
+      notifications: prev.notifications.filter((n) => n.id !== id),
+    }));
+  }, []);
+
+  const clearAllNotifications = useCallback(() => {
+    setStore((prev) => ({
+      ...prev,
+      notifications: [],
+      liveAnnouncement: 'All notifications cleared',
+    }));
+  }, []);
+
+  const markAllNotificationsRead = useCallback(() => {
+    setStore((prev) => ({
+      ...prev,
+      notifications: prev.notifications.map((n) => ({ ...n, read: true })),
+    }));
+  }, []);
+
+  const setSnapPreview = useCallback((snap: SnapLayout | null) => {
+    setStore((prev) => ({ ...prev, snapPreview: snap }));
+  }, []);
+
+  const snapWindow = useCallback(
+    (appId: OsAppId, layout: SnapLayout) => {
+      setStore((prev) => {
+        const win = prev.windows[appId];
+        if (!win) return prev;
+
+        if (layout === 'none') {
+          return {
+            ...prev,
+            snapPreview: null,
+            windows: {
+              ...prev.windows,
+              [appId]: {
+                ...win,
+                snapLayout: 'none',
+                rect: win.restoreRect ?? win.rect,
+                restoreRect: null,
+              },
+            },
+          };
+        }
+
+        if (layout === 'maximize') {
+          return {
+            ...prev,
+            snapPreview: null,
+            windows: {
+              ...prev.windows,
+              [appId]: {
+                ...win,
+                isMinimized: false,
+                isMaximized: true,
+                snapLayout: 'maximize',
+                restoreRect:
+                  win.snapLayout && win.snapLayout !== 'none'
+                    ? win.restoreRect
+                    : win.rect,
+              },
+            },
+          };
+        }
+
+        const snappedRect = computeSnapRect(layout, stageBounds);
+        if (!snappedRect) return prev;
+
+        const restoreRect =
+          win.snapLayout && win.snapLayout !== 'none'
+            ? win.restoreRect
+            : win.rect ??
+              computeDefaultWindowRect(appId, stageBounds, win.cascadeIndex);
+
+        return {
+          ...prev,
+          snapPreview: null,
+          windows: {
+            ...prev.windows,
+            [appId]: {
+              ...win,
+              isOpen: true,
+              isMinimized: false,
+              isMaximized: false,
+              hasCustomRect: true,
+              snapLayout: layout,
+              rect: snappedRect,
+              restoreRect,
+            },
+          },
+        };
+      });
+    },
+    [stageBounds]
+  );
+
+  const unsnapWindow = useCallback(
+    (appId: OsAppId) => {
+      setStore((prev) => {
+        const win = prev.windows[appId];
+        if (!win || !win.snapLayout || win.snapLayout === 'none') return prev;
+
+        return {
+          ...prev,
+          windows: {
+            ...prev.windows,
+            [appId]: {
+              ...win,
+              snapLayout: 'none',
+              rect:
+                win.restoreRect ??
+                win.rect ??
+                computeDefaultWindowRect(appId, stageBounds, win.cascadeIndex),
+              restoreRect: null,
+              isMaximized: false,
+            },
+          },
+        };
+      });
+    },
+    [stageBounds]
+  );
+
+  const unreadNotificationsCount = useMemo(
+    () => store.notifications.filter((n) => !n.read).length,
+    [store.notifications]
+  );
+
+  useEffect(() => {
+    if (store.sessionPhase !== 'desktop') return;
+
+    function handleKeyDown(e: KeyboardEvent) {
+      const activeEl = document.activeElement as HTMLElement | null;
+      const isInput =
+        activeEl &&
+        (activeEl.tagName === 'INPUT' ||
+          activeEl.tagName === 'TEXTAREA' ||
+          activeEl.tagName === 'SELECT' ||
+          activeEl.isContentEditable);
+
+      if (e.key === 'Escape') {
+        if (store.snapPreview) {
+          e.preventDefault();
+          setSnapPreview(null);
+          return;
+        }
+        if (store.altTabOpen) {
+          e.preventDefault();
+          setStore((prev) => ({ ...prev, altTabOpen: false }));
+          return;
+        }
+        if (store.shortcutsHelpOpen) {
+          e.preventDefault();
+          setStore((prev) => ({ ...prev, shortcutsHelpOpen: false }));
+          return;
+        }
+        if (store.quickSettingsOpen) {
+          e.preventDefault();
+          setStore((prev) => ({ ...prev, quickSettingsOpen: false }));
+          return;
+        }
+        if (store.notificationCenterOpen) {
+          e.preventDefault();
+          setStore((prev) => ({ ...prev, notificationCenterOpen: false }));
+          return;
+        }
+        if (store.launcherOpen) {
+          e.preventDefault();
+          setStore((prev) => ({ ...prev, launcherOpen: false }));
+          return;
+        }
+        if (store.aboutOsOpen) {
+          e.preventDefault();
+          setAboutOsOpen(false);
+          return;
+        }
+        if (store.logoutDialogOpen) {
+          e.preventDefault();
+          closeLogoutDialog();
+          return;
+        }
+      }
+
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        setStore((prev) => ({
+          ...prev,
+          launcherOpen: !prev.launcherOpen,
+          quickSettingsOpen: false,
+          notificationCenterOpen: false,
+        }));
+        return;
+      }
+
+      if (e.altKey && (e.key === 'Tab' || e.code === 'Tab')) {
+        e.preventDefault();
+        const openAppIds = OS_APP_ORDER.filter((id) => store.windows[id].isOpen);
+        if (openAppIds.length > 0) {
+          setStore((prev) => {
+            const nextIdx =
+              (prev.altTabIndex + (e.shiftKey ? -1 : 1) + openAppIds.length) %
+              openAppIds.length;
+            return {
+              ...prev,
+              altTabOpen: true,
+              altTabIndex: nextIdx,
+            };
+          });
+        }
+        return;
+      }
+
+      if (isInput) return;
+
+      if (
+        e.key === 'F1' ||
+        (e.key === '?' && !e.ctrlKey && !e.altKey && !e.metaKey)
+      ) {
+        e.preventDefault();
+        setStore((prev) => ({ ...prev, shortcutsHelpOpen: true }));
+        return;
+      }
+    }
+
+    function handleKeyUp(e: KeyboardEvent) {
+      if (e.key === 'Alt' || e.code === 'AltLeft' || e.code === 'AltRight') {
+        setStore((prev) => {
+          if (!prev.altTabOpen) return prev;
+          const openAppIds = OS_APP_ORDER.filter((id) => prev.windows[id].isOpen);
+          const selectedApp = openAppIds[prev.altTabIndex] ?? null;
+          if (selectedApp) {
+            setTimeout(() => focusApp(selectedApp), 0);
+          }
+          return {
+            ...prev,
+            altTabOpen: false,
+          };
+        });
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [
+    closeLogoutDialog,
+    focusApp,
+    setAboutOsOpen,
+    setSnapPreview,
+    store.aboutOsOpen,
+    store.altTabOpen,
+    store.launcherOpen,
+    store.logoutDialogOpen,
+    store.notificationCenterOpen,
+    store.quickSettingsOpen,
+    store.sessionPhase,
+    store.shortcutsHelpOpen,
+    store.snapPreview,
+    store.windows,
+  ]);
+
   const value = useMemo<DesktopContextValue>(
     () => ({
       sessionPhase: effectiveSessionPhase,
       logoutDialogOpen: store.logoutDialogOpen,
       aboutOsOpen: store.aboutOsOpen,
       settingsTab: store.settingsTab,
+      appearanceSubTab: store.appearanceSubTab,
       wallpaperId,
+      themeId,
+      previewThemeId,
       windows: store.windows,
       activeAppId: store.activeAppId,
       projectsSubView: store.projectsSubView,
       filesTargetPath: store.filesTargetPath,
       launcherOpen: store.launcherOpen,
       mobileAllAppsOpen: store.mobileAllAppsOpen,
+      quickSettingsOpen: store.quickSettingsOpen,
+      notificationCenterOpen: store.notificationCenterOpen,
+      shortcutsHelpOpen: store.shortcutsHelpOpen,
+      altTabOpen: store.altTabOpen,
+      altTabIndex: store.altTabIndex,
+      simulatedBrightness: store.simulatedBrightness,
+      simulatedSoundMuted: store.simulatedSoundMuted,
+      notifications: store.notifications,
+      unreadNotificationsCount,
+      snapPreview: store.snapPreview,
       liveAnnouncement: store.liveAnnouncement,
       isMobile,
       isKnownRoute: activeRouteKnown,
@@ -889,10 +1437,26 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       confirmLogout,
       setAboutOsOpen,
       openSettings,
+      setAppearanceSubTab,
       setWallpaperId,
+      setThemeId,
+      setPreviewThemeId,
       setStageBounds,
       setLauncherOpen,
       setMobileAllAppsOpen,
+      setQuickSettingsOpen,
+      setNotificationCenterOpen,
+      setShortcutsHelpOpen,
+      setAltTabOpen,
+      setAltTabIndex,
+      setSimulatedBrightness,
+      setSimulatedSoundMuted,
+      dismissNotification,
+      clearAllNotifications,
+      markAllNotificationsRead,
+      setSnapPreview,
+      snapWindow,
+      unsnapWindow,
       setProjectsSubView,
       setFilesTargetPath,
       openApp,
@@ -906,9 +1470,11 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
     }),
     [
       activeRouteKnown,
+      clearAllNotifications,
       closeApp,
       closeLogoutDialog,
       confirmLogout,
+      dismissNotification,
       effectiveSessionPhase,
       enterDesktopFromPortfolio,
       focusApp,
@@ -919,24 +1485,41 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       isBootingToOs,
       isBootingToPortfolio,
       isMobile,
+      markAllNotificationsRead,
       minimizeApp,
       openApp,
       openLogoutDialog,
       openSettings,
+      previewThemeId,
       resetWindows,
       setAboutOsOpen,
-      setWallpaperId,
+      setAltTabIndex,
+      setAltTabOpen,
+      setAppearanceSubTab,
       setFilesTargetPath,
       setLauncherOpen,
       setMobileAllAppsOpen,
+      setNotificationCenterOpen,
+      setPreviewThemeId,
       setProjectsSubView,
+      setQuickSettingsOpen,
+      setShortcutsHelpOpen,
+      setSimulatedBrightness,
+      setSimulatedSoundMuted,
+      setSnapPreview,
       setStageBounds,
+      setThemeId,
+      setWallpaperId,
       showDesktop,
       skipToPortfolio,
+      snapWindow,
       stageBounds,
       startLogin,
       store,
+      themeId,
       toggleMaximizeApp,
+      unreadNotificationsCount,
+      unsnapWindow,
       updateWindowRect,
       wallpaperId,
     ]

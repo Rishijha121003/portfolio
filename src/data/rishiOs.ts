@@ -14,6 +14,8 @@ import {
   VERIFIED_IMAGES,
 } from '@/data/portfolio';
 
+export { PROJECT_RECORDS };
+
 export type OsAppId =
   | 'home'
   | 'projects'
@@ -564,16 +566,16 @@ export const VIRTUAL_FS: Record<string, VirtualFsNode> = {
       '# Rishi Jha — Resume / Curriculum Vitae',
       '',
       `Software Developer · ${SITE_IDENTITY.fullName}`,
-      'Location: New Delhi / NCR, India',
+      'Location: Darbhanga, Bihar, India (Open to Relocate)',
       '',
       '## Profile Summary',
-      'Software developer with strong foundational skills in Python, backend development with FastAPI, and modern frontend interfaces with React/Next.js. Background in Mechanical Engineering prior to pursuing B.Tech in Computer Science, bringing rigorous problem-solving discipline and analytical systems thinking.',
+      'Software developer with strong foundational skills in Python, backend development with FastAPI, and modern frontend interfaces with React/Next.js. Diploma in CSE from Government Polytechnic Darbhanga prior to pursuing B.Tech in Computer Science at Sandip University, bringing rigorous problem-solving discipline and analytical systems thinking.',
       '',
       '## Education',
       '- **B.Tech in Computer Science & Engineering** (2022 – 2025)',
-      '  Dronacharya College of Engineering (DCE), Gurugram',
-      '- **Diploma in Mechanical Engineering** (2018 – 2021)',
-      '  Govind Ballabh Pant Institute of Technology, New Delhi',
+      '  Sandip University',
+      '- **Diploma in Computer Science & Engineering** (2018 – 2021)',
+      '  Government Polytechnic Darbhanga',
       '',
       '## Core Technical Skills',
       '- **Languages**: Python, JavaScript, TypeScript, SQL, HTML5, CSS3',

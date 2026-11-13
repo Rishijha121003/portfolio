@@ -14,7 +14,7 @@ import styles from './LoginScreen.module.css';
  */
 export function LoginScreen() {
   const pathname = usePathname();
-  const { sessionPhase, startLogin, skipToPortfolio } = useDesktop();
+  const { sessionPhase, startLogin, skipToPortfolio, themeId } = useDesktop();
   const clock = useOsClock();
   const loginButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -43,7 +43,7 @@ export function LoginScreen() {
   }, [sessionPhase, startLogin]);
 
   return (
-    <div className={styles.screen} aria-label="RISHI OS Login Screen">
+    <div className={styles.screen} data-rishi-theme={themeId} aria-label="RISHI OS Login Screen">
       <div className={styles.wallpaper} aria-hidden="true" />
 
       {/* Top Display Manager Bar */}

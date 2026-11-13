@@ -1,0 +1,413 @@
+/* ===================================================================== */
+/* RISHI OS — Centralized Theme Engine Stylesheet                         */
+/* 8 Preset Themes Scoped Under [data-rishi-theme="<id>"]                 */
+/* ===================================================================== */
+
+/* --- Theme 1: Midnight Cyan (Default) --- */
+[data-rishi-theme="midnight-cyan"] {
+  --bg-canvas: #071426;
+  --bg-secondary: #0b1b2d;
+  --bg-surface: #10243a;
+  --bg-elevated: #183350;
+  --bg-inset: #050e1b;
+  --bg-deep: #030a14;
+  --bg-overlay: rgba(4, 11, 20, 0.82);
+  --bg-panel: rgba(16, 36, 58, 0.88);
+
+  --glass-bg: rgba(16, 36, 58, 0.78);
+  --glass-bg-strong: rgba(12, 28, 46, 0.88);
+  --glass-bg-subtle: rgba(20, 44, 70, 0.56);
+  --glass-bg-inactive: rgba(12, 28, 46, 0.80);
+  --glass-border: rgba(34, 211, 238, 0.22);
+  --glass-border-strong: rgba(34, 211, 238, 0.42);
+
+  --os-desktop-bg: #071426;
+  --os-window-bg: rgba(14, 30, 48, 0.88);
+  --os-window-inactive-bg: rgba(11, 24, 39, 0.82);
+  --os-titlebar-bg: rgba(20, 42, 67, 0.92);
+  --os-titlebar-inactive-bg: rgba(14, 30, 48, 0.85);
+  --os-dock-bg: rgba(16, 36, 58, 0.65);
+  --os-panel-bg: rgba(12, 28, 46, 0.70);
+
+  --border: rgba(34, 211, 238, 0.18);
+  --border-subtle: rgba(147, 178, 208, 0.10);
+  --border-strong: rgba(34, 211, 238, 0.38);
+
+  --text-primary: #e6f3ff;
+  --text-secondary: #93b2d0;
+  --text-muted: #6c8cae;
+
+  --accent: #22d3ee;
+  --accent-hover: #67e8f9;
+  --accent-soft: rgba(34, 211, 238, 0.14);
+  --accent-ink: #071426;
+  --accent-linux: #22d3ee;
+  --accent-secondary: #67e8f9;
+  --accent-gradient: linear-gradient(135deg, #67e8f9 0%, #06b6d4 100%);
+  --accent-linux-soft: rgba(34, 211, 238, 0.14);
+  --accent-linux-border: rgba(34, 211, 238, 0.38);
+  --accent-linux-glow: rgba(34, 211, 238, 0.28);
+
+  --neu-light: rgba(34, 211, 238, 0.08);
+  --neu-light-strong: rgba(34, 211, 238, 0.14);
+  --neu-dark: rgba(2, 6, 12, 0.64);
+  --neu-dark-strong: rgba(1, 4, 8, 0.78);
+}
+
+/* --- Theme 2: Emerald Forest --- */
+[data-rishi-theme="emerald-forest"] {
+  --bg-canvas: #14221c;
+  --bg-secondary: #182c22;
+  --bg-surface: #20382c;
+  --bg-elevated: #294838;
+  --bg-inset: #0d1713;
+  --bg-deep: #08100c;
+  --bg-overlay: rgba(10, 18, 14, 0.82);
+  --bg-panel: rgba(32, 56, 44, 0.88);
+
+  --glass-bg: rgba(32, 56, 44, 0.78);
+  --glass-bg-strong: rgba(24, 44, 34, 0.88);
+  --glass-bg-subtle: rgba(40, 70, 55, 0.56);
+  --glass-bg-inactive: rgba(24, 44, 34, 0.80);
+  --glass-border: rgba(110, 231, 160, 0.22);
+  --glass-border-strong: rgba(110, 231, 160, 0.42);
+
+  --os-desktop-bg: #14221c;
+  --os-window-bg: rgba(27, 47, 37, 0.88);
+  --os-window-inactive-bg: rgba(21, 38, 30, 0.82);
+  --os-titlebar-bg: rgba(36, 64, 50, 0.92);
+  --os-titlebar-inactive-bg: rgba(27, 47, 37, 0.85);
+  --os-dock-bg: rgba(32, 56, 44, 0.65);
+  --os-panel-bg: rgba(24, 44, 34, 0.70);
+
+  --border: rgba(110, 231, 160, 0.18);
+  --border-subtle: rgba(152, 201, 168, 0.10);
+  --border-strong: rgba(110, 231, 160, 0.38);
+
+  --text-primary: #e5f5ea;
+  --text-secondary: #98c9a8;
+  --text-muted: #719e81;
+
+  --accent: #6ee7a0;
+  --accent-hover: #86efac;
+  --accent-soft: rgba(110, 231, 160, 0.14);
+  --accent-ink: #0c1812;
+  --accent-linux: #6ee7a0;
+  --accent-secondary: #86efac;
+  --accent-gradient: linear-gradient(135deg, #86efac 0%, #34d399 100%);
+  --accent-linux-soft: rgba(110, 231, 160, 0.14);
+  --accent-linux-border: rgba(110, 231, 160, 0.38);
+  --accent-linux-glow: rgba(110, 231, 160, 0.28);
+
+  --neu-light: rgba(110, 231, 160, 0.08);
+  --neu-light-strong: rgba(110, 231, 160, 0.14);
+  --neu-dark: rgba(4, 9, 6, 0.64);
+  --neu-dark-strong: rgba(2, 6, 4, 0.78);
+}
+
+/* --- Theme 3: Royal Purple --- */
+[data-rishi-theme="royal-purple"] {
+  --bg-canvas: #19152b;
+  --bg-secondary: #201a38;
+  --bg-surface: #2a2145;
+  --bg-elevated: #372c59;
+  --bg-inset: #110e1d;
+  --bg-deep: #0b0813;
+  --bg-overlay: rgba(13, 11, 23, 0.82);
+  --bg-panel: rgba(42, 33, 69, 0.88);
+
+  --glass-bg: rgba(42, 33, 69, 0.78);
+  --glass-bg-strong: rgba(33, 26, 54, 0.88);
+  --glass-bg-subtle: rgba(52, 41, 85, 0.56);
+  --glass-bg-inactive: rgba(33, 26, 54, 0.80);
+  --glass-border: rgba(167, 139, 250, 0.22);
+  --glass-border-strong: rgba(167, 139, 250, 0.42);
+
+  --os-desktop-bg: #19152b;
+  --os-window-bg: rgba(35, 28, 58, 0.88);
+  --os-window-inactive-bg: rgba(27, 21, 46, 0.82);
+  --os-titlebar-bg: rgba(48, 38, 79, 0.92);
+  --os-titlebar-inactive-bg: rgba(35, 28, 58, 0.85);
+  --os-dock-bg: rgba(42, 33, 69, 0.65);
+  --os-panel-bg: rgba(33, 26, 54, 0.70);
+
+  --border: rgba(167, 139, 250, 0.18);
+  --border-subtle: rgba(185, 171, 219, 0.10);
+  --border-strong: rgba(167, 139, 250, 0.38);
+
+  --text-primary: #f0eafe;
+  --text-secondary: #b9abdb;
+  --text-muted: #8d7eb3;
+
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-soft: rgba(167, 139, 250, 0.14);
+  --accent-ink: #120e21;
+  --accent-linux: #a78bfa;
+  --accent-secondary: #c4b5fd;
+  --accent-gradient: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 100%);
+  --accent-linux-soft: rgba(167, 139, 250, 0.14);
+  --accent-linux-border: rgba(167, 139, 250, 0.38);
+  --accent-linux-glow: rgba(167, 139, 250, 0.28);
+
+  --neu-light: rgba(167, 139, 250, 0.08);
+  --neu-light-strong: rgba(167, 139, 250, 0.14);
+  --neu-dark: rgba(7, 5, 12, 0.64);
+  --neu-dark-strong: rgba(4, 3, 8, 0.78);
+}
+
+/* --- Theme 4: Arctic Teal --- */
+[data-rishi-theme="arctic-teal"] {
+  --bg-canvas: #142323;
+  --bg-secondary: #182e2d;
+  --bg-surface: #203a39;
+  --bg-elevated: #294b4a;
+  --bg-inset: #0d1818;
+  --bg-deep: #081010;
+  --bg-overlay: rgba(10, 19, 19, 0.82);
+  --bg-panel: rgba(32, 58, 57, 0.88);
+
+  --glass-bg: rgba(32, 58, 57, 0.78);
+  --glass-bg-strong: rgba(25, 46, 45, 0.88);
+  --glass-bg-subtle: rgba(40, 72, 71, 0.56);
+  --glass-bg-inactive: rgba(25, 46, 45, 0.80);
+  --glass-border: rgba(45, 212, 191, 0.22);
+  --glass-border-strong: rgba(45, 212, 191, 0.42);
+
+  --os-desktop-bg: #142323;
+  --os-window-bg: rgba(27, 49, 48, 0.88);
+  --os-window-inactive-bg: rgba(21, 39, 38, 0.82);
+  --os-titlebar-bg: rgba(36, 67, 65, 0.92);
+  --os-titlebar-inactive-bg: rgba(27, 49, 48, 0.85);
+  --os-dock-bg: rgba(32, 58, 57, 0.65);
+  --os-panel-bg: rgba(25, 46, 45, 0.70);
+
+  --border: rgba(45, 212, 191, 0.18);
+  --border-subtle: rgba(146, 205, 197, 0.10);
+  --border-strong: rgba(45, 212, 191, 0.38);
+
+  --text-primary: #e2f7f4;
+  --text-secondary: #92cdc5;
+  --text-muted: #6ea39c;
+
+  --accent: #2dd4bf;
+  --accent-hover: #5eead4;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --accent-ink: #0a1616;
+  --accent-linux: #2dd4bf;
+  --accent-secondary: #5eead4;
+  --accent-gradient: linear-gradient(135deg, #5eead4 0%, #14b8a6 100%);
+  --accent-linux-soft: rgba(45, 212, 191, 0.14);
+  --accent-linux-border: rgba(45, 212, 191, 0.38);
+  --accent-linux-glow: rgba(45, 212, 191, 0.28);
+
+  --neu-light: rgba(45, 212, 191, 0.08);
+  --neu-light-strong: rgba(45, 212, 191, 0.14);
+  --neu-dark: rgba(4, 9, 9, 0.64);
+  --neu-dark-strong: rgba(2, 6, 6, 0.78);
+}
+
+/* --- Theme 5: Sunset Ember --- */
+[data-rishi-theme="sunset-ember"] {
+  --bg-canvas: #261817;
+  --bg-secondary: #2e1e1c;
+  --bg-surface: #3b2725;
+  --bg-elevated: #4d3330;
+  --bg-inset: #190f0e;
+  --bg-deep: #100908;
+  --bg-overlay: rgba(20, 12, 11, 0.82);
+  --bg-panel: rgba(59, 39, 37, 0.88);
+
+  --glass-bg: rgba(59, 39, 37, 0.78);
+  --glass-bg-strong: rgba(47, 31, 29, 0.88);
+  --glass-bg-subtle: rgba(73, 48, 45, 0.56);
+  --glass-bg-inactive: rgba(47, 31, 29, 0.80);
+  --glass-border: rgba(251, 146, 60, 0.22);
+  --glass-border-strong: rgba(251, 146, 60, 0.42);
+
+  --os-desktop-bg: #261817;
+  --os-window-bg: rgba(49, 32, 30, 0.88);
+  --os-window-inactive-bg: rgba(40, 26, 25, 0.82);
+  --os-titlebar-bg: rgba(69, 45, 43, 0.92);
+  --os-titlebar-inactive-bg: rgba(49, 32, 30, 0.85);
+  --os-dock-bg: rgba(59, 39, 37, 0.65);
+  --os-panel-bg: rgba(47, 31, 29, 0.70);
+
+  --border: rgba(251, 146, 60, 0.18);
+  --border-subtle: rgba(216, 172, 157, 0.10);
+  --border-strong: rgba(251, 146, 60, 0.38);
+
+  --text-primary: #fff0e5;
+  --text-secondary: #d8ac9d;
+  --text-muted: #b08375;
+
+  --accent: #fb923c;
+  --accent-hover: #fdba74;
+  --accent-soft: rgba(251, 146, 60, 0.14);
+  --accent-ink: #1c0f0e;
+  --accent-linux: #fb923c;
+  --accent-secondary: #fdba74;
+  --accent-gradient: linear-gradient(135deg, #fdba74 0%, #ea580c 100%);
+  --accent-linux-soft: rgba(251, 146, 60, 0.14);
+  --accent-linux-border: rgba(251, 146, 60, 0.38);
+  --accent-linux-glow: rgba(251, 146, 60, 0.28);
+
+  --neu-light: rgba(251, 146, 60, 0.08);
+  --neu-light-strong: rgba(251, 146, 60, 0.14);
+  --neu-dark: rgba(10, 6, 5, 0.64);
+  --neu-dark-strong: rgba(6, 3, 3, 0.78);
+}
+
+/* --- Theme 6: Neon Rose --- */
+[data-rishi-theme="neon-rose"] {
+  --bg-canvas: #241727;
+  --bg-secondary: #2c1d30;
+  --bg-surface: #38243d;
+  --bg-elevated: #4a3051;
+  --bg-inset: #180e1a;
+  --bg-deep: #0f0811;
+  --bg-overlay: rgba(19, 11, 21, 0.82);
+  --bg-panel: rgba(56, 36, 61, 0.88);
+
+  --glass-bg: rgba(56, 36, 61, 0.78);
+  --glass-bg-strong: rgba(45, 29, 49, 0.88);
+  --glass-bg-subtle: rgba(70, 45, 76, 0.56);
+  --glass-bg-inactive: rgba(45, 29, 49, 0.80);
+  --glass-border: rgba(244, 114, 182, 0.22);
+  --glass-border-strong: rgba(244, 114, 182, 0.42);
+
+  --os-desktop-bg: #241727;
+  --os-window-bg: rgba(47, 30, 51, 0.88);
+  --os-window-inactive-bg: rgba(38, 24, 42, 0.82);
+  --os-titlebar-bg: rgba(66, 42, 72, 0.92);
+  --os-titlebar-inactive-bg: rgba(47, 30, 51, 0.85);
+  --os-dock-bg: rgba(56, 36, 61, 0.65);
+  --os-panel-bg: rgba(45, 29, 49, 0.70);
+
+  --border: rgba(244, 114, 182, 0.18);
+  --border-subtle: rgba(213, 166, 200, 0.10);
+  --border-strong: rgba(244, 114, 182, 0.38);
+
+  --text-primary: #fce7f3;
+  --text-secondary: #d5a6c8;
+  --text-muted: #aa7ba0;
+
+  --accent: #f472b6;
+  --accent-hover: #f9a8d4;
+  --accent-soft: rgba(244, 114, 182, 0.14);
+  --accent-ink: #1a0d1d;
+  --accent-linux: #f472b6;
+  --accent-secondary: #f9a8d4;
+  --accent-gradient: linear-gradient(135deg, #f9a8d4 0%, #db2777 100%);
+  --accent-linux-soft: rgba(244, 114, 182, 0.14);
+  --accent-linux-border: rgba(244, 114, 182, 0.38);
+  --accent-linux-glow: rgba(244, 114, 182, 0.28);
+
+  --neu-light: rgba(244, 114, 182, 0.08);
+  --neu-light-strong: rgba(244, 114, 182, 0.14);
+  --neu-dark: rgba(10, 5, 11, 0.64);
+  --neu-dark-strong: rgba(6, 3, 7, 0.78);
+}
+
+/* --- Theme 7: Solar Gold --- */
+[data-rishi-theme="solar-gold"] {
+  --bg-canvas: #202329;
+  --bg-secondary: #272a31;
+  --bg-surface: #30343d;
+  --bg-elevated: #3f444f;
+  --bg-inset: #14161a;
+  --bg-deep: #0c0d10;
+  --bg-overlay: rgba(16, 17, 21, 0.82);
+  --bg-panel: rgba(48, 52, 61, 0.88);
+
+  --glass-bg: rgba(48, 52, 61, 0.78);
+  --glass-bg-strong: rgba(38, 41, 48, 0.88);
+  --glass-bg-subtle: rgba(60, 65, 76, 0.56);
+  --glass-bg-inactive: rgba(38, 41, 48, 0.80);
+  --glass-border: rgba(250, 204, 21, 0.22);
+  --glass-border-strong: rgba(250, 204, 21, 0.42);
+
+  --os-desktop-bg: #202329;
+  --os-window-bg: rgba(41, 44, 52, 0.88);
+  --os-window-inactive-bg: rgba(34, 37, 43, 0.82);
+  --os-titlebar-bg: rgba(56, 61, 71, 0.92);
+  --os-titlebar-inactive-bg: rgba(41, 44, 52, 0.85);
+  --os-dock-bg: rgba(48, 52, 61, 0.65);
+  --os-panel-bg: rgba(38, 41, 48, 0.70);
+
+  --border: rgba(250, 204, 21, 0.18);
+  --border-subtle: rgba(207, 190, 151, 0.10);
+  --border-strong: rgba(250, 204, 21, 0.38);
+
+  --text-primary: #fff8db;
+  --text-secondary: #cfbe97;
+  --text-muted: #a29370;
+
+  --accent: #facc15;
+  --accent-hover: #fde047;
+  --accent-soft: rgba(250, 204, 21, 0.14);
+  --accent-ink: #17191e;
+  --accent-linux: #facc15;
+  --accent-secondary: #fde047;
+  --accent-gradient: linear-gradient(135deg, #fde047 0%, #ca8a04 100%);
+  --accent-linux-soft: rgba(250, 204, 21, 0.14);
+  --accent-linux-border: rgba(250, 204, 21, 0.38);
+  --accent-linux-glow: rgba(250, 204, 21, 0.28);
+
+  --neu-light: rgba(250, 204, 21, 0.08);
+  --neu-light-strong: rgba(250, 204, 21, 0.14);
+  --neu-dark: rgba(8, 9, 11, 0.64);
+  --neu-dark-strong: rgba(5, 6, 7, 0.78);
+}
+
+/* --- Theme 8: Monochrome --- */
+[data-rishi-theme="monochrome"] {
+  --bg-canvas: #17191d;
+  --bg-secondary: #202327;
+  --bg-surface: #292d33;
+  --bg-elevated: #373c44;
+  --bg-inset: #0f1013;
+  --bg-deep: #090a0b;
+  --bg-overlay: rgba(12, 13, 15, 0.82);
+  --bg-panel: rgba(41, 45, 51, 0.88);
+
+  --glass-bg: rgba(41, 45, 51, 0.78);
+  --glass-bg-strong: rgba(33, 36, 41, 0.88);
+  --glass-bg-subtle: rgba(52, 57, 65, 0.56);
+  --glass-bg-inactive: rgba(33, 36, 41, 0.80);
+  --glass-border: rgba(229, 231, 235, 0.22);
+  --glass-border-strong: rgba(229, 231, 235, 0.42);
+
+  --os-desktop-bg: #17191d;
+  --os-window-bg: rgba(35, 38, 43, 0.88);
+  --os-window-inactive-bg: rgba(28, 31, 35, 0.82);
+  --os-titlebar-bg: rgba(48, 53, 60, 0.92);
+  --os-titlebar-inactive-bg: rgba(35, 38, 43, 0.85);
+  --os-dock-bg: rgba(41, 45, 51, 0.65);
+  --os-panel-bg: rgba(33, 36, 41, 0.70);
+
+  --border: rgba(229, 231, 235, 0.18);
+  --border-subtle: rgba(176, 180, 188, 0.10);
+  --border-strong: rgba(229, 231, 235, 0.38);
+
+  --text-primary: #ffffff;
+  --text-secondary: #b0b4bc;
+  --text-muted: #838790;
+
+  --accent: #e5e7eb;
+  --accent-hover: #f3f4f6;
+  --accent-soft: rgba(229, 231, 235, 0.14);
+  --accent-ink: #111317;
+  --accent-linux: #e5e7eb;
+  --accent-secondary: #f3f4f6;
+  --accent-gradient: linear-gradient(135deg, #f3f4f6 0%, #9ca3af 100%);
+  --accent-linux-soft: rgba(229, 231, 235, 0.14);
+  --accent-linux-border: rgba(229, 231, 235, 0.38);
+  --accent-linux-glow: rgba(229, 231, 235, 0.28);
+
+  --neu-light: rgba(229, 231, 235, 0.08);
+  --neu-light-strong: rgba(229, 231, 235, 0.14);
+  --neu-dark: rgba(6, 7, 8, 0.64);
+  --neu-dark-strong: rgba(4, 4, 5, 0.78);
+}
+

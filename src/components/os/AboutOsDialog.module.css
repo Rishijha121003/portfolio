@@ -112,6 +112,58 @@
   color: var(--text-primary);
 }
 
+/* Sub-Tab Navigation Bar within Appearance */
+.subTabBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-inset);
+  border: var(--border-thin) solid var(--border-subtle);
+  margin-bottom: var(--space-2);
+}
+
+.subTabBtn {
+  height: 30px;
+  padding-inline: 14px;
+  border-radius: var(--radius-xs);
+  border: var(--border-thin) solid transparent;
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.subTabBtn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+}
+
+.subTabBtnActive {
+  background-color: var(--bg-surface);
+  border-color: var(--accent-linux-border);
+  box-shadow: var(--neu-shadow-raised-xs);
+  color: var(--accent-linux);
+  font-weight: 600;
+}
+
+.subTabBadge {
+  font-size: 0.5625rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background-color: var(--accent-linux-soft);
+  color: var(--accent-linux);
+  border: 1px solid var(--accent-linux-border);
+}
+
 .body {
   flex: 1;
   min-height: 0;
@@ -481,6 +533,153 @@
   color: var(--text-muted);
 }
 
+/* Color Theme Tokens Row */
+.themeTokensBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-inset);
+  border: var(--border-thin) solid var(--border-subtle);
+}
+
+.tokenPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+}
+
+.tokenDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.tokenKey {
+  color: var(--text-muted);
+}
+
+.tokenVal {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Color Theme Cards Grid */
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.themeCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-inset);
+  border: var(--border-thin) solid var(--border-subtle);
+  box-shadow: var(--neu-shadow-raised-xs);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.themeCard:hover {
+  border-color: var(--border);
+  background-color: var(--bg-elevated);
+}
+
+.themeCard:focus-visible {
+  outline: 2px solid var(--accent-linux);
+  outline-offset: 2px;
+}
+
+.themeCardSelected {
+  background-color: var(--bg-elevated);
+  border-color: var(--accent-linux);
+  box-shadow:
+    var(--neu-shadow-raised-xs),
+    0 0 0 1px var(--accent-linux);
+}
+
+.themePaletteStrip {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 48px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.themeSwatchCol {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4px;
+}
+
+.swatchMiniTag {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.themeCardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-inline: 2px;
+  min-width: 0;
+}
+
+.themeCardTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.defaultTag {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background-color: var(--accent-linux-soft);
+  color: var(--accent-linux);
+  border: 1px solid var(--accent-linux-border);
+}
+
+.themeCardTagline {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Action Controls Footer Bar */
 .controlsBar {
   flex-shrink: 0;
@@ -607,7 +806,8 @@
     padding: var(--space-3);
   }
 
-  .galleryGrid {
+  .galleryGrid,
+  .themeGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }

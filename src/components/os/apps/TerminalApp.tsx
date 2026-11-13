@@ -18,6 +18,7 @@ import {
   VIRTUAL_FS,
   VIRTUAL_ROOT,
 } from '@/data/rishiOs';
+import { getThemeConfig, OS_THEMES } from '@/data/rishiThemes';
 import styles from './TerminalApp.module.css';
 
 interface TerminalLine {
@@ -270,6 +271,8 @@ export function TerminalApp() {
     isMobile,
     wallpaperId,
     setWallpaperId,
+    themeId,
+    setThemeId,
   } = useDesktop();
   const [cwd, setCwd] = useState<string>(VIRTUAL_ROOT);
   const [inputValue, setInputValue] = useState('');
@@ -363,7 +366,8 @@ export function TerminalApp() {
           { text: '  neofetch             Display workspace info and particle skeleton' },
           { text: '  cmatrix / matrix     Stream cyber digital matrix rain' },
           { text: '  sudo <command>       Execute with elevated developer privileges' },
-          { text: '  theme [name]         Switch desktop wallpaper on the fly' },
+          { text: '  theme [name]         Switch RISHI OS color theme (8 presets)' },
+          { text: '  wallpaper [name]     Switch desktop wallpaper on the fly' },
           { text: '  resume               Display Rishi Jha software developer CV' },
           { text: '  help                 Show available commands and shortcuts' },
           { text: '  whoami               Display current virtual shell user' },
@@ -409,35 +413,83 @@ export function TerminalApp() {
         break;
       }
 
-      case 'theme':
-      case 'wallpaper': {
+      case 'theme': {
         const themeArg = (args[0] || '').toLowerCase();
         if (!themeArg) {
+          const currentTheme = getThemeConfig(themeId);
+          responseLines = [
+            { text: `Current color theme: ${currentTheme.name} (${currentTheme.colors.accent} / ${currentTheme.colors.surface})`, tone: 'accent' },
+            { text: 'Available 8 preset themes:', tone: 'normal' },
+            ...OS_THEMES.map((t) => ({
+              text: `  ${t.id.padEnd(18)} ${t.name.padEnd(16)} [${t.colors.accent}] ${t.tagline}`,
+            })),
+            { text: 'Usage: theme <name> (e.g. theme emerald-forest, theme royal-purple)', tone: 'accent' },
+          ];
+        } else {
+          const matchTheme = OS_THEMES.find(
+            (t) =>
+              t.id.toLowerCase() === themeArg ||
+              t.name.toLowerCase().includes(themeArg) ||
+              t.shortName.toLowerCase() === themeArg
+          );
+          if (matchTheme) {
+            setThemeId(matchTheme.id, true);
+            responseLines = [
+              { text: `RISHI OS color theme switched to "${matchTheme.name}".`, tone: 'accent' },
+              { text: `Palette: BG: ${matchTheme.colors.background} | Surface: ${matchTheme.colors.surface} | Accent: ${matchTheme.colors.accent}`, tone: 'normal' },
+            ];
+          } else {
+            // Check if user was looking for a wallpaper
+            const matchWallpaper = OS_WALLPAPERS.find(
+              (w) =>
+                w.id.toLowerCase() === themeArg ||
+                w.name.toLowerCase().includes(themeArg)
+            );
+            if (matchWallpaper) {
+              setWallpaperId(matchWallpaper.id, true);
+              responseLines = [
+                { text: `Desktop wallpaper switched to "${matchWallpaper.name}".`, tone: 'accent' },
+                { text: 'Tip: Use "wallpaper <name>" for wallpapers and "theme <name>" for color themes.', tone: 'normal' },
+              ];
+            } else {
+              responseLines = [
+                { text: `Unknown color theme "${args[0]}".`, tone: 'error' },
+                { text: 'Run "theme" to view available color themes, or "wallpaper" for wallpapers.', tone: 'normal' },
+              ];
+            }
+          }
+        }
+        break;
+      }
+
+      case 'wallpaper': {
+        const wpArg = (args[0] || '').toLowerCase();
+        if (!wpArg) {
           responseLines = [
             { text: `Current wallpaper: ${getWallpaperConfig(wallpaperId).name}`, tone: 'accent' },
             { text: 'Available wallpapers:', tone: 'normal' },
             ...OS_WALLPAPERS.map((w) => ({
               text: `  ${w.id.padEnd(20)} ${w.name} (${w.category})`,
             })),
-            { text: 'Usage: theme <name> (e.g. theme cyber-grid, theme deep-space)', tone: 'accent' },
+            { text: 'Usage: wallpaper <name> (e.g. wallpaper cyber-grid, wallpaper deep-space)', tone: 'accent' },
           ];
         } else {
           const match = OS_WALLPAPERS.find(
             (w) =>
-              w.id.toLowerCase() === themeArg ||
-              w.name.toLowerCase().includes(themeArg) ||
-              w.shortName.toLowerCase() === themeArg
+              w.id.toLowerCase() === wpArg ||
+              w.name.toLowerCase().includes(wpArg) ||
+              w.shortName.toLowerCase() === wpArg
           );
           if (match) {
-            setWallpaperId(match.id);
+            setWallpaperId(match.id, true);
             responseLines = [
               { text: `Desktop wallpaper switched to "${match.name}".`, tone: 'accent' },
-              { text: `Theme: ${match.category} — ${match.description}`, tone: 'normal' },
+              { text: `Category: ${match.category} — ${match.description}`, tone: 'normal' },
             ];
           } else {
             responseLines = [
-              { text: `Unknown wallpaper theme "${args[0]}".`, tone: 'error' },
-              { text: 'Run "theme" to view available wallpapers.', tone: 'normal' },
+              { text: `Unknown wallpaper "${args[0]}".`, tone: 'error' },
+              { text: 'Run "wallpaper" to view available wallpapers.', tone: 'normal' },
             ];
           }
         }
@@ -450,8 +502,8 @@ export function TerminalApp() {
           { text: '  RISHI JHA — SOFTWARE DEVELOPER CURRICULUM VITAE', tone: 'accent' },
           { text: '=======================================================', tone: 'accent' },
           { text: 'Education:', tone: 'accent' },
-          { text: '  • B.Tech in Computer Science & Engineering (2022–2025) — DCE Gurugram' },
-          { text: '  • Diploma in Mechanical Engineering (2018–2021) — G.B. Pant Institute' },
+          { text: '  • B.Tech in Computer Science & Engineering (2022–2025) — Sandip University' },
+          { text: '  • Diploma in Computer Science & Engineering (2018–2021) — Government Polytechnic Darbhanga' },
           { text: 'Core Stack:', tone: 'accent' },
           { text: '  • Python, FastAPI, Next.js, React, TypeScript, PostgreSQL, Docker' },
           { text: 'Featured Work:', tone: 'accent' },
@@ -877,7 +929,9 @@ export function TerminalApp() {
                   {NEOFETCH_SPECS.map((row) => (
                     <div key={row.label} className={styles.neofetchRow}>
                       <dt className={styles.specKey}>{`${row.label}:`}</dt>
-                      <dd className={styles.specVal}>{row.value}</dd>
+                      <dd className={styles.specVal}>
+                        {row.label === 'Theme' ? getThemeConfig(themeId).name : row.value}
+                      </dd>
                     </div>
                   ))}
                 </dl>
