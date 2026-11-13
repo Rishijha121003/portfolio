@@ -301,7 +301,7 @@ export function TopSystemPanel() {
             </button>
           ) : null}
 
-          <time className={styles.clock} dateTime={clock.compactDateTime}>
+          <time className={styles.clock} dateTime={clock.compactDateTime} suppressHydrationWarning>
             {clock.compactDateTime}
           </time>
 

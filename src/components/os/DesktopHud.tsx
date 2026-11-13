@@ -77,8 +77,12 @@ export function DesktopHud() {
       <aside className={styles.hudRoot} aria-label="Desktop system dashboard">
         {/* Large Elegant Clock & Date */}
         <div className={styles.timeBlock} aria-hidden="true">
-          <span className={styles.timeDisplay}>{time24}</span>
-          <span className={styles.dateDisplay}>{fullDate} · NEW DELHI, IN</span>
+          <time className={styles.timeDisplay} suppressHydrationWarning>
+            {time24}
+          </time>
+          <span className={styles.dateDisplay} suppressHydrationWarning>
+            {fullDate}
+          </span>
         </div>
 
         {/* Developer Telemetry Card */}
@@ -330,3 +334,4 @@ export function DesktopHud() {
     </>
   );
 }
+

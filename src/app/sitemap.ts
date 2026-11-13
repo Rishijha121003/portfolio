@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { PROJECT_RECORDS } from '@/data/portfolio';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.rishijhadev.me';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [

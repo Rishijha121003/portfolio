@@ -23,20 +23,49 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+const PRODUCTION_SITE_URL = 'https://www.rishijhadev.me';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? PRODUCTION_SITE_URL;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
-  ),
+  metadataBase: new URL(SITE_URL),
   icons: {
-    icon: '/icon.svg',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
     shortcut: '/icon.svg',
+    apple: '/icon.svg',
   },
   title: {
-    default: 'RISHI OS — Rishi Jha',
+    default: 'Rishi Jha — Portfolio & RISHI OS Workspace',
     template: '%s | RISHI OS',
   },
   description:
-    'RISHI OS — Linux-inspired developer workspace and portfolio of Rishi Jha.',
+    'Interactive Unix-inspired developer workspace and portfolio of Rishi Jha — featuring DormiQ, LifeOS, AssignFlow, and full-stack systems engineering.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: SITE_URL,
+    siteName: 'Rishi Jha Portfolio',
+    title: 'Rishi Jha — Portfolio & RISHI OS Workspace',
+    description:
+      'Interactive Unix-inspired developer workspace and portfolio of Rishi Jha — featuring DormiQ, LifeOS, AssignFlow, and full-stack systems engineering.',
+    images: [
+      {
+        url: '/images/hero-workspace.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Rishi Jha — Developer Workspace & Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rishi Jha — Portfolio & RISHI OS Workspace',
+    description:
+      'Interactive Unix-inspired developer workspace and portfolio of Rishi Jha — featuring DormiQ, LifeOS, AssignFlow, and full-stack systems engineering.',
+    images: ['/images/hero-workspace.jpg'],
+  },
 };
 
 export default function RootLayout({

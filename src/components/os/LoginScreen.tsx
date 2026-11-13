@@ -57,8 +57,8 @@ export function LoginScreen() {
         </div>
 
         <div className={styles.barRight}>
-          <span className={styles.keyHint}>Enter to log in</span>
-          <time className={styles.barClock} dateTime={clock.compactDateTime}>
+          <span className={styles.keyHint}>Press Enter to log in</span>
+          <time className={styles.barClock} dateTime={clock.compactDateTime} suppressHydrationWarning>
             {clock.compactDateTime}
           </time>
         </div>
@@ -67,10 +67,10 @@ export function LoginScreen() {
       {/* Main Greeter Stage */}
       <main id="main-content" className={styles.centerStage}>
         <div className={styles.heroClockBlock}>
-          <time className={styles.clockTime} dateTime={clock.time24}>
+          <time className={styles.clockTime} dateTime={clock.time24} suppressHydrationWarning>
             {clock.time24}
           </time>
-          <span className={styles.clockDate}>{clock.fullDate}</span>
+          <span className={styles.clockDate} suppressHydrationWarning>{clock.fullDate}</span>
         </div>
 
         <section className={styles.card} aria-labelledby="greeter-username">
@@ -97,7 +97,7 @@ export function LoginScreen() {
           </div>
 
           <div className={styles.sessionMetaPill}>
-            Passwordless Guest Session · Ready
+            Guest Session · No password required
           </div>
 
           {pathname !== '/' ? (
@@ -160,8 +160,8 @@ export function LoginScreen() {
 
       {/* Subtle System Session Footer */}
       <footer className={styles.bottomBar}>
-        <span>SESSION // RISHI OS DESKTOP</span>
-        <span>SIMULATED PORTFOLIO LOGIN · NO CREDENTIALS STORED</span>
+        <span>RISHI OS v2.4 // WORKSPACE</span>
+        <span>Public Developer Session</span>
       </footer>
     </div>
   );
