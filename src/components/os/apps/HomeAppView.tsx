@@ -22,13 +22,16 @@ export function HomeAppView() {
         {/* Right Welcome Copy & Pill CTAs */}
         <div className={styles.heroDetails}>
           <div className={styles.copyBlock}>
+            <div className={styles.systemKicker}>
+              <span className={styles.kickerDot} aria-hidden="true" />
+              <span>SESSION ACTIVE // RISHI OS v2.4</span>
+            </div>
             <h2 id="os-home-hero-name" className={styles.heading}>
-              <span>Hello, Rishi!</span>{' '}
-              <span aria-hidden="true">👋</span>
+              Rishi Jha
             </h2>
-            <p className={styles.subheading}>Welcome to RISHI OS</p>
+            <p className={styles.subheading}>Software Developer · Full-Stack &amp; Systems</p>
             <p className={styles.description}>
-              A developer&apos;s workspace built to explore ideas, build projects, and grow together.
+              Interactive developer workstation engineered to explore architectural case studies, confirmed technical skills, and production applications.
             </p>
           </div>
 
