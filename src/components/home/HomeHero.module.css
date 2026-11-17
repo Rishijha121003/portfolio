@@ -370,7 +370,91 @@
 .cardHeader {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cardDossierTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.05em;
+}
+
+.dossierDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.cardBadgeSub {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.emblemContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0;
+  border-radius: 14px;
+  background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.4) 70%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.emblemGlow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.emblemImage {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 10px 24px rgba(56, 189, 248, 0.25));
+  transition: transform 300ms ease;
+}
+
+.spotlightCard:hover .emblemImage {
+  transform: scale(1.04);
+}
+
+.dossierIdentity {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+}
+
+.dossierName {
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+}
+
+.dossierRole {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.8125rem;
+  color: #38bdf8;
+  letter-spacing: 0.02em;
 }
 
 .hackathonBadge {

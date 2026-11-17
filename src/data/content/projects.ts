@@ -33,9 +33,9 @@ export const PROJECT_RECORDS: readonly ProjectRecord[] = [
       'Manual hostel allotment registers and unorganized paper complaint logs make tracking bed vacancies and resolving maintenance requests slow across student hostels.',
     category: 'Hostel Management System',
     filterCategories: ['Full Stack'],
-    projectType: 'Team Project',
+    projectType: 'Team Project (5 Members)',
     status: 'Core Implemented',
-    statusTag: 'Featured Team Project · Core Implemented',
+    statusTag: 'Team Project · Core Implemented',
     technologies: [
       'Python',
       'Flask',
@@ -74,7 +74,7 @@ export const PROJECT_RECORDS: readonly ProjectRecord[] = [
       size: 5,
     },
     image: VERIFIED_IMAGES.dormiqPreview,
-    featured: true,
+    featured: false,
   },
   {
     id: 'assignflow',
@@ -92,7 +92,7 @@ export const PROJECT_RECORDS: readonly ProjectRecord[] = [
       'Managing college coursework across scattered folders and messaging apps leads to lost submissions, inconsistent grading states, and unclear student deadlines.',
     category: 'Assignment Lifecycle Management',
     filterCategories: ['Full Stack', 'Backend', 'Personal Projects'],
-    projectType: 'Personal Project (In Development)',
+    projectType: 'Personal Project',
     status: 'In Progress',
     statusTag: 'In Progress · Local Development',
     technologies: [
@@ -154,7 +154,7 @@ export const PROJECT_RECORDS: readonly ProjectRecord[] = [
       'Disconnected to-do lists rarely help decide what fits realistically into a given day alongside longer-term goals and routines.',
     category: 'Personal Productivity System',
     filterCategories: ['Personal Projects'],
-    projectType: 'Personal Project (In Development)',
+    projectType: 'Personal Project',
     status: 'In Progress',
     statusTag: 'In Progress · V0.1–V0.2 Complete',
     technologies: [
@@ -253,7 +253,7 @@ export const PROJECT_RECORDS: readonly ProjectRecord[] = [
       'Tracking daily cash, UPI, card, and bank transactions across separate apps makes reviewing monthly cash flow and category totals error-prone.',
     category: 'Personal Finance Management',
     filterCategories: ['Full Stack', 'Backend', 'Personal Projects'],
-    projectType: 'Personal Project (Local Development)',
+    projectType: 'Personal Project',
     status: 'In Progress',
     statusTag: 'In Progress · Local Development',
     technologies: [

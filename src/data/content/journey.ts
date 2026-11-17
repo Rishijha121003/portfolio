@@ -46,13 +46,13 @@ export const JOURNEY_ENTRIES: readonly JourneyRecord[] = [
   },
   {
     index: '04',
-    stageLabel: 'ACHIEVEMENT',
+    stageLabel: 'TEAM PROJECT',
     period: 'CRT Hackathon',
-    status: '🏆 Top 3 Winner',
+    status: 'Team Achievement',
     title: 'Cheque Mate: Third Place',
     subtitle: 'Team Impact Crew | Sandip University',
     isFeatured: true,
-    highlightBadge: 'THIRD PLACE · TOP 3 FINALIST',
+    highlightBadge: 'THIRD PLACE (TEAM COLLABORATION)',
     iconType: 'trophy',
     detail:
       'As part of the three-month Campus Recruitment Training (CRT) programme, students worked on developing projects that were later presented in a project pitching competition called Cheque Mate. I participated as a member of the five-person team Impact Crew. We presented DormiQ and secured Third Place (Top 3) among approximately 12–14 participating teams.',
@@ -63,7 +63,7 @@ export const JOURNEY_ENTRIES: readonly JourneyRecord[] = [
       { label: 'Project', value: 'DormiQ' },
       { label: 'Team size', value: '5 members' },
     ],
-    tags: ['FastAPI Backend', 'DormiQ', 'National Pitching', 'Team Impact Crew'],
+    tags: ['Flask Backend', 'DormiQ', 'Team Impact Crew', 'Sandip University'],
   },
   {
     index: '05',

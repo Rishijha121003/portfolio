@@ -9,8 +9,8 @@ import styles from './HomeHero.module.css';
 
 /**
  * Modern Developer Hero — Rishi Jha // Full Stack & Systems Developer
- * Designed for elite visual impact, clean typography, live availability,
- * and high-converting featured project spotlight.
+ * Highlights individual engineering strengths, FastAPI & React 19 stack,
+ * and clean systems architecture.
  */
 export function HomeHero() {
   const router = useRouter();
@@ -62,7 +62,7 @@ export function HomeHero() {
           </div>
         </header>
 
-        {/* Hero Body Split: Left Identity + Right Interactive Spotlight Card */}
+        {/* Hero Body Split: Left Identity + Right Interactive Developer Dossier Card */}
         <div className={styles.heroBody}>
           <div className={styles.identityCol}>
             {/* Role Category Badge */}
@@ -84,8 +84,8 @@ export function HomeHero() {
               <p className={styles.statementText}>
                 Hi, I&apos;m <strong>Rishi Jha</strong> — a Computer Science student at{' '}
                 <strong>Sandip University</strong> specializing in <strong>FastAPI</strong>,{' '}
-                <strong>React 19</strong>, and <strong>PostgreSQL</strong>. Passionate about
-                high-throughput API design, clean systems architecture, and fluid digital interfaces.
+                <strong>React 19</strong>, and <strong>PostgreSQL</strong>. Focused on clean
+                architecture, high-throughput APIs, and practical software applications.
               </p>
 
               <div className={styles.taglineRow} aria-label="Core technologies">
@@ -128,57 +128,49 @@ export function HomeHero() {
             </div>
           </div>
 
-          {/* Right Supporting Visual: Featured Work Spotlight Card */}
+          {/* Right Supporting Visual: Developer Engineering Dossier Card */}
           <div className={styles.visualCol}>
             <div className={styles.spotlightCard}>
-              {/* Card Top Pill & Header */}
+              {/* Card Top Header */}
               <div className={styles.cardHeader}>
-                <div className={styles.hackathonBadge}>
-                  <span className={styles.trophyIcon} aria-hidden="true">
-                    🏆
-                  </span>
-                  <span>Cheque Mate Hackathon · Top 3 Finalist</span>
+                <div className={styles.cardDossierTag}>
+                  <span className={styles.dossierDot} aria-hidden="true" />
+                  <span>DEVELOPER DOSSIER</span>
                 </div>
+                <span className={styles.cardBadgeSub}>Sandip University</span>
               </div>
 
-              {/* Central Featured Showcase: DormiQ */}
-              <div className={styles.spotlightShowcase}>
-                <div className={styles.projectIconBadge}>
-                  <Image
-                    src="/images/rj-standalone.svg"
-                    alt="DormiQ Emblem"
-                    width={28}
-                    height={28}
-                    className={styles.projectLogo}
-                  />
-                </div>
-                <div className={styles.projectInfo}>
-                  <div className={styles.projectEyebrow}>FEATURED CASE STUDY</div>
-                  <h3 className={styles.projectTitle}>DormiQ</h3>
-                  <p className={styles.projectSubtitle}>
-                    Smart Hostel &amp; Housing Management Ecosystem
-                  </p>
-                </div>
+              {/* Central Emblem Showcase */}
+              <div className={styles.emblemContainer}>
+                <div className={styles.emblemGlow} aria-hidden="true" />
+                <Image
+                  src="/images/rj-primary.svg"
+                  alt="RJ Geometric Emblem"
+                  width={140}
+                  height={140}
+                  priority
+                  className={styles.emblemImage}
+                />
               </div>
 
-              <p className={styles.projectSummary}>
-                Engineered robust student hostel allocation workflows, real-time queues, and role-based
-                access control with FastAPI and PostgreSQL backend services.
-              </p>
+              <div className={styles.dossierIdentity}>
+                <span className={styles.dossierName}>RISHI JHA</span>
+                <span className={styles.dossierRole}>Full Stack &amp; Backend Developer</span>
+              </div>
 
               {/* Technical Specifications Grid */}
               <div className={styles.specsGrid}>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>EDUCATION</span>
-                  <span className={styles.specValue}>B.Tech CSE · Sandip Univ</span>
+                  <span className={styles.specValue}>B.Tech CSE (4th Year)</span>
                 </div>
                 <div className={styles.specItem}>
-                  <span className={styles.specLabel}>RECOGNITION</span>
-                  <span className={styles.specValueHighlight}>Top 3 National Finalist</span>
+                  <span className={styles.specLabel}>CORE STACK</span>
+                  <span className={styles.specValueHighlight}>FastAPI &amp; PostgreSQL</span>
                 </div>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>LOCATION</span>
-                  <span className={styles.specValue}>Bihar, India</span>
+                  <span className={styles.specValue}>Darbhanga, Bihar</span>
                 </div>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>STATUS</span>
@@ -187,8 +179,8 @@ export function HomeHero() {
               </div>
 
               <div className={styles.spotlightFooter}>
-                <Link href="/projects/dormiq" className={styles.caseStudyLink}>
-                  <span>Read DormiQ Case Study</span>
+                <Link href="/projects" className={styles.caseStudyLink}>
+                  <span>Explore Projects Directory</span>
                   <span aria-hidden="true">→</span>
                 </Link>
               </div>
@@ -199,14 +191,14 @@ export function HomeHero() {
         {/* Bottom Metrics Bar */}
         <footer className={styles.bottomStatsBar} aria-label="Key Highlights">
           <div className={styles.metricItem}>
-            <span className={styles.metricValue}>Top 3</span>
-            <span className={styles.metricLabel}>Cheque Mate Hackathon</span>
+            <span className={styles.metricValue}>FastAPI &amp; APIs</span>
+            <span className={styles.metricLabel}>High-throughput Backends</span>
           </div>
           <div className={styles.metricDivider} aria-hidden="true" />
 
           <div className={styles.metricItem}>
-            <span className={styles.metricValue}>FastAPI</span>
-            <span className={styles.metricLabel}>High-throughput Backends</span>
+            <span className={styles.metricValue}>React 19 &amp; Next.js</span>
+            <span className={styles.metricLabel}>Modern Web Applications</span>
           </div>
           <div className={styles.metricDivider} aria-hidden="true" />
 

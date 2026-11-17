@@ -163,9 +163,9 @@ export function JourneyLedger({ embedded = false }: JourneyLedgerProps) {
             </span>
             <span className={styles.highlightPill}>
               <span className={styles.pillTrophy} aria-hidden="true">
-                🏆
+                👥
               </span>
-              <span>Cheque Mate Hackathon Top 3</span>
+              <span>Cheque Mate (Team 3rd Place)</span>
             </span>
             <span className={styles.highlightPill}>
               <span className={styles.pillDotCyan} aria-hidden="true" />

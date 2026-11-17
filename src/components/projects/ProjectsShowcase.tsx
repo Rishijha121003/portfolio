@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import {
@@ -31,6 +30,33 @@ const CATEGORY_SHORT_LABELS: Record<ProjectFilterCategory, string> = {
 
 function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
   switch (project.id) {
+    case 'dormiq':
+      return (
+        <div className={styles.mockupContainer}>
+          <div className={styles.mockupBrowserBar}>
+            <div className={styles.browserDots}>
+              <span className={styles.dotRed} />
+              <span className={styles.dotYellow} />
+              <span className={styles.dotGreen} />
+            </div>
+            <span className={styles.browserUrl}>dormiq.app/hostel-allotment</span>
+          </div>
+          <div className={styles.mockupContent}>
+            <div className={styles.pipelineRow}>
+              <span className={styles.pipelineStepActive}>Student Portal</span>
+              <span className={styles.pipelineArrow}>→</span>
+              <span className={styles.pipelineStep}>Bed Allocation</span>
+              <span className={styles.pipelineArrow}>→</span>
+              <span className={styles.pipelineStep}>Warden Queue</span>
+            </div>
+            <div className={styles.mockupMetaRow}>
+              <span className={styles.mockupTag}>Python Flask</span>
+              <span className={styles.mockupTag}>Team Impact Crew (5)</span>
+              <span className={styles.mockupTag}>Cheque Mate 3rd</span>
+            </div>
+          </div>
+        </div>
+      );
     case 'assignflow':
       return (
         <div className={styles.mockupContainer}>
@@ -230,9 +256,6 @@ export function ProjectsShowcase({
     });
   }, [activeCategory, normalizedQuery]);
 
-  const featuredDormiq = filteredProjects.find((p) => p.featured);
-  const gridProjects = filteredProjects.filter((p) => !p.featured);
-
   const countForCategory = (cat: ProjectFilterCategory): number => {
     if (cat === 'All') return PROJECT_RECORDS.length;
     return PROJECT_RECORDS.filter((p) => p.filterCategories.includes(cat)).length;
@@ -290,160 +313,10 @@ export function ProjectsShowcase({
         </div>
       ) : null}
 
-      {/* Flagship Hero Card: DormiQ */}
-      {featuredDormiq ? (
-        <article
-          className={styles.flagshipHeroCard}
-          aria-labelledby="featured-dormiq-heading"
-        >
-          {/* Top Award Ribbon */}
-          <div className={styles.flagshipRibbon}>
-            <div className={styles.ribbonLeft}>
-              <span className={styles.ribbonTrophy} aria-hidden="true">
-                🏆
-              </span>
-              <span className={styles.ribbonText}>
-                Cheque Mate National Hackathon · Third Place Finalist
-              </span>
-            </div>
-            <div className={styles.ribbonRight}>
-              <span className={styles.teamBadgePill}>
-                Team Impact Crew (5 Members)
-              </span>
-            </div>
-          </div>
-
-          <div className={styles.flagshipBody}>
-            {/* Left Column: Information & Actions */}
-            <div className={styles.flagshipLeft}>
-              <div className={styles.flagshipHeaderGroup}>
-                <div className={styles.flagshipTagsRow}>
-                  <span className={styles.featuredTagPill}>★ Flagship Case Study</span>
-                  <span className={styles.categoryTagPill}>{featuredDormiq.category}</span>
-                  {featuredDormiq.previousName ? (
-                    <span className={styles.prevNamePill}>
-                      Prev: {featuredDormiq.previousName}
-                    </span>
-                  ) : null}
-                </div>
-
-                <CardHeadingTag
-                  id="featured-dormiq-heading"
-                  className={styles.flagshipTitle}
-                >
-                  {featuredDormiq.title}
-                </CardHeadingTag>
-
-                <p className={styles.flagshipTagline}>
-                  Smart Hostel &amp; Housing Management Ecosystem
-                </p>
-              </div>
-
-              <p className={styles.flagshipSynopsis}>
-                {featuredDormiq.shortDescription}
-              </p>
-
-              {/* Core Feature Metric Chips */}
-              <div className={styles.metricChipsRow}>
-                <div className={styles.metricChip}>
-                  <span className={styles.metricChipDot} />
-                  <span>3 Role Dashboards (Student, Warden, Admin)</span>
-                </div>
-                <div className={styles.metricChip}>
-                  <span className={styles.metricChipDot} />
-                  <span>Automated Bed Allotment &amp; Vacancy</span>
-                </div>
-                <div className={styles.metricChip}>
-                  <span className={styles.metricChipDot} />
-                  <span>Real-Time Complaint Tracking Queue</span>
-                </div>
-              </div>
-
-              {/* Curated Tech Stack */}
-              <ul className={styles.flagshipTechList} aria-label="DormiQ technology stack">
-                {featuredDormiq.technologies.slice(0, 5).map((tech) => (
-                  <li key={tech} className={styles.techPill}>
-                    {tech}
-                  </li>
-                ))}
-                {featuredDormiq.technologies.length > 5 ? (
-                  <li className={styles.techPillMuted}>
-                    {`+${featuredDormiq.technologies.length - 5}`}
-                  </li>
-                ) : null}
-              </ul>
-
-              {/* CTA Actions */}
-              <div className={styles.flagshipActions}>
-                <ProjectActionButton
-                  project={featuredDormiq}
-                  label="Explore Full Case Study"
-                  onOpenProject={onOpenProject}
-                  className={styles.flagshipPrimaryBtn}
-                />
-
-                {featuredDormiq.githubUrl ? (
-                  <a
-                    href={featuredDormiq.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.flagshipSecondaryBtn}
-                  >
-                    <span>GitHub</span>
-                    <span aria-hidden="true">↗</span>
-                  </a>
-                ) : null}
-
-                {featuredDormiq.liveUrl ? (
-                  <a
-                    href={featuredDormiq.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.flagshipSecondaryBtn}
-                  >
-                    <span>Live Demo</span>
-                    <span aria-hidden="true">↗</span>
-                  </a>
-                ) : null}
-              </div>
-            </div>
-
-            {/* Right Column: High-Res Architecture Visual & Floating Badges */}
-            {featuredDormiq.image ? (
-              <div className={styles.flagshipRight}>
-                <div className={styles.mediaFrame}>
-                  <Image
-                    src={featuredDormiq.image.src}
-                    alt={featuredDormiq.image.alt}
-                    width={featuredDormiq.image.width}
-                    height={featuredDormiq.image.height}
-                    sizes="(max-width: 900px) 100vw, 420px"
-                    priority
-                    className={styles.mediaImage}
-                  />
-                  <div className={styles.mediaOverlayScrim} aria-hidden="true" />
-
-                  {/* Floating Stat Card inside visual */}
-                  <div className={styles.floatingMediaCard}>
-                    <div className={styles.floatCardRow}>
-                      <span className={styles.floatTrophy}>🏆</span>
-                      <div className={styles.floatText}>
-                        <span className={styles.floatHeading}>Third Place</span>
-                        <span className={styles.floatSub}>Among 12–14 Teams</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </article>
-      ) : null}
-
-      {/* Remaining Projects Grid */}
-      {gridProjects.length > 0 ? (
+      {/* Unified Bento Projects Grid */}
+      {filteredProjects.length > 0 ? (
         <div className={styles.cardsGrid}>
-          {gridProjects.map((project) => (
+          {filteredProjects.map((project) => (
             <article
               key={project.id}
               className={styles.projectBentoCard}
@@ -454,9 +327,22 @@ export function ProjectsShowcase({
 
               <div className={styles.cardMain}>
                 <div className={styles.cardHeader}>
-                  <span className={styles.cardCategoryChip}>
-                    {project.category}
-                  </span>
+                  <div className={styles.cardHeaderLeft}>
+                    <span className={styles.cardCategoryChip}>
+                      {project.category}
+                    </span>
+                    {project.projectType ? (
+                      <span
+                        className={
+                          project.projectType.includes('Personal')
+                            ? styles.projectTypePersonal
+                            : styles.projectTypeTeam
+                        }
+                      >
+                        {project.projectType}
+                      </span>
+                    ) : null}
+                  </div>
 
                   <span
                     className={
@@ -471,12 +357,22 @@ export function ProjectsShowcase({
                 </div>
 
                 <div className={styles.cardTitleBlock}>
-                  <CardHeadingTag
-                    id={`project-heading-${project.slug}`}
-                    className={styles.cardTitle}
-                  >
-                    {project.title}
-                  </CardHeadingTag>
+                  <div className={styles.cardTitleRow}>
+                    <CardHeadingTag
+                      id={`project-heading-${project.slug}`}
+                      className={styles.cardTitle}
+                    >
+                      {project.title}
+                    </CardHeadingTag>
+                    {project.slug === 'dormiq' && project.recognition ? (
+                      <span
+                        className={styles.recognitionMiniBadge}
+                        title={project.recognition}
+                      >
+                        🏆 3rd Place (Team)
+                      </span>
+                    ) : null}
+                  </div>
                   {project.origin ? (
                     <p className={styles.cardOrigin}>{project.origin}</p>
                   ) : null}
@@ -509,7 +405,7 @@ export function ProjectsShowcase({
                 <div className={styles.cardFooter}>
                   <ProjectActionButton
                     project={project}
-                    label="View Details"
+                    label={project.slug === 'dormiq' ? 'View Case Study' : 'View Details'}
                     onOpenProject={onOpenProject}
                     className={styles.cardDetailsBtn}
                   />
@@ -519,9 +415,10 @@ export function ProjectsShowcase({
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={styles.externalLink}
+                      className={styles.cardLinkIcon}
+                      aria-label={`${project.title} GitHub repository`}
                     >
-                      <span>GitHub</span>
+                      <span>Code</span>
                       <span aria-hidden="true">↗</span>
                     </a>
                   ) : null}
@@ -531,9 +428,10 @@ export function ProjectsShowcase({
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={styles.externalLink}
+                      className={styles.cardLinkIcon}
+                      aria-label={`${project.title} Live Demo`}
                     >
-                      <span>Live Demo</span>
+                      <span>Demo</span>
                       <span aria-hidden="true">↗</span>
                     </a>
                   ) : null}
@@ -605,38 +503,12 @@ export function ProjectsShowcase({
             </div>
 
             <HeadingTag id="projects-page-heading" className={styles.pageHeading}>
-              Featured Projects
+              Projects &amp; Case Studies
             </HeadingTag>
             <p className={styles.subtitleCopy}>
-              Production web applications, high-performance API backends, and hackathon-winning
-              architectures built with FastAPI, React 19, and PostgreSQL.
+              Personal software projects, backend architectures, and collaborative applications built
+              with FastAPI, React 19, and PostgreSQL.
             </p>
-
-            {/* Quick Metrics Bar */}
-            <div className={styles.headerStatsBar}>
-              <div className={styles.headerStatItem}>
-                <span className={styles.headerStatVal}>6</span>
-                <span className={styles.headerStatLabel}>Verified Builds</span>
-              </div>
-              <div className={styles.headerStatSep} aria-hidden="true" />
-
-              <div className={styles.headerStatItem}>
-                <span className={styles.headerStatValGold}>Top 3</span>
-                <span className={styles.headerStatLabel}>National Finalist</span>
-              </div>
-              <div className={styles.headerStatSep} aria-hidden="true" />
-
-              <div className={styles.headerStatItem}>
-                <span className={styles.headerStatVal}>FastAPI</span>
-                <span className={styles.headerStatLabel}>Backend Core</span>
-              </div>
-              <div className={styles.headerStatSep} aria-hidden="true" />
-
-              <div className={styles.headerStatItem}>
-                <span className={styles.headerStatVal}>PostgreSQL</span>
-                <span className={styles.headerStatLabel}>Relational Models</span>
-              </div>
-            </div>
           </div>
         </Container>
       </section>
