@@ -168,6 +168,10 @@ export interface JourneyRecord {
   isFeatured?: boolean;
   highlightBadge?: string;
   highlightDetails?: readonly JourneyHighlightDetail[];
+  period?: string;
+  status?: string;
+  tags?: readonly string[];
+  iconType?: 'spark' | 'polytechnic' | 'btech' | 'trophy' | 'tech' | 'rocket';
 }
 
 export interface SkillItem {
