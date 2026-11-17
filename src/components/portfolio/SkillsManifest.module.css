@@ -45,12 +45,15 @@
 .pageTitle {
   margin-top: 4px;
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5.4vw, 3.85rem);
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
   font-weight: 800;
-  line-height: 0.94;
-  letter-spacing: -0.01em;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: var(--text-primary);
+  color: #f8fafc;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .embeddedWrap .pageTitle {
@@ -75,19 +78,26 @@
 }
 
 .categoryCard {
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  border: var(--border-thin) solid var(--glass-border);
-  background-color: var(--bg-surface);
-  box-shadow: var(--neu-shadow-raised-sm), var(--glass-highlight);
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(13, 19, 32, 0.75);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  transition: border-color var(--transition-fast);
+  gap: 1rem;
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .categoryCard:hover {
-  border-color: var(--accent-linux-border);
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.5),
+    0 0 24px rgba(56, 189, 248, 0.12);
 }
 
 .categoryHeader {

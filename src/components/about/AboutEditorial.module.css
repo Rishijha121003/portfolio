@@ -65,12 +65,15 @@
 
 .pageHeading {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8.2vw, 6.25rem);
+  font-size: clamp(3rem, 7vw, 5.25rem);
   font-weight: 800;
-  line-height: 0.85;
-  letter-spacing: -0.02em;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: var(--text-primary);
+  color: #f8fafc;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: right;
 }
 
@@ -122,11 +125,11 @@
 
 .sectionHeading {
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 3vw, 2.35rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
 }
 
 .proseGroup {
