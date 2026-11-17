@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   border-bottom: var(--border-thin) solid var(--glass-border);
-  background-color: rgba(17, 24, 39, 0.85);
+  background-color: rgba(17, 24, 39, 0.88);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   box-shadow: 0 4px 20px rgba(3, 7, 16, 0.35);
@@ -27,6 +27,7 @@
   white-space: nowrap;
   transition: color var(--transition-fast);
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand:hover {
@@ -142,6 +143,7 @@
   align-items: center;
   gap: var(--space-3);
   min-width: 0;
+  flex-shrink: 0;
 }
 
 .breadcrumb {
@@ -176,6 +178,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(3, 7, 16, 0.3);
+  cursor: pointer;
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
@@ -200,7 +203,7 @@
   display: none;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 0.8rem;
   border: var(--border-thin) solid var(--border-strong);
   border-radius: var(--radius-pill);
   background-color: rgba(28, 41, 61, 0.75);
@@ -211,9 +214,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
+  cursor: pointer;
   transition:
     background-color var(--transition-fast),
-    border-color var(--transition-fast);
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .menuButton:hover {
@@ -221,7 +226,136 @@
   border-color: var(--accent-linux);
 }
 
-@media (max-width: 960px) {
+.menuButtonActive {
+  background-color: rgba(85, 199, 232, 0.2);
+  border-color: var(--accent-linux);
+  box-shadow: 0 0 10px rgba(85, 199, 232, 0.2);
+}
+
+/* Mobile Upper Nav Dropdown */
+.mobileBackdrop {
+  position: fixed;
+  top: var(--top-bar-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(3, 7, 16, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 38;
+  animation: fadeIn 180ms ease forwards;
+}
+
+.mobileDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 39;
+  background-color: rgba(14, 22, 37, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: var(--border-thin) solid var(--accent-linux-border);
+  box-shadow: 0 16px 32px rgba(3, 7, 16, 0.65);
+  padding: 12px 0 16px;
+  animation: slideDown 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mobileNavList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(28, 41, 61, 0.45);
+  border: var(--border-thin) solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.mobileNavLink:hover {
+  background-color: rgba(28, 41, 61, 0.85);
+  color: var(--text-primary);
+  border-color: var(--accent-linux-border);
+}
+
+.mobileNavLinkActive {
+  background: linear-gradient(
+    90deg,
+    rgba(85, 199, 232, 0.2) 0%,
+    rgba(85, 199, 232, 0.06) 100%
+  );
+  border-color: var(--accent-linux-border);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.mobileNavLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileNavIndex {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mobileNavLinkActive .mobileNavIndex {
+  color: var(--accent-linux-bright);
+}
+
+.mobileNavLabel {
+  letter-spacing: 0.02em;
+}
+
+.mobileActiveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-linux-bright);
+  box-shadow: 0 0 8px var(--accent-linux-bright);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 860px) {
   .navBar {
     display: none;
   }
@@ -231,3 +365,9 @@
   }
 }
 
+@media (min-width: 861px) {
+  .mobileDropdown,
+  .mobileBackdrop {
+    display: none !important;
+  }
+}

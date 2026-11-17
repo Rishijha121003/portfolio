@@ -1,6 +1,6 @@
 'use client';
 
-import type { RefObject } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -9,10 +9,6 @@ import { PRIMARY_ROUTES, PROJECT_RECORDS, SITE_IDENTITY } from '@/data/portfolio
 import styles from './TopEdgeBar.module.css';
 
 interface TopEdgeBarProps {
-  isCollapsedDesktop?: boolean;
-  isPanelExpanded: boolean;
-  onOpenPanel: () => void;
-  openButtonRef: RefObject<HTMLButtonElement | null>;
   onEnterOs?: () => void;
 }
 
@@ -41,16 +37,34 @@ function getBreadcrumbLabel(pathname: string): string {
 }
 
 /**
- * Modern top navigation bar displaying brand identifier, top-level route links, RISHI OS switch, and mobile menu trigger.
+ * Modern top navigation bar displaying brand identifier, top-level route links,
+ * RISHI OS switch, and responsive upper navigation dropdown for mobile.
  */
-export function TopEdgeBar({
-  isPanelExpanded,
-  onOpenPanel,
-  openButtonRef,
-  onEnterOs,
-}: TopEdgeBarProps) {
+export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
   const pathname = usePathname();
   const breadcrumb = getBreadcrumbLabel(pathname);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  // Sync state when pathname changes during navigation (React recommended pattern)
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileMenuOpen(false);
+  }
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
 
   return (
     <header className={styles.bar}>
@@ -61,6 +75,7 @@ export function TopEdgeBar({
             className={styles.brand}
             aria-label={`${SITE_IDENTITY.fullName} Home`}
             title={`${SITE_IDENTITY.fullName} Home`}
+            onClick={() => setMobileMenuOpen(false)}
           >
             <span className={styles.brandMark}>
               <Image
@@ -109,38 +124,118 @@ export function TopEdgeBar({
                 type="button"
                 className={styles.osSwitchButton}
                 onClick={onEnterOs}
-                title="Switch back to RISHI OS desktop environment"
+                title="Switch to RISHI OS desktop environment"
               >
                 <span className={styles.osDot} aria-hidden="true" />
                 <span>RISHI OS</span>
               </button>
             ) : null}
 
+            {/* Mobile upper nav menu toggle */}
             <button
-              ref={openButtonRef}
+              ref={menuButtonRef}
               type="button"
-              className={styles.menuButton}
-              aria-expanded={isPanelExpanded}
-              aria-controls="site-navigation-panel"
-              aria-label="Open navigation panel"
-              onClick={onOpenPanel}
+              className={`${styles.menuButton} ${
+                mobileMenuOpen ? styles.menuButtonActive : ''
+              }`}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-dropdown"
+              aria-label={
+                mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
+              }
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
             >
-              <span className={styles.menuButtonLabel}>Menu</span>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <rect x="2" y="3" width="12" height="1.8" rx="0.9" />
-                <rect x="2" y="7.1" width="12" height="1.8" rx="0.9" />
-                <rect x="2" y="11.2" width="12" height="1.8" rx="0.9" />
-              </svg>
+              <span className={styles.menuButtonLabel}>
+                {mobileMenuOpen ? 'Close' : 'Menu'}
+              </span>
+              {mobileMenuOpen ? (
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              ) : (
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="3" width="12" height="1.8" rx="0.9" />
+                  <rect x="2" y="7.1" width="12" height="1.8" rx="0.9" />
+                  <rect x="2" y="11.2" width="12" height="1.8" rx="0.9" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </Container>
+
+      {/* Mobile Upper Nav Dropdown Menu */}
+      {mobileMenuOpen ? (
+        <>
+          <div
+            className={styles.mobileBackdrop}
+            aria-hidden="true"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div
+            id="mobile-nav-dropdown"
+            className={styles.mobileDropdown}
+            role="dialog"
+            aria-label="Mobile Navigation Menu"
+          >
+            <Container>
+              <nav aria-label="Mobile Navigation">
+                <ul className={styles.mobileNavList}>
+                  {PRIMARY_ROUTES.map((route) => {
+                    const active = isRouteActive(pathname, route.href);
+                    return (
+                      <li key={route.href}>
+                        <Link
+                          href={route.href}
+                          className={
+                            active
+                              ? `${styles.mobileNavLink} ${styles.mobileNavLinkActive}`
+                              : styles.mobileNavLink
+                          }
+                          aria-current={active ? 'page' : undefined}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <span className={styles.mobileNavLeft}>
+                            <span className={styles.mobileNavIndex}>
+                              [{route.index}]
+                            </span>
+                            <span className={styles.mobileNavLabel}>
+                              {route.label}
+                            </span>
+                          </span>
+                          {active ? (
+                            <span
+                              className={styles.mobileActiveDot}
+                              aria-hidden="true"
+                            />
+                          ) : null}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </Container>
+          </div>
+        </>
+      ) : null}
     </header>
   );
 }
