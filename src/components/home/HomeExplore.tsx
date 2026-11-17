@@ -49,7 +49,7 @@ export function HomeExplore() {
                 <div className={styles.cardGlow} aria-hidden="true" />
 
                 <div className={styles.cardTop}>
-                  <div className={styles.indexBadge}>[{item.index}]</div>
+                  <div className={styles.indexBadge}>{item.index}</div>
                   <div className={styles.pathLabel}>{item.pathLabel}</div>
                 </div>
 

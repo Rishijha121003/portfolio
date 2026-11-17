@@ -21,8 +21,8 @@ function isRouteActive(pathname: string, href: string): boolean {
 }
 
 /**
- * Modern floating glass upper navigation bar with high-impact micro-interactions,
- * active indicator pills, RISHI OS system switch, and responsive mobile dropdown.
+ * Modern floating capsule navigation bar with refined typography,
+ * smooth hover transitions, live status beacon, and RISHI OS launcher.
  */
 export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
   const pathname = usePathname();
@@ -30,7 +30,7 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
   const [prevPathname, setPrevPathname] = useState(pathname);
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  // Sync state when pathname changes during navigation (React recommended pattern)
+  // Sync state when pathname changes during navigation
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
     setMobileMenuOpen(false);
@@ -53,7 +53,7 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
     <header className={styles.bar}>
       <Container>
         <div className={styles.inner}>
-          {/* Brand Mark Left */}
+          {/* Brand Logo & Name */}
           <Link
             href="/"
             className={styles.brand}
@@ -64,20 +64,20 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
             <span className={styles.brandMark}>
               <Image
                 src="/images/rj-standalone.svg"
-                alt="RJ Monogram Logo"
-                width={22}
-                height={22}
+                alt="RJ Logo"
+                width={20}
+                height={20}
                 priority
                 className={styles.brandLogoImg}
               />
             </span>
-            <div className={styles.brandInfo}>
-              <span className={styles.brandName}>RISHI JHA</span>
-              <span className={styles.brandSub}>FULL STACK</span>
+            <div className={styles.brandTextGroup}>
+              <span className={styles.brandName}>{SITE_IDENTITY.fullName}</span>
+              <span className={styles.brandRole}>Full Stack Developer</span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links directly in the Top Navbar */}
+          {/* Desktop Navigation Links */}
           <nav className={styles.navBar} aria-label="Main Navigation">
             <ul className={styles.navList}>
               {PRIMARY_ROUTES.map((route) => {
@@ -93,8 +93,10 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
                       }
                       aria-current={active ? 'page' : undefined}
                     >
-                      <span className={styles.navIndex}>[{route.index}]</span>
-                      <span className={styles.navLabel}>{route.label}</span>
+                      <span>{route.label}</span>
+                      {active ? (
+                        <span className={styles.activePillDot} aria-hidden="true" />
+                      ) : null}
                     </Link>
                   </li>
                 );
@@ -104,6 +106,11 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
 
           {/* Right Action Group */}
           <div className={styles.rightGroup}>
+            <div className={styles.availabilityPill} title="Available for opportunities">
+              <span className={styles.liveBeacon} aria-hidden="true" />
+              <span className={styles.availabilityText}>Available</span>
+            </div>
+
             {onEnterOs ? (
               <button
                 type="button"
@@ -111,15 +118,14 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
                 onClick={onEnterOs}
                 title="Switch to RISHI OS simulated desktop environment"
               >
-                <span className={styles.osPulseDot} aria-hidden="true" />
-                <span className={styles.osBtnText}>RISHI OS</span>
-                <span className={styles.osBadge} aria-hidden="true">
-                  v1.0
+                <span className={styles.osIcon} aria-hidden="true">
+                  ❖
                 </span>
+                <span>RISHI OS</span>
               </button>
             ) : null}
 
-            {/* Mobile upper nav menu toggle */}
+            {/* Mobile menu toggle */}
             <button
               ref={menuButtonRef}
               type="button"
@@ -133,17 +139,14 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
               }
               onClick={() => setMobileMenuOpen((prev) => !prev)}
             >
-              <span className={styles.menuButtonLabel}>
-                {mobileMenuOpen ? 'Close' : 'Menu'}
-              </span>
               {mobileMenuOpen ? (
                 <svg
-                  width="14"
-                  height="14"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.5"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
@@ -153,15 +156,18 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
                 </svg>
               ) : (
                 <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   aria-hidden="true"
                 >
-                  <rect x="2" y="3" width="12" height="1.8" rx="0.9" />
-                  <rect x="2" y="7.1" width="12" height="1.8" rx="0.9" />
-                  <rect x="2" y="11.2" width="12" height="1.8" rx="0.9" />
+                  <line x1="4" y1="8" x2="20" y2="8" />
+                  <line x1="4" y1="16" x2="20" y2="16" />
                 </svg>
               )}
             </button>
@@ -169,7 +175,7 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
         </div>
       </Container>
 
-      {/* Mobile Upper Nav Dropdown Menu */}
+      {/* Mobile Dropdown Menu */}
       {mobileMenuOpen ? (
         <>
           <div
@@ -200,13 +206,8 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
                           aria-current={active ? 'page' : undefined}
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <span className={styles.mobileNavLeft}>
-                            <span className={styles.mobileNavIndex}>
-                              [{route.index}]
-                            </span>
-                            <span className={styles.mobileNavLabel}>
-                              {route.label}
-                            </span>
+                          <span className={styles.mobileNavLabel}>
+                            {route.label}
                           </span>
                           {active ? (
                             <span

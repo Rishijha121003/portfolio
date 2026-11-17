@@ -2,15 +2,15 @@
 
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDesktop } from '@/components/os/DesktopContext';
-import { DigitalTerrain } from '@/components/home/DigitalTerrain';
+import Link from 'next/link';
 import Image from 'next/image';
+import { useDesktop } from '@/components/os/DesktopContext';
 import styles from './HomeHero.module.css';
 
 /**
- * Main Portfolio Homepage Hero — "RISHI.JHA / Personal Digital Identity"
- * Ultra-modern developer hero featuring monumental typography, live status beacon,
- * interactive developer dossier card, official RJ emblem, and vector digital terrain horizon.
+ * Modern Developer Hero — Rishi Jha // Full Stack & Systems Developer
+ * Designed for elite visual impact, clean typography, live availability,
+ * and high-converting featured project spotlight.
  */
 export function HomeHero() {
   const router = useRouter();
@@ -48,59 +48,53 @@ export function HomeHero() {
             <span className={styles.statusBeacon} aria-hidden="true" />
             <span className={styles.statusText}>AVAILABLE FOR OPPORTUNITIES</span>
             <span className={styles.metaDivider} aria-hidden="true">
-              /
+              ·
             </span>
-            <span className={styles.systemTag}>SYSTEM v1.0</span>
+            <span className={styles.systemTag}>B.Tech CSE @ Sandip University</span>
           </div>
 
           <div className={styles.topMetaRight} aria-hidden="true">
-            <span className={styles.mottoText}>DREAM</span>
-            <span className={styles.mottoChevron}>›</span>
-            <span className={styles.mottoText}>CODE</span>
-            <span className={styles.mottoChevron}>›</span>
-            <span className={styles.mottoText}>BUILD</span>
+            <span className={styles.mottoTag}>Dream</span>
+            <span className={styles.mottoDot}>•</span>
+            <span className={styles.mottoTag}>Code</span>
+            <span className={styles.mottoDot}>•</span>
+            <span className={styles.mottoTag}>Build</span>
           </div>
         </header>
 
-        {/* Hero Body Split: Left Identity + Right Interactive Dossier Card */}
+        {/* Hero Body Split: Left Identity + Right Interactive Spotlight Card */}
         <div className={styles.heroBody}>
           <div className={styles.identityCol}>
-            {/* Terminal Boot Sequence Pill */}
-            <div
-              className={styles.terminalBootBlock}
-              aria-label="Developer initialization status"
-            >
-              <div className={styles.bootRow}>
-                <span className={styles.bootPrompt}>{'>_'}</span>
-                <span className={styles.bootText}>init rishi_jha --full-stack</span>
-                <span className={styles.bootBadge}>Ready</span>
+            {/* Role Category Badge */}
+            <div className={styles.badgeWrapper}>
+              <div className={styles.roleBadge}>
+                <span className={styles.roleSparkle} aria-hidden="true">
+                  ✨
+                </span>
+                <span>Full Stack &amp; Backend Engineer</span>
               </div>
             </div>
 
-            {/* Monumental Name & Title */}
+            {/* Monumental Headline */}
             <div className={styles.headingGroup}>
               <h1 id="home-hero-heading" className={styles.nameHeading}>
-                <span className={styles.nameText}>RISHI JHA</span>
-                <span className={styles.cursor} aria-hidden="true">
-                  _
-                </span>
+                Building scalable backends &amp; modern web products.
               </h1>
 
-              <p className={styles.roleTitle}>
-                Full Stack & Systems Developer
-              </p>
-
               <p className={styles.statementText}>
-                Computer Science Student at <strong>Sandip University</strong> building
-                scalable backend architectures, robust APIs, and high-performance web products.
+                Hi, I&apos;m <strong>Rishi Jha</strong> — a Computer Science student at{' '}
+                <strong>Sandip University</strong> specializing in <strong>FastAPI</strong>,{' '}
+                <strong>React 19</strong>, and <strong>PostgreSQL</strong>. Passionate about
+                high-throughput API design, clean systems architecture, and fluid digital interfaces.
               </p>
 
-              <div className={styles.taglineRow}>
+              <div className={styles.taglineRow} aria-label="Core technologies">
                 <span className={styles.taglinePill}>FastAPI</span>
                 <span className={styles.taglinePill}>React 19</span>
                 <span className={styles.taglinePill}>PostgreSQL</span>
                 <span className={styles.taglinePill}>TypeScript</span>
                 <span className={styles.taglinePill}>Python</span>
+                <span className={styles.taglinePill}>TailwindCSS</span>
               </div>
             </div>
 
@@ -128,36 +122,49 @@ export function HomeHero() {
                 </span>
               </button>
 
-              <a href="/contact" className={styles.tertiaryCta}>
-                <span>Get in Touch</span>
-              </a>
+              <Link href="/contact" className={styles.tertiaryCta}>
+                <span>Contact Me</span>
+              </Link>
             </div>
           </div>
 
-          {/* Right Supporting Visual: Holographic Tech Emblem Card */}
+          {/* Right Supporting Visual: Featured Work Spotlight Card */}
           <div className={styles.visualCol}>
-            <div className={styles.dossierCard}>
+            <div className={styles.spotlightCard}>
+              {/* Card Top Pill & Header */}
               <div className={styles.cardHeader}>
-                <div className={styles.cardHeaderLeft}>
-                  <span className={styles.cardDotGreen} />
-                  <span className={styles.cardDotYellow} />
-                  <span className={styles.cardDotRed} />
+                <div className={styles.hackathonBadge}>
+                  <span className={styles.trophyIcon} aria-hidden="true">
+                    🏆
+                  </span>
+                  <span>Cheque Mate Hackathon · Top 3 Finalist</span>
                 </div>
-                <span className={styles.cardHeaderTitle}>DEVELOPER DOSSIER</span>
               </div>
 
-              {/* Central Illuminated Emblem */}
-              <div className={styles.emblemContainer}>
-                <div className={styles.emblemGlow} aria-hidden="true" />
-                <Image
-                  src="/images/rj-primary.svg"
-                  alt="RJ Geometric Emblem"
-                  width={240}
-                  height={240}
-                  priority
-                  className={styles.emblemImage}
-                />
+              {/* Central Featured Showcase: DormiQ */}
+              <div className={styles.spotlightShowcase}>
+                <div className={styles.projectIconBadge}>
+                  <Image
+                    src="/images/rj-standalone.svg"
+                    alt="DormiQ Emblem"
+                    width={28}
+                    height={28}
+                    className={styles.projectLogo}
+                  />
+                </div>
+                <div className={styles.projectInfo}>
+                  <div className={styles.projectEyebrow}>FEATURED CASE STUDY</div>
+                  <h3 className={styles.projectTitle}>DormiQ</h3>
+                  <p className={styles.projectSubtitle}>
+                    Smart Hostel &amp; Housing Management Ecosystem
+                  </p>
+                </div>
               </div>
+
+              <p className={styles.projectSummary}>
+                Engineered robust student hostel allocation workflows, real-time queues, and role-based
+                access control with FastAPI and PostgreSQL backend services.
+              </p>
 
               {/* Technical Specifications Grid */}
               <div className={styles.specsGrid}>
@@ -166,43 +173,53 @@ export function HomeHero() {
                   <span className={styles.specValue}>B.Tech CSE · Sandip Univ</span>
                 </div>
                 <div className={styles.specItem}>
-                  <span className={styles.specLabel}>HACKATHON</span>
-                  <span className={styles.specValueHighlight}>Top 3 · Cheque Mate</span>
+                  <span className={styles.specLabel}>RECOGNITION</span>
+                  <span className={styles.specValueHighlight}>Top 3 National Finalist</span>
                 </div>
                 <div className={styles.specItem}>
-                  <span className={styles.specLabel}>FEATURED</span>
-                  <span className={styles.specValue}>DormiQ Case Study</span>
+                  <span className={styles.specLabel}>LOCATION</span>
+                  <span className={styles.specValue}>Bihar, India</span>
                 </div>
                 <div className={styles.specItem}>
                   <span className={styles.specLabel}>STATUS</span>
                   <span className={styles.specValueOnline}>● Open to Roles</span>
                 </div>
               </div>
+
+              <div className={styles.spotlightFooter}>
+                <Link href="/projects/dormiq" className={styles.caseStudyLink}>
+                  <span>Read DormiQ Case Study</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Digital Wireframe Horizon Terrain */}
-        <DigitalTerrain className={styles.terrainContainer} />
-
-        {/* Bottom Technical Status Bar */}
-        <footer className={styles.bottomStatusBar} aria-label="System status">
-          <div className={styles.statusPill}>
-            <span className={styles.onlineDot} aria-hidden="true" />
-            <span className={styles.statusKey}>System:</span>
-            <span className={styles.statusValOnline}>Online</span>
-            <span className={styles.statusSep}>{'//'}</span>
-            <span className={styles.statusKey}>Architecture:</span>
-            <span className={styles.statusVal}>Next.js 16 + React 19</span>
-            <span className={styles.statusSep}>{'//'}</span>
-            <span className={styles.statusKey}>Simulated OS:</span>
-            <span className={styles.statusVal}>RISHI OS v1.0</span>
+        {/* Bottom Metrics Bar */}
+        <footer className={styles.bottomStatsBar} aria-label="Key Highlights">
+          <div className={styles.metricItem}>
+            <span className={styles.metricValue}>Top 3</span>
+            <span className={styles.metricLabel}>Cheque Mate Hackathon</span>
           </div>
+          <div className={styles.metricDivider} aria-hidden="true" />
 
-          <a href="#home-introduction" className={styles.scrollDownLink}>
-            <span>Scroll Down</span>
-            <span aria-hidden="true">↓</span>
-          </a>
+          <div className={styles.metricItem}>
+            <span className={styles.metricValue}>FastAPI</span>
+            <span className={styles.metricLabel}>High-throughput Backends</span>
+          </div>
+          <div className={styles.metricDivider} aria-hidden="true" />
+
+          <div className={styles.metricItem}>
+            <span className={styles.metricValue}>B.Tech CSE</span>
+            <span className={styles.metricLabel}>Sandip University</span>
+          </div>
+          <div className={styles.metricDivider} aria-hidden="true" />
+
+          <div className={styles.metricItem}>
+            <span className={styles.metricValue}>RISHI OS</span>
+            <span className={styles.metricLabel}>Interactive Desktop Web OS</span>
+          </div>
         </footer>
       </div>
     </section>

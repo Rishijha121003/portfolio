@@ -43,7 +43,7 @@ export function SkillsManifest({ embedded = false }: SkillsManifestProps) {
         >
           <div className={styles.categoryHeader}>
             <div className={styles.categoryTitleWrap}>
-              <span className={styles.cardIndex}>[{category.index}]</span>
+              <span className={styles.cardIndex}>{category.index}</span>
               <CategoryHeadingTag
                 id={`skills-cat-${category.index}`}
                 className={styles.domainTitle}

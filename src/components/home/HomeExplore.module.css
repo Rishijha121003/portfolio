@@ -146,21 +146,22 @@
 }
 
 .indexBadge {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.75rem;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 0.6875rem;
   font-weight: 700;
+  letter-spacing: 0.04em;
   color: #38bdf8;
-  padding: 3px 8px;
-  border-radius: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
   background-color: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  border: 1px solid rgba(56, 189, 248, 0.28);
 }
 
 .pathLabel {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.6875rem;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 0.75rem;
   color: #64748b;
-  letter-spacing: 0.04em;
+  font-weight: 500;
 }
 
 .cardCenter {

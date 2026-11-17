@@ -5,11 +5,11 @@
   height: 64px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  background-color: rgba(7, 9, 14, 0.82);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(7, 9, 14, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.5);
   transition: border-color 200ms ease, background-color 200ms ease;
 }
 
@@ -51,31 +51,31 @@
 .brand:hover .brandMark {
   border-color: #38bdf8;
   box-shadow:
-    0 0 20px rgba(56, 189, 248, 0.4),
+    0 0 20px rgba(56, 189, 248, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
 .brandLogoImg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
 }
 
-.brandInfo {
+.brandTextGroup {
   display: flex;
   flex-direction: column;
   gap: 1px;
 }
 
 .brandName {
-  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-family: var(--font-plus-jakarta-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
   color: #f8fafc;
-  line-height: 1.1;
+  line-height: 1.15;
   transition: color 180ms ease;
 }
 
@@ -83,13 +83,12 @@
   color: #38bdf8;
 }
 
-.brandSub {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: #64748b;
-  text-transform: uppercase;
+.brandRole {
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #94a3b8;
 }
 
 /* Central Floating Nav Pills */
@@ -101,19 +100,20 @@
 .navList {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   list-style: none;
   padding: 4px;
   margin: 0;
   border-radius: 9999px;
-  background-color: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow:
-    inset 0 1px 2px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(0, 0, 0, 0.4),
     0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .navLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -147,20 +147,12 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.navIndex {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.6875rem;
-  color: #64748b;
-  transition: color 180ms ease;
-}
-
-.navLinkActive .navIndex {
-  color: #38bdf8;
-  font-weight: 700;
-}
-
-.navLabel {
-  letter-spacing: 0.01em;
+.activePillDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
 }
 
 /* Right Actions */
@@ -171,11 +163,50 @@
   flex-shrink: 0;
 }
 
+.availabilityPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px;
+  border-radius: 9999px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  cursor: default;
+}
+
+.liveBeacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  animation: pulseLive 2.2s ease-in-out infinite;
+}
+
+@keyframes pulseLive {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
+.availabilityText {
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #86efac;
+  letter-spacing: 0.02em;
+}
+
 .osSwitchButton {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 0.48rem 0.95rem;
+  gap: 7px;
+  padding: 0.44rem 0.95rem;
   border: 1px solid rgba(56, 189, 248, 0.32);
   border-radius: 9999px;
   background: linear-gradient(
@@ -187,8 +218,7 @@
   font-family: var(--font-plus-jakarta-sans), sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
   white-space: nowrap;
   box-shadow:
     0 2px 12px rgba(0, 0, 0, 0.35),
@@ -205,61 +235,29 @@
     rgba(18, 28, 48, 0.95) 100%
   );
   box-shadow:
-    0 0 20px rgba(56, 189, 248, 0.3),
+    0 0 20px rgba(56, 189, 248, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
-.osPulseDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
-  animation: pulseBeacon 2.5s ease-in-out infinite;
-}
-
-@keyframes pulseBeacon {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(0.85);
-  }
-}
-
-.osBtnText {
-  letter-spacing: 0.08em;
-}
-
-.osBadge {
-  padding: 1px 5px;
-  border-radius: 4px;
-  background-color: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.625rem;
-  color: #7dd3fc;
+.osIcon {
+  font-size: 0.8125rem;
+  color: #38bdf8;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
 }
 
 /* Mobile Menu Toggle */
 .menuButton {
   display: none;
   align-items: center;
-  gap: 8px;
-  padding: 0.48rem 0.85rem;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 9999px;
+  border-radius: 10px;
   background-color: rgba(22, 33, 53, 0.7);
   color: #f8fafc;
-  font-family: var(--font-plus-jakarta-sans), sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
   cursor: pointer;
   transition: all 180ms ease;
 }
@@ -282,9 +280,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(3, 7, 16, 0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(3, 7, 16, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 48;
   animation: fadeIn 180ms ease forwards;
 }
@@ -296,11 +294,11 @@
   right: 0;
   z-index: 49;
   background-color: rgba(10, 15, 26, 0.96);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-bottom: 1px solid rgba(56, 189, 248, 0.28);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75);
-  padding: 12px 0 18px;
+  padding: 14px 0 20px;
   animation: slideDown 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -317,9 +315,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  border-radius: 10px;
-  background-color: rgba(22, 33, 53, 0.4);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background-color: rgba(22, 33, 53, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
   color: #94a3b8;
   font-family: var(--font-plus-jakarta-sans), sans-serif;
@@ -346,25 +344,8 @@
   font-weight: 600;
 }
 
-.mobileNavLeft {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.mobileNavIndex {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-.mobileNavLinkActive .mobileNavIndex {
-  color: #38bdf8;
-  font-weight: 700;
-}
-
 .mobileNavLabel {
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .mobileActiveDot {
@@ -376,7 +357,7 @@
 }
 
 .mobileNavArrow {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #64748b;
   transition: transform 180ms ease, color 180ms ease;
 }
@@ -389,7 +370,7 @@
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
@@ -407,7 +388,13 @@
 }
 
 /* Breakpoints */
-@media (max-width: 860px) {
+@media (max-width: 900px) {
+  .availabilityPill {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
   .navBar {
     display: none;
   }
@@ -417,7 +404,7 @@
   }
 }
 
-@media (min-width: 861px) {
+@media (min-width: 821px) {
   .mobileDropdown,
   .mobileBackdrop {
     display: none !important;

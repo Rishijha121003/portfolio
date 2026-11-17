@@ -435,7 +435,7 @@ export function ProjectsShowcase({
               <div className={styles.cardHeader}>
                 <div className={styles.cardIndexRow}>
                   <span className={styles.inlineIndexBadge}>
-                    [{project.index}]
+                    {project.index}
                   </span>
                   <span className={styles.cardCategory}>{project.category}</span>
                 </div>
@@ -581,20 +581,36 @@ export function ProjectsShowcase({
         </Container>
       </section>
 
-      {/* Split Workspace inside Container on /projects */}
+      {/* Modern Filter Pill Bar + Projects Showcase Stream */}
       <section className={styles.routeLedgerSection} aria-label="Projects directory">
         <Container>
-          <div className={styles.routeShell}>
-            <div className={styles.osToolbar}>
-              <div className={styles.osToolbarLeft}>
-                <span className={styles.osCountPill}>
-                  {`${filteredProjects.length} of ${PROJECT_RECORDS.length} builds`}
-                </span>
-              </div>
-              {searchBar}
+          <div className={styles.portfolioFilterRow}>
+            <div className={styles.horizontalFilterPills} role="group" aria-label="Filter projects by category">
+              {PROJECT_FILTER_CATEGORIES.map((category) => {
+                const isActive = activeCategory === category;
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    aria-pressed={isActive}
+                    className={
+                      isActive
+                        ? `${styles.filterPillBtn} ${styles.filterPillActive}`
+                        : styles.filterPillBtn
+                    }
+                    onClick={() => setActiveCategory(category)}
+                  >
+                    <span>{CATEGORY_SHORT_LABELS[category]}</span>
+                    <span className={styles.filterPillCount}>{countForCategory(category)}</span>
+                  </button>
+                );
+              })}
             </div>
+            {searchBar}
+          </div>
 
-            <div className={styles.osWorkspace}>{sidebarNav}<div className={styles.osMainPane}>{projectsStream}</div></div>
+          <div className={styles.portfolioProjectsStream}>
+            {projectsStream}
           </div>
         </Container>
       </section>
