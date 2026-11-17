@@ -1,203 +1,250 @@
 .section {
-  padding-block: clamp(4.5rem, 8.5vw, 7rem);
-  border-top: var(--border-thin) solid var(--border-subtle);
-  background-color: var(--bg-canvas);
+  width: 100%;
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+  background-color: transparent;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .headerRow {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: var(--space-4);
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .headerLeft {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0.5rem;
 }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
-  font-family: var(--font-mono);
+  gap: 8px;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #38bdf8;
   text-transform: uppercase;
-  color: var(--text-secondary);
 }
 
-.eyebrowRule {
-  width: 24px;
-  height: 1px;
-  background-color: var(--text-muted);
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
 }
 
 .heading {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4.4vw, 3.25rem);
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.015em;
-  text-transform: uppercase;
-  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  color: #f8fafc;
+  margin: 0;
 }
 
 .dirHint {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-mono);
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background-color: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
+  color: #94a3b8;
 }
 
-.linuxDot {
+.dirDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--accent-linux);
-  flex-shrink: 0;
+  background-color: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
 }
 
-.list {
+.dirText {
+  color: #cbd5e1;
+}
+
+/* Bento Grid */
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.bentoCard {
+  position: relative;
   display: flex;
   flex-direction: column;
-  list-style: none;
-  border-top: var(--border-thin) solid var(--border-subtle);
+  justify-content: space-between;
+  min-height: 220px;
+  padding: 1.75rem;
+  border-radius: 18px;
+  background-color: rgba(13, 19, 32, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.rowLink {
-  display: grid;
-  grid-template-columns: 3.5rem minmax(9.5rem, 15rem) minmax(0, 1fr) auto auto;
+.bentoFeatured {
+  grid-column: span 2;
+  background: linear-gradient(
+    135deg,
+    rgba(18, 27, 46, 0.85) 0%,
+    rgba(13, 19, 32, 0.8) 100%
+  );
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+.cardGlow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.12) 0%,
+    transparent 70%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+
+.bentoCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(56, 189, 248, 0.14);
+}
+
+.bentoCard:hover .cardGlow {
+  opacity: 1;
+}
+
+.cardTop {
+  display: flex;
   align-items: center;
-  gap: var(--space-4);
-  min-height: 64px;
-  padding: var(--space-6) var(--space-2);
-  border-bottom: var(--border-thin) solid var(--border-subtle);
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast);
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 }
 
-.rowLink:hover,
-.rowLink:focus-visible {
-  background-color: rgba(255, 255, 255, 0.025);
-  border-bottom-color: var(--border-strong);
-}
-
-.index {
-  font-family: var(--font-mono);
+.indexBadge {
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  transition: color var(--transition-fast);
-}
-
-.rowLink:hover .index,
-.rowLink:focus-visible .index {
-  color: var(--accent-linux);
-}
-
-.label {
-  font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  transition: color var(--transition-fast);
-}
-
-.rowLink:hover .label,
-.rowLink:focus-visible .label {
-  color: var(--text-primary);
-}
-
-.description {
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-  transition: color var(--transition-fast);
-}
-
-.rowLink:hover .description,
-.rowLink:focus-visible .description {
-  color: var(--text-primary);
+  color: #38bdf8;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background-color: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
 }
 
 .pathLabel {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.6875rem;
+  color: #64748b;
   letter-spacing: 0.04em;
-  color: var(--text-muted);
-  white-space: nowrap;
-  transition: color var(--transition-fast);
 }
 
-.rowLink:hover .pathLabel,
-.rowLink:focus-visible .pathLabel {
-  color: var(--accent-linux);
+.cardCenter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
 }
 
-.arrow {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--text-muted);
-  transition:
-    color var(--transition-fast),
-    transform var(--transition-fast);
+.cardTitle {
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f8fafc;
+  margin: 0;
+  transition: color 180ms ease;
 }
 
-.rowLink:hover .arrow,
-.rowLink:focus-visible .arrow {
-  color: var(--accent-linux);
-  transform: translate(3px, -2px);
+.bentoCard:hover .cardTitle {
+  color: #38bdf8;
 }
 
-@media (max-width: 900px) {
-  .rowLink {
-    grid-template-columns: 3rem minmax(8rem, 11.5rem) minmax(0, 1fr) auto;
-    padding-block: var(--space-4);
+.cardDesc {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.cardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.exploreAction {
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #64748b;
+  transition: color 180ms ease;
+}
+
+.bentoCard:hover .exploreAction {
+  color: #cbd5e1;
+}
+
+.cardArrow {
+  font-size: 1.125rem;
+  color: #64748b;
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.bentoCard:hover .cardArrow {
+  color: #38bdf8;
+  transform: translateX(4px);
+}
+
+@media (max-width: 960px) {
+  .bentoGrid {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .pathLabel {
-    display: none;
+  .bentoFeatured {
+    grid-column: span 2;
   }
 }
 
 @media (max-width: 640px) {
-  .section {
-    padding-block: var(--space-12);
+  .bentoGrid {
+    grid-template-columns: 1fr;
   }
 
-  .rowLink {
-    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
-    gap: var(--space-1) var(--space-3);
-    padding: var(--space-4) var(--space-1);
+  .bentoFeatured {
+    grid-column: span 1;
   }
 
-  .description {
-    grid-column: 2 / 3;
-    font-size: 0.84375rem;
-  }
-
-  .pathLabel {
-    display: inline-block;
-    grid-column: 2 / 3;
-    font-size: 0.6875rem;
-    margin-top: var(--space-1);
-  }
-
-  .arrow {
-    grid-row: 1;
-    grid-column: 3;
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

@@ -14,7 +14,8 @@ interface HomeIntroductionProps {
 }
 
 /**
- * Editorial statement area with oversized staggered headline, concise placeholder copy, and /about link.
+ * Editorial statement section featuring monumental typography, engineering philosophy pills,
+ * and direct deep dive link into the About page.
  */
 export function HomeIntroduction({
   eyebrow,
@@ -42,14 +43,16 @@ export function HomeIntroduction({
     >
       <Container>
         <div className={styles.wrapper}>
+          {/* Header Metadata */}
           <div className={styles.topMeta}>
             <span className={styles.eyebrow}>
-              <span className={styles.eyebrowRule} aria-hidden="true" />
+              <span className={styles.eyebrowDot} aria-hidden="true" />
               <span>{resolvedEyebrow}</span>
             </span>
             <span className={styles.statusLabel}>{resolvedStatus}</span>
           </div>
 
+          {/* Monumental Editorial Headline */}
           <h2 id="home-intro-heading" className={styles.heading}>
             <span className={styles.headingLead}>{resolvedLead}</span>
             {resolvedIndent ? (
@@ -57,23 +60,56 @@ export function HomeIntroduction({
             ) : null}
           </h2>
 
-          <div className={styles.offsetColumn}>
-            <span className={styles.copyAccentRule} aria-hidden="true" />
+          {/* 2-Column Split: Pillars Left + Detailed Copy Right */}
+          <div className={styles.contentGrid}>
+            <div className={styles.pillarsCol}>
+              <div className={styles.pillarCard}>
+                <span className={styles.pillarIndex}>01</span>
+                <div className={styles.pillarInfo}>
+                  <h3 className={styles.pillarTitle}>Backend Architecture</h3>
+                  <p className={styles.pillarDesc}>
+                    FastAPI, PostgreSQL & typed schemas designed for reliability and speed.
+                  </p>
+                </div>
+              </div>
 
-            <div className={styles.copyBlock}>
-              {resolvedLines.map((line) => (
-                <p key={line} className={styles.line}>
-                  {line}
-                </p>
-              ))}
+              <div className={styles.pillarCard}>
+                <span className={styles.pillarIndex}>02</span>
+                <div className={styles.pillarInfo}>
+                  <h3 className={styles.pillarTitle}>Modern Web UI</h3>
+                  <p className={styles.pillarDesc}>
+                    React 19 & Next.js delivering fluid interfaces and responsive glass depth.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.pillarCard}>
+                <span className={styles.pillarIndex}>03</span>
+                <div className={styles.pillarInfo}>
+                  <h3 className={styles.pillarTitle}>Pragmatic Execution</h3>
+                  <p className={styles.pillarDesc}>
+                    Hackathon Top 3 validated problem solving with real-world products.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <Link href={resolvedCtaHref} className={styles.moreLink}>
-              <span>{resolvedCtaLabel}</span>
-              <span className={styles.linkArrow} aria-hidden="true">
-                ↗
-              </span>
-            </Link>
+            <div className={styles.narrativeCol}>
+              <div className={styles.copyBlock}>
+                {resolvedLines.map((line) => (
+                  <p key={line} className={styles.line}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+
+              <Link href={resolvedCtaHref} className={styles.moreLink}>
+                <span>{resolvedCtaLabel}</span>
+                <span className={styles.linkArrow} aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </Container>

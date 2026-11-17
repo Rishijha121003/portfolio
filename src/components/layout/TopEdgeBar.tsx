@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
-import { PRIMARY_ROUTES, PROJECT_RECORDS, SITE_IDENTITY } from '@/data/portfolio';
+import { PRIMARY_ROUTES, SITE_IDENTITY } from '@/data/portfolio';
 import styles from './TopEdgeBar.module.css';
 
 interface TopEdgeBarProps {
@@ -20,29 +20,12 @@ function isRouteActive(pathname: string, href: string): boolean {
   return pathname === href;
 }
 
-function getBreadcrumbLabel(pathname: string): string {
-  if (pathname === '/') return 'HOME';
-
-  const primary = PRIMARY_ROUTES.find((route) => route.href === pathname);
-  if (primary) return `HOME / ${primary.breadcrumbLabel}`;
-
-  if (pathname.startsWith('/projects/')) {
-    const slug = pathname.replace('/projects/', '');
-    const project = PROJECT_RECORDS.find((p) => p.slug === slug);
-    const label = project ? project.title.toUpperCase() : slug.toUpperCase();
-    return `HOME / PROJECTS / ${label}`;
-  }
-
-  return 'HOME / 404';
-}
-
 /**
- * Modern top navigation bar displaying brand identifier, top-level route links,
- * RISHI OS switch, and responsive upper navigation dropdown for mobile.
+ * Modern floating glass upper navigation bar with high-impact micro-interactions,
+ * active indicator pills, RISHI OS system switch, and responsive mobile dropdown.
  */
 export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
   const pathname = usePathname();
-  const breadcrumb = getBreadcrumbLabel(pathname);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -70,6 +53,7 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
     <header className={styles.bar}>
       <Container>
         <div className={styles.inner}>
+          {/* Brand Mark Left */}
           <Link
             href="/"
             className={styles.brand}
@@ -81,12 +65,16 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
               <Image
                 src="/images/rj-standalone.svg"
                 alt="RJ Monogram Logo"
-                width={24}
-                height={24}
+                width={22}
+                height={22}
                 priority
                 className={styles.brandLogoImg}
               />
             </span>
+            <div className={styles.brandInfo}>
+              <span className={styles.brandName}>RISHI JHA</span>
+              <span className={styles.brandSub}>FULL STACK</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation Links directly in the Top Navbar */}
@@ -114,20 +102,20 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
             </ul>
           </nav>
 
+          {/* Right Action Group */}
           <div className={styles.rightGroup}>
-            <span className={styles.breadcrumb} aria-label="Current route">
-              {breadcrumb}
-            </span>
-
             {onEnterOs ? (
               <button
                 type="button"
                 className={styles.osSwitchButton}
                 onClick={onEnterOs}
-                title="Switch to RISHI OS desktop environment"
+                title="Switch to RISHI OS simulated desktop environment"
               >
-                <span className={styles.osDot} aria-hidden="true" />
-                <span>RISHI OS</span>
+                <span className={styles.osPulseDot} aria-hidden="true" />
+                <span className={styles.osBtnText}>RISHI OS</span>
+                <span className={styles.osBadge} aria-hidden="true">
+                  v1.0
+                </span>
               </button>
             ) : null}
 
@@ -225,7 +213,11 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
                               className={styles.mobileActiveDot}
                               aria-hidden="true"
                             />
-                          ) : null}
+                          ) : (
+                            <span className={styles.mobileNavArrow} aria-hidden="true">
+                              →
+                            </span>
+                          )}
                         </Link>
                       </li>
                     );

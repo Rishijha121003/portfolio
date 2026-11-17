@@ -1,8 +1,20 @@
 import type { Metadata } from 'next';
-import { Barlow_Condensed, Inter, JetBrains_Mono } from 'next/font/google';
+import {
+  Barlow_Condensed,
+  Inter,
+  JetBrains_Mono,
+  Plus_Jakarta_Sans,
+} from 'next/font/google';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { RishiDesktopShell } from '@/components/os/RishiDesktopShell';
 import './globals.css';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-plus-jakarta-sans',
+  display: 'swap',
+});
 
 const barlowCondensed = Barlow_Condensed({
   subsets: ['latin'],
@@ -76,7 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${barlowCondensed.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${barlowCondensed.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         <a href="#main-content" className="skip-link">

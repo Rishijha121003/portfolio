@@ -4,7 +4,8 @@ import { HOME_STRUCTURAL_DATA } from '@/data/portfolio';
 import styles from './HomeExplore.module.css';
 
 /**
- * Editorial directory section linking to the five independent portfolio routes.
+ * Editorial Bento Grid Showcase section linking directly to the five primary portfolio routes:
+ * Projects, About, Journey, Skills, and Contact.
  */
 export function HomeExplore() {
   const { explore } = HOME_STRUCTURAL_DATA;
@@ -19,37 +20,56 @@ export function HomeExplore() {
         <div className={styles.headerRow}>
           <div className={styles.headerLeft}>
             <span className={styles.eyebrow}>
-              <span className={styles.eyebrowRule} aria-hidden="true" />
+              <span className={styles.eyebrowDot} aria-hidden="true" />
               <span>{explore.eyebrow}</span>
             </span>
             <h2 id="home-explore-heading" className={styles.heading}>
-              {explore.heading}
+              Portfolio Directory
             </h2>
           </div>
 
           <span className={styles.dirHint} aria-hidden="true">
-            <span className={styles.linuxDot} />
-            <span>{explore.directoryHint}</span>
+            <span className={styles.dirDot} />
+            <span className={styles.dirText}>{explore.directoryHint}</span>
           </span>
         </div>
 
-        <nav aria-label="Explore portfolio pages">
-          <ul className={styles.list}>
-            {explore.items.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className={styles.rowLink}>
-                  <span className={styles.index}>{item.index}</span>
-                  <span className={styles.label}>{item.label}</span>
-                  <span className={styles.description}>{item.description}</span>
-                  <span className={styles.pathLabel}>{item.pathLabel}</span>
-                  <span className={styles.arrow} aria-hidden="true">
-                    ↗
+        {/* Bento Grid Layout */}
+        <div className={styles.bentoGrid} role="navigation" aria-label="Explore portfolio pages">
+          {explore.items.map((item, index) => {
+            const isFeatured = index === 0; // Projects is featured wide card
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.bentoCard} ${
+                  isFeatured ? styles.bentoFeatured : ''
+                }`}
+              >
+                <div className={styles.cardGlow} aria-hidden="true" />
+
+                <div className={styles.cardTop}>
+                  <div className={styles.indexBadge}>[{item.index}]</div>
+                  <div className={styles.pathLabel}>{item.pathLabel}</div>
+                </div>
+
+                <div className={styles.cardCenter}>
+                  <h3 className={styles.cardTitle}>{item.label}</h3>
+                  <p className={styles.cardDesc}>{item.description}</p>
+                </div>
+
+                <div className={styles.cardBottom}>
+                  <span className={styles.exploreAction}>
+                    Explore Section
                   </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+                  <span className={styles.cardArrow} aria-hidden="true">
+                    →
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </Container>
     </section>
   );

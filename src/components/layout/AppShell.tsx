@@ -12,7 +12,8 @@ interface AppShellProps {
 }
 
 /**
- * Clean layout shell for the multi-page portfolio, hosting the unified upper navigation bar and main content.
+ * Modern layout shell for the developer portfolio, hosting the unified upper navigation bar,
+ * atmospheric ambient background glows, and main content column.
  */
 export function AppShell({
   children,
@@ -21,7 +22,18 @@ export function AppShell({
   isExiting = false,
 }: AppShellProps) {
   return (
-    <div className={`${styles.shell} ${isExiting ? styles.shellExiting : ''}`}>
+    <div
+      className={`${styles.shell} ${styles.portfolioRoot} ${
+        isExiting ? styles.shellExiting : ''
+      }`}
+    >
+      {/* Ambient background atmosphere for portfolio */}
+      <div className={styles.ambientBackdrop} aria-hidden="true">
+        <div className={styles.ambientBlobTop} />
+        <div className={styles.ambientBlobBottom} />
+        <div className={styles.ambientGrid} />
+      </div>
+
       <div className={styles.contentColumn}>
         <TopEdgeBar onEnterOs={onEnterOs} />
 
