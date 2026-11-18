@@ -333,3 +333,19 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* Phase 5 — portfolio theme: anti-FOUC outermost backgrounds */
+html,
+body {
+  background-color: var(--bg-canvas);
+}
+
+html[data-theme='light'] body {
+  background-color: #FAFAF9;
+  color-scheme: light;
+}
+
+html[data-theme='dark'] body {
+  background-color: #171816;
+  color-scheme: dark;
+}

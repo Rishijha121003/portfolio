@@ -41,8 +41,8 @@ export const SITE_IDENTITY: SiteIdentity = {
   firstName: 'RISHI',
   lastName: 'JHA',
   fullName: 'Rishi Jha',
-  rolePlaceholder: 'Title / Role — Pending Confirmation',
-  availabilityPlaceholder: 'Availability — Pending Confirmation',
+  rolePlaceholder: 'Backend-Focused Full Stack Developer',
+  availabilityPlaceholder: 'Open to backend & full-stack opportunities',
   portraitNote: 'Awaiting clean solo portrait',
 };
 

@@ -15,7 +15,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #38bdf8;
+  color: #A16207;
 }
 
 .eyebrow::before {
@@ -23,8 +23,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
+  background-color: #A16207;
   flex-shrink: 0;
 }
 
@@ -34,7 +33,7 @@
   text-transform: uppercase;
   line-height: 1.02;
   letter-spacing: -0.03em;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin: 0;
 }
 
@@ -47,9 +46,7 @@
 }
 
 .accent {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #A16207;
   font-weight: 800;
 }
 
@@ -58,6 +55,6 @@
   font-family: var(--font-inter), sans-serif;
   font-size: 1.0625rem;
   line-height: 1.65;
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin: 0;
 }

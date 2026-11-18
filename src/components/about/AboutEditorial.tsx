@@ -57,14 +57,14 @@ export function AboutEditorial({ embedded = false }: AboutEditorialProps = {}) {
               </PageHeadingTag>
               <div className={styles.identityBadge}>
                 <span className={styles.identityInitials}>{SITE_IDENTITY.initials}</span>
-                <span className={styles.identityRole}>Full Stack Developer</span>
+                <span className={styles.identityRole}>Backend-Focused Full Stack Developer</span>
               </div>
             </div>
 
             <p className={styles.subtitleCopy}>
               Computer Science student at <strong>Sandip University</strong> specializing in{' '}
               <strong>FastAPI</strong>, <strong>React 19</strong>, and <strong>PostgreSQL</strong>.
-              Focused on clean systems architecture, high-throughput APIs, and practical software engineering.
+              Focused on clean systems architecture and practical software engineering.
             </p>
 
             {/* Quick Facts Strip */}
@@ -190,16 +190,16 @@ export function AboutEditorial({ embedded = false }: AboutEditorialProps = {}) {
 
                 <div className={styles.workspaceSpecs}>
                   <div className={styles.specMini}>
-                    <span className={styles.specMiniLabel}>OS</span>
-                    <span className={styles.specMiniVal}>Linux / Fedora</span>
+                    <span className={styles.specMiniLabel}>FOCUS</span>
+                    <span className={styles.specMiniVal}>Backend systems</span>
                   </div>
                   <div className={styles.specMini}>
-                    <span className={styles.specMiniLabel}>EDITOR</span>
-                    <span className={styles.specMiniVal}>VS Code / Neovim</span>
+                    <span className={styles.specMiniLabel}>LANGS</span>
+                    <span className={styles.specMiniVal}>Python · TypeScript · SQL</span>
                   </div>
                   <div className={styles.specMini}>
                     <span className={styles.specMiniLabel}>STACK</span>
-                    <span className={styles.specMiniVal}>Python · TS · SQL</span>
+                    <span className={styles.specMiniVal}>FastAPI · PostgreSQL · SQLAlchemy</span>
                   </div>
                 </div>
               </article>
@@ -250,7 +250,6 @@ export function AboutEditorial({ embedded = false }: AboutEditorialProps = {}) {
               className={`${styles.bentoCard} ${styles.beliefCard}`}
               aria-labelledby={beliefSection.id}
             >
-              <div className={styles.beliefGlowEffect} aria-hidden="true" />
 
               <div className={styles.cardHeader}>
                 <div className={styles.sectionTagRow}>
@@ -318,19 +317,19 @@ export function AboutEditorial({ embedded = false }: AboutEditorialProps = {}) {
 
                 <div className={styles.hobbiesGrid} aria-label="Personal interests">
                   {beyondTechnology.hobbies.map((hobby) => {
-                    let icon = '🎯';
+                    let icon = '01';
                     let desc = 'Focus & discipline';
                     if (hobby === 'Badminton') {
-                      icon = '🏸';
+                      icon = '01';
                       desc = 'Agility & high energy';
                     } else if (hobby === 'Chess') {
-                      icon = '♟️';
+                      icon = '02';
                       desc = 'Strategy & foresight';
                     } else if (hobby === 'Travelling') {
-                      icon = '✈️';
+                      icon = '03';
                       desc = 'Exploration & perspective';
                     } else if (hobby === 'Reading') {
-                      icon = '📚';
+                      icon = '04';
                       desc = 'Ideas & continuous growth';
                     }
                     return (
@@ -377,7 +376,7 @@ export function AboutEditorial({ embedded = false }: AboutEditorialProps = {}) {
                   <div className={styles.targetStackList}>
                     <div className={styles.targetStackItem}>
                       <span className={styles.targetDot} aria-hidden="true" />
-                      <span>Deep mastery of FastAPI, ASGI, and high-throughput REST APIs</span>
+                      <span>Deep mastery of FastAPI, ASGI, and production REST API design</span>
                     </div>
                     <div className={styles.targetStackItem}>
                       <span className={styles.targetDot} aria-hidden="true" />

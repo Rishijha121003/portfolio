@@ -14,7 +14,7 @@ export function SiteFooter() {
           <div className={styles.left}>
             <span className={styles.footerLogoMark} aria-hidden="true">
               <Image
-                src="/images/rj-white.svg"
+                src="/images/rj-black.svg"
                 alt="RJ Monogram"
                 width={15}
                 height={15}

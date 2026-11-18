@@ -1,13 +1,13 @@
 .section {
   width: 100%;
-  padding-block: 3.5rem 4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-block: 2.5rem 3rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   background-color: transparent;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .viewport {
@@ -30,7 +30,7 @@
 }
 
 .viewport:focus-visible {
-  outline: 2px solid #38bdf8;
+  outline: 2px solid var(--accent-linux);
   outline-offset: -2px;
 }
 
@@ -43,15 +43,14 @@
 
 .trackLtr {
   --marquee-gap: 1.5rem;
-  animation: marqueeLtr 42s linear infinite;
+  animation: marqueeLtr 46s linear infinite;
 }
 
 .trackRtl {
   --marquee-gap: 2.25rem;
-  animation: marqueeRtl 32s linear infinite;
+  animation: marqueeRtl 34s linear infinite;
 }
 
-/* Pause corresponding track on hover or keyboard focus */
 .viewport:hover .track,
 .viewport:focus-within .track {
   animation-play-state: paused;
@@ -70,18 +69,18 @@
   flex-shrink: 0;
   width: clamp(260px, 26vw, 380px);
   aspect-ratio: 16 / 10;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background-color: rgba(15, 23, 42, 0.6);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-surface);
   overflow: hidden;
-  transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
 .visualTile:hover {
-  border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(56, 189, 248, 0.2);
-  transform: translateY(-3px);
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
 .tileImage {
@@ -90,15 +89,12 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  filter: contrast(1.05) brightness(0.92);
-  transition:
-    filter 260ms ease,
-    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  filter: contrast(1.05);
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .visualTile:hover .tileImage {
-  filter: contrast(1.1) brightness(1.02);
-  transform: scale(1.035);
+  transform: scale(1.03);
 }
 
 .wordItem {
@@ -108,37 +104,38 @@
   flex-shrink: 0;
 }
 
-.word {
-  font-family: var(--font-plus-jakarta-sans), sans-serif;
-  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+.wordText {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--text-muted);
   white-space: nowrap;
   line-height: 1;
-  transition: color 180ms ease;
+  transition: color 160ms ease;
 }
 
-.wordItem:hover .word {
-  color: #f8fafc;
+.wordItem:hover .wordText {
+  color: var(--text-primary);
 }
 
-.wordAccent {
-  color: #f1f5f9;
-  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.wordTextAccent {
+  color: var(--accent);
 }
 
-.wordDim {
-  color: #475569;
+.repeatFill {
+  /* keeps duplicate slides identical for a seamless loop */
 }
 
-.wordSep {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 1.25rem;
-  color: #334155;
+.groupClone {
+  /* duplicate group used only for the seamless loop */
+}
+
+.wordDivider {
+  font-family: var(--font-mono), monospace;
+  font-size: 1rem;
+  color: var(--border-strong);
   user-select: none;
 }
 

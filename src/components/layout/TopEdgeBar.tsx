@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { PRIMARY_ROUTES, SITE_IDENTITY } from '@/data/portfolio';
 import styles from './TopEdgeBar.module.css';
 
@@ -69,7 +70,7 @@ export function TopEdgeBar() {
             </span>
             <div className={styles.brandTextGroup}>
               <span className={styles.brandName}>{SITE_IDENTITY.fullName}</span>
-              <span className={styles.brandRole}>Full Stack Developer</span>
+              <span className={styles.brandRole}>Backend-Focused Full Stack Developer</span>
             </div>
           </Link>
 
@@ -107,16 +108,15 @@ export function TopEdgeBar() {
               <span className={styles.availabilityText}>Available</span>
             </div>
 
+            <ThemeToggle />
+
             <Link
               href="/os"
               className={styles.osSwitchButton}
-              title="Open RISHI OS simulated interactive workspace"
-              aria-label="Open RISHI OS"
+              title="Open RISHI OS — simulated developer workspace"
+              aria-label="Open RISHI OS — simulated developer workspace"
             >
-              <span className={styles.osIcon} aria-hidden="true">
-                ❖
-              </span>
-              <span>Open RISHI OS</span>
+              <span>RISHI OS</span>
               <span className={styles.arrow} aria-hidden="true">
                 ↗
               </span>
@@ -226,12 +226,9 @@ export function TopEdgeBar() {
                       href="/os"
                       className={styles.mobileOsBtn}
                       onClick={() => setMobileMenuOpen(false)}
-                      aria-label="Open RISHI OS Workspace"
+                      aria-label="Open RISHI OS — simulated workspace"
                     >
-                      <span className={styles.mobileOsIcon} aria-hidden="true">
-                        ❖
-                      </span>
-                      <span>Open RISHI OS Workspace</span>
+                      <span>RISHI OS</span>
                       <span className={styles.mobileNavArrow} aria-hidden="true">
                         ↗
                       </span>

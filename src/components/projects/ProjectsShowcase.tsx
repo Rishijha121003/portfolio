@@ -39,7 +39,7 @@ function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
               <span className={styles.dotYellow} />
               <span className={styles.dotGreen} />
             </div>
-            <span className={styles.browserUrl}>dormiq.app/hostel-allotment</span>
+            <span className={styles.browserUrl}>dormiq · hostel / allotment</span>
           </div>
           <div className={styles.mockupContent}>
             <div className={styles.pipelineRow}>
@@ -66,7 +66,7 @@ function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
               <span className={styles.dotYellow} />
               <span className={styles.dotGreen} />
             </div>
-            <span className={styles.browserUrl}>api.assignflow.dev/speedgrader</span>
+            <span className={styles.browserUrl}>assignflow · speedgrader</span>
           </div>
           <div className={styles.mockupContent}>
             <div className={styles.pipelineRow}>
@@ -93,21 +93,21 @@ function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
               <span className={styles.dotYellow} />
               <span className={styles.dotGreen} />
             </div>
-            <span className={styles.browserUrl}>lifeos.workspace/dashboard</span>
+            <span className={styles.browserUrl}>lifeos · plan / today</span>
           </div>
           <div className={styles.mockupContent}>
             <div className={styles.statMiniGrid}>
               <div className={styles.miniStat}>
-                <span className={styles.miniLabel}>Weekly Focus</span>
-                <span className={styles.miniValue}>94.2%</span>
+                <span className={styles.miniLabel}>TASK VIEWS</span>
+                <span className={styles.miniValue}>Today · Upcoming</span>
               </div>
               <div className={styles.miniStat}>
-                <span className={styles.miniLabel}>Active Tasks</span>
-                <span className={styles.miniValue}>18 Done</span>
+                <span className={styles.miniLabel}>PLANNING ENGINE</span>
+                <span className={styles.miniValue}>Deterministic V2</span>
               </div>
               <div className={styles.miniStat}>
-                <span className={styles.miniLabel}>FastAPI Sync</span>
-                <span className={styles.miniValueSuccess}>Connected</span>
+                <span className={styles.miniLabel}>BACKEND</span>
+                <span className={styles.miniValueSuccess}>FastAPI · SQLAlchemy 2</span>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@ function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
               <span className={styles.dotYellow} />
               <span className={styles.dotGreen} />
             </div>
-            <span className={styles.browserUrl}>finora.finance/cashflow</span>
+            <span className={styles.browserUrl}>finora · cashflow</span>
           </div>
           <div className={styles.mockupContent}>
             <div className={styles.finBarChart}>
@@ -146,13 +146,13 @@ function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
               <span className={styles.dotYellow} />
               <span className={styles.dotGreen} />
             </div>
-            <span className={styles.browserUrl}>support.campus/tickets/queue</span>
+            <span className={styles.browserUrl}>campus · complaints</span>
           </div>
           <div className={styles.mockupContent}>
             <div className={styles.ticketPillRow}>
-              <span className={styles.ticketBadgeNew}>Ticket #1042</span>
-              <span className={styles.ticketRole}>Warden Review</span>
-              <span className={styles.ticketStatusResolved}>Resolved</span>
+              <span className={styles.ticketBadgeNew}>Ticket queue</span>
+              <span className={styles.ticketRole}>Student</span>
+              <span className={styles.ticketStatusResolved}>Status tracking</span>
             </div>
           </div>
         </div>
@@ -166,11 +166,11 @@ function ProjectVisualMockup({ project }: { project: ProjectRecord }) {
               <span className={styles.dotYellow} />
               <span className={styles.dotGreen} />
             </div>
-            <span className={styles.browserUrl}>api.endpoints/v1</span>
+            <span className={styles.browserUrl}>django · posts</span>
           </div>
           <div className={styles.mockupContent}>
             <div className={styles.codeSnippetRow}>
-              <code>GET /api/v1/{project.slug} → 200 OK</code>
+              <code>urls.py — structured URL routing</code>
             </div>
           </div>
         </div>

@@ -68,7 +68,7 @@ export function HomeIntroduction({
                 <div className={styles.pillarInfo}>
                   <h3 className={styles.pillarTitle}>Backend Architecture</h3>
                   <p className={styles.pillarDesc}>
-                    FastAPI, PostgreSQL & typed schemas designed for reliability and speed.
+                    FastAPI, PostgreSQL & typed schemas designed for reliability.
                   </p>
                 </div>
               </div>
@@ -78,7 +78,7 @@ export function HomeIntroduction({
                 <div className={styles.pillarInfo}>
                   <h3 className={styles.pillarTitle}>Modern Web UI</h3>
                   <p className={styles.pillarDesc}>
-                    React 19 & Next.js delivering fluid interfaces and responsive glass depth.
+                    React 19 & Next.js delivering fast, accessible web interfaces.
                   </p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export function HomeIntroduction({
                 <div className={styles.pillarInfo}>
                   <h3 className={styles.pillarTitle}>Pragmatic Execution</h3>
                   <p className={styles.pillarDesc}>
-                    Hackathon Top 3 validated problem solving with real-world products.
+                    Third place at the Cheque Mate pitch competition.
                   </p>
                 </div>
               </div>

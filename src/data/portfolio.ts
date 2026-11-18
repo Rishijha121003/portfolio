@@ -42,16 +42,6 @@ export const PRIMARY_ROUTES: readonly RouteNavItem[] = [
   { index: '06', label: 'Contact', href: '/contact', breadcrumbLabel: 'CONTACT' },
 ];
 
-export const NAV_SOCIAL_PLACEHOLDERS: readonly {
-  label: string;
-  statusLabel: string;
-  icon: 'github' | 'linkedin' | 'x';
-}[] = [
-  { label: 'GitHub', statusLabel: 'Pending verification', icon: 'github' },
-  { label: 'LinkedIn', statusLabel: 'Pending verification', icon: 'linkedin' },
-  { label: 'X', statusLabel: 'Pending verification', icon: 'x' },
-];
-
 export const DUAL_MARQUEE_DATA: DualMarqueeData = {
   visualTrackLabel: 'Project visual showcase',
   visualTiles: [
@@ -75,14 +65,14 @@ export const HOME_STRUCTURAL_DATA: HomeStructuralContent = {
     sectionLabel: 'PORTFOLIO',
     greeting: "Hey, I'm",
     displayName: 'Rishi Jha',
-    rolePlaceholder: 'Computer Science Student | Aspiring Full Stack Developer',
+    rolePlaceholder: 'Backend-Focused Full Stack Developer',
     tagline: 'Learning. Building. Improving.',
     exploreLabel: 'EXPLORE',
     scrollLabel: 'SCROLL',
   },
   introduction: {
     eyebrow: '03 / INTRODUCTION',
-    statusLabel: 'STUDENT // DEVELOPER',
+    statusLabel: 'OPEN TO BACKEND & FULL-STACK ROLES',
     headingLead: 'LEARNING.',
     headingIndent: 'BUILDING. IMPROVING.',
     lines: [
@@ -139,10 +129,10 @@ export const HOME_STRUCTURAL_DATA: HomeStructuralContent = {
     metaPath: '~/contact',
     heading: 'HAVE SOMETHING IN MIND?',
     statementPlaceholder:
-      'Supporting note placeholder — final conversation and inquiry copy pending confirmation.',
+      'Building backend-focused applications with Python, FastAPI and PostgreSQL. Open to backend and full-stack opportunities.',
     ctaLabel: 'GET IN TOUCH',
     ctaHref: '/contact',
   },
 };
 
-export const FOOTER_STATUS_TEXT = 'RISHI OS // A Developer’s Workspace';
+export const FOOTER_STATUS_TEXT = 'Backend-Focused Full Stack Developer';

@@ -1,6 +1,6 @@
 .footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  background-color: rgba(7, 9, 14, 0.95);
+  border-top: 1px solid var(--border);
+  background-color: var(--bg-canvas);
   padding-block: 1.75rem;
   position: relative;
   z-index: 10;
@@ -20,7 +20,7 @@
   gap: 10px;
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.8125rem;
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 .footerLogoMark {
@@ -30,16 +30,15 @@
   width: 26px;
   height: 26px;
   border-radius: 6px;
-  background-color: rgba(22, 33, 53, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(244, 242, 236, 0.6);
+  border: 1px solid var(--border);
   opacity: 0.85;
   transition: all 180ms ease;
 }
 
 .footer:hover .footerLogoMark {
   opacity: 1;
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+  border-color: rgba(161, 98, 7, 0.4);
 }
 
 .footerLogoImg {
@@ -50,11 +49,11 @@
 
 .brandInitials {
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .slash {
-  color: #475569;
+  color: var(--text-muted);
 }
 
 .right {
@@ -65,14 +64,17 @@
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .marker {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: #10b981;
-  box-shadow: 0 0 8px #10b981;
+  background-color: #A16207;
   flex-shrink: 0;
+}
+
+:global(html[data-theme='dark']) .footerLogoImg {
+  filter: invert(1);
 }

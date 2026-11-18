@@ -1,191 +1,150 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './HomeHero.module.css';
 
 /**
- * Modern Developer Hero — Rishi Jha // Full Stack & Systems Developer
- * Highlights individual engineering strengths, FastAPI & React 19 stack,
- * and clean systems architecture.
+ * Homepage hero — Print Editorial Developer Portfolio.
+ * Left: eyebrow (exact professional headline), serif H1, proof strip.
+ * Right: editorial dossier index card with verified facts only.
  */
 export function HomeHero() {
   return (
     <section className={styles.section} aria-labelledby="home-hero-heading">
-      {/* Background depth & ambient glow */}
-      <div className={styles.gridOverlay} aria-hidden="true" />
-      <div className={styles.ambientGlow} aria-hidden="true" />
-
       <div className={styles.stage}>
-        {/* Top Technical Metadata Bar */}
-        <header className={styles.topMetaBar} aria-label="System Identity Header">
-          <div className={styles.topMetaLeft}>
-            <span className={styles.statusBeacon} aria-hidden="true" />
-            <span className={styles.statusText}>AVAILABLE FOR OPPORTUNITIES</span>
-            <span className={styles.metaDivider} aria-hidden="true">
-              ·
-            </span>
-            <span className={styles.systemTag}>B.Tech CSE @ Sandip University</span>
-          </div>
-
-          <div className={styles.topMetaRight} aria-hidden="true">
-            <span className={styles.mottoTag}>Dream</span>
-            <span className={styles.mottoDot}>•</span>
-            <span className={styles.mottoTag}>Code</span>
-            <span className={styles.mottoDot}>•</span>
-            <span className={styles.mottoTag}>Build</span>
-          </div>
+        {/* Editorial identity bar — a hairline, not a capsule */}
+        <header className={styles.metaBar} aria-label="Availability">
+          <span className={styles.metaDot} aria-hidden="true" />
+          <span className={styles.metaText}>AVAILABLE FOR OPPORTUNITIES</span>
+          <span className={styles.metaSep} aria-hidden="true">
+            ·
+          </span>
+          <span className={styles.metaFaint}>
+            B.Tech CSE @ Sandip University
+          </span>
         </header>
 
-        {/* Hero Body Split: Left Identity + Right Interactive Developer Dossier Card */}
+        {/* Asymmetric hero split */}
         <div className={styles.heroBody}>
           <div className={styles.identityCol}>
-            {/* Role Category Badge */}
-            <div className={styles.badgeWrapper}>
-              <div className={styles.roleBadge}>
-                <span className={styles.roleSparkle} aria-hidden="true">
-                  ✨
-                </span>
-                <span>Full Stack &amp; Backend Engineer</span>
-              </div>
-            </div>
+            <p className={styles.eyebrow}>Backend-Focused Full Stack Developer</p>
 
-            {/* Monumental Headline */}
-            <div className={styles.headingGroup}>
-              <h1 id="home-hero-heading" className={styles.nameHeading}>
-                Building scalable backends &amp; modern web products.
-              </h1>
+            <h1 id="home-hero-heading" className={styles.headline}>
+              Building scalable backends
+              <br />&amp; modern web products.
+            </h1>
 
-              <p className={styles.statementText}>
-                Hi, I&apos;m <strong>Rishi Jha</strong> — a Computer Science student at{' '}
-                <strong>Sandip University</strong> specializing in <strong>FastAPI</strong>,{' '}
-                <strong>React 19</strong>, and <strong>PostgreSQL</strong>. Focused on clean
-                architecture, high-throughput APIs, and practical software applications.
-              </p>
+            <p className={styles.statement}>
+              I&apos;m <strong>Rishi Jha</strong> — a Computer Science student at{' '}
+              <strong>Sandip University</strong> building backend systems with{' '}
+              <strong>Python</strong>, <strong>FastAPI</strong> and{' '}
+              <strong>PostgreSQL</strong>, with a bias for clean architecture and
+              real data integrity.
+            </p>
 
-              <div className={styles.taglineRow} aria-label="Core technologies">
-                <span className={styles.taglinePill}>FastAPI</span>
-                <span className={styles.taglinePill}>React 19</span>
-                <span className={styles.taglinePill}>Next.js</span>
-                <span className={styles.taglinePill}>PostgreSQL</span>
-                <span className={styles.taglinePill}>TypeScript</span>
-                <span className={styles.taglinePill}>Python</span>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
             <div className={styles.actionRow}>
-              <a href="#home-explore" className={styles.primaryCta}>
-                <span>Explore Work</span>
-                <span className={styles.ctaArrow} aria-hidden="true">
-                  ↓
-                </span>
-              </a>
-
-              <Link
-                href="/os"
+              <Link href="/projects/assignflow" className={styles.primaryCta}>
+                View AssignFlow
+                <span aria-hidden="true">→</span>
+              </Link>
+              <a
+                href="https://github.com/Rishijha121003"
                 className={styles.secondaryCta}
-                title="Launch RISHI OS simulated developer workspace"
+                target="_blank"
+                rel="noreferrer"
               >
-                <span className={styles.osWindowIcon} aria-hidden="true">
-                  ❖
-                </span>
-                <span>Launch RISHI OS</span>
-                <span className={styles.ctaArrow} aria-hidden="true">
-                  ↗
-                </span>
-              </Link>
-
-              <Link href="/contact" className={styles.tertiaryCta}>
-                <span>Contact Me</span>
-              </Link>
+                GitHub
+                <span aria-hidden="true">↗</span>
+              </a>
             </div>
+
+            <p className={styles.proofStrip} aria-label="Core technologies">
+              FastAPI · PostgreSQL · SQLAlchemy 2 · Alembic · JWT cookie auth
+              <br />
+              row-level locking · on-demand ZIP packaging · CSV formula-injection sanitization ·
+              Pytest
+            </p>
           </div>
 
-          {/* Right Supporting Visual: Developer Engineering Dossier Card */}
-          <div className={styles.visualCol}>
-            <div className={styles.spotlightCard}>
-              {/* Card Top Header */}
-              <div className={styles.cardHeader}>
-                <div className={styles.cardDossierTag}>
-                  <span className={styles.dossierDot} aria-hidden="true" />
-                  <span>DEVELOPER DOSSIER</span>
-                </div>
-                <span className={styles.cardBadgeSub}>Sandip University</span>
-              </div>
-
-              {/* Central Emblem Showcase */}
-              <div className={styles.emblemContainer}>
-                <div className={styles.emblemGlow} aria-hidden="true" />
-                <Image
-                  src="/images/rj-primary.svg"
-                  alt="RJ Geometric Emblem"
-                  width={140}
-                  height={140}
-                  priority
-                  className={styles.emblemImage}
-                />
-              </div>
-
-              <div className={styles.dossierIdentity}>
-                <span className={styles.dossierName}>RISHI JHA</span>
-                <span className={styles.dossierRole}>Full Stack &amp; Backend Developer</span>
-              </div>
-
-              {/* Technical Specifications Grid */}
-              <div className={styles.specsGrid}>
-                <div className={styles.specItem}>
-                  <span className={styles.specLabel}>EDUCATION</span>
-                  <span className={styles.specValue}>B.Tech CSE (4th Year)</span>
-                </div>
-                <div className={styles.specItem}>
-                  <span className={styles.specLabel}>CORE STACK</span>
-                  <span className={styles.specValueHighlight}>FastAPI &amp; PostgreSQL</span>
-                </div>
-                <div className={styles.specItem}>
-                  <span className={styles.specLabel}>LOCATION</span>
-                  <span className={styles.specValue}>Darbhanga, Bihar</span>
-                </div>
-                <div className={styles.specItem}>
-                  <span className={styles.specLabel}>STATUS</span>
-                  <span className={styles.specValueOnline}>● Open to Roles</span>
-                </div>
-              </div>
-
-              <div className={styles.spotlightFooter}>
-                <Link href="/projects" className={styles.caseStudyLink}>
-                  <span>Explore Projects Directory</span>
-                  <span aria-hidden="true">→</span>
-                </Link>
+          {/* Right column — editorial dossier index card */}
+          <aside className={styles.dossier} aria-label="Current work and background">
+            <div className={styles.dossierHead}>
+              <Image
+                src="/images/rj-primary.svg"
+                alt="RJ monogram"
+                width={40}
+                height={40}
+                priority
+                className={styles.dossierMark}
+              />
+              <div className={styles.dossierHeadText}>
+                <span className={styles.dossierName}>Rishi Jha</span>
+                <span className={styles.dossierRole}>
+                  Backend-Focused Full Stack Developer
+                </span>
               </div>
             </div>
-          </div>
+
+            <dl className={styles.dossierRows}>
+              <div className={styles.dossierRow}>
+                <dt>EDUCATION</dt>
+                <dd>B.Tech CSE · Sandip University · 4th year</dd>
+              </div>
+              <div className={styles.dossierRow}>
+                <dt>BUILDING</dt>
+                <dd>
+                  AssignFlow — assignment lifecycle workflow, FastAPI ·
+                  SQLAlchemy 2 · PostgreSQL
+                </dd>
+              </div>
+              <div className={styles.dossierRow}>
+                <dt>SHIPPED</dt>
+                <dd>
+                  DormiQ — hostel allocation system · Team Impact Crew · 3rd,
+                  Cheque Mate pitch
+                </dd>
+              </div>
+              <div className={styles.dossierRow}>
+                <dt>CERTIFIED</dt>
+                <dd>HackerRank SQL certification</dd>
+              </div>
+              <div className={styles.dossierRow}>
+                <dt>BASE</dt>
+                <dd>Darbhanga, Bihar · India</dd>
+              </div>
+              <div className={styles.dossierRow}>
+                <dt>STATUS</dt>
+                <dd className={styles.statusValue}>Open to backend &amp; full-stack roles</dd>
+              </div>
+            </dl>
+
+            <Link href="/projects" className={styles.dossierLink}>
+              Browse all projects
+              <span aria-hidden="true">→</span>
+            </Link>
+          </aside>
         </div>
 
-        {/* Bottom Metrics Bar */}
-        <footer className={styles.bottomStatsBar} aria-label="Key Highlights">
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>FastAPI &amp; APIs</span>
-            <span className={styles.metricLabel}>High-throughput Backends</span>
-          </div>
-          <div className={styles.metricDivider} aria-hidden="true" />
-
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>React 19 &amp; Next.js</span>
-            <span className={styles.metricLabel}>Modern Web Applications</span>
-          </div>
-          <div className={styles.metricDivider} aria-hidden="true" />
-
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>B.Tech CSE</span>
-            <span className={styles.metricLabel}>Sandip University</span>
-          </div>
-          <div className={styles.metricDivider} aria-hidden="true" />
-
-          <div className={styles.metricItem}>
-            <span className={styles.metricValue}>RISHI OS</span>
-            <span className={styles.metricLabel}>Interactive Desktop Web OS</span>
-          </div>
+        {/* Bottom mono strip — verified facts only */}
+        <footer className={styles.stripBar} aria-label="Highlights">
+          <span className={styles.stripItem}>
+            <strong>FastAPI · PostgreSQL · SQLAlchemy 2</strong>
+            <em>backend systems</em>
+          </span>
+          <span className={styles.stripSep} aria-hidden="true" />
+          <span className={styles.stripItem}>
+            <strong>DormiQ — 3rd</strong>
+            <em>Cheque Mate pitch</em>
+          </span>
+          <span className={styles.stripSep} aria-hidden="true" />
+          <span className={styles.stripItem}>
+            <strong>AssignFlow</strong>
+            <em>in progress · local development</em>
+          </span>
+          <span className={styles.stripSep} aria-hidden="true" />
+          <span className={styles.stripItem}>
+            <strong>RISHI OS</strong>
+            <em>simulated workspace</em>
+          </span>
         </footer>
       </div>
     </section>

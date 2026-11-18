@@ -1,49 +1,49 @@
 .portfolioRoot {
-  /* Scoped Portfolio Typography */
-  --font-display: var(--font-plus-jakarta-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Scoped Portfolio Typography — Print Editorial System */
+  --font-display: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-plus-jakarta-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
 
-  /* Scoped Modern Obsidian Theme Surfaces */
-  --bg-canvas: #07090e;
-  --bg-secondary: #0c1017;
-  --bg-surface: rgba(13, 19, 32, 0.75);
-  --bg-elevated: rgba(22, 33, 54, 0.85);
-  --bg-inset: rgba(10, 14, 24, 0.88);
-  --bg-panel: rgba(11, 16, 27, 0.9);
+  /* Scoped Paper Surfaces */
+  --bg-canvas: #FAFAF9;
+  --bg-secondary: #F4F2EC;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-inset: #EDEAE3;
+  --bg-panel: #FFFFFF;
 
-  /* Scoped Borders & Highlights */
-  --border: rgba(255, 255, 255, 0.09);
-  --border-subtle: rgba(255, 255, 255, 0.05);
-  --border-strong: rgba(56, 189, 248, 0.35);
+  /* Scoped Hairlines */
+  --border: #E7E4DC;
+  --border-subtle: rgba(28, 25, 23, 0.08);
+  --border-strong: rgba(28, 25, 23, 0.18);
 
-  /* Scoped Vibrant Cyan Accents */
-  --accent: #f8fafc;
-  --accent-linux: #38bdf8;
-  --accent-linux-bright: #7dd3fc;
-  --accent-linux-soft: rgba(56, 189, 248, 0.15);
-  --accent-linux-border: rgba(56, 189, 248, 0.35);
-  --accent-linux-glow: rgba(56, 189, 248, 0.25);
-  --accent-secondary: #818cf8;
-  --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+  /* Scoped Amber Accents — restrained: links, indexes, small highlights */
+  --accent: #A16207;
+  --accent-linux: #A16207;
+  --accent-linux-bright: #A16207;
+  --accent-linux-soft: rgba(161, 98, 7, 0.09);
+  --accent-linux-border: rgba(161, 98, 7, 0.30);
+  --accent-linux-glow: transparent;
+  --accent-secondary: #6E6A63;
+  --accent-gradient: #A16207;
 
   /* Scoped Typography Ink */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #1C1917;
+  --text-secondary: #4A4742;
+  --text-muted: #6E6A63;
 
-  /* Scoped Glass & Shadows */
-  --glass-bg: rgba(13, 19, 32, 0.78);
-  --glass-bg-strong: rgba(10, 15, 26, 0.92);
-  --glass-border: rgba(56, 189, 248, 0.22);
-  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --shadow-panel: 0 20px 48px rgba(0, 0, 0, 0.75);
+  /* Scoped Shadows — flat, minimal */
+  --glass-bg: #FFFFFF;
+  --glass-bg-strong: #FFFFFF;
+  --glass-border: #E7E4DC;
+  --glass-highlight: none;
+  --shadow-panel: 0 1px 2px rgba(28, 25, 23, 0.06), 0 8px 24px rgba(28, 25, 23, 0.05);
 
-  /* Radii */
-  --radius-xs: 8px;
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  /* Radii — small, restrained */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
   --radius-pill: 9999px;
 
   background-color: var(--bg-canvas);
@@ -71,59 +71,6 @@
   pointer-events: none;
 }
 
-/* Ambient Backdrop Atmosphere Glows */
-.ambientBackdrop {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.ambientBlobTop {
-  position: absolute;
-  top: -160px;
-  left: 20%;
-  width: 650px;
-  height: 650px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(56, 189, 248, 0.08) 0%,
-    rgba(99, 102, 241, 0.04) 50%,
-    transparent 70%
-  );
-  filter: blur(90px);
-}
-
-.ambientBlobBottom {
-  position: absolute;
-  bottom: 10%;
-  right: 15%;
-  width: 700px;
-  height: 700px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(99, 102, 241, 0.07) 0%,
-    rgba(56, 189, 248, 0.03) 50%,
-    transparent 70%
-  );
-  filter: blur(100px);
-}
-
-.ambientGrid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
-  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
-  opacity: 0.8;
-}
-
 .contentColumn {
   position: relative;
   z-index: 1;
@@ -136,4 +83,42 @@
 .main {
   flex: 1;
   min-width: 0;
+}
+
+/* Phase 5 — Dark Editorial theme: flips portfolio tokens only */
+:global(html[data-theme='dark']) .portfolioRoot {
+  --bg-canvas: #171816;
+  --bg-secondary: #272823;
+  --bg-surface: #20211E;
+  --bg-elevated: #272823;
+  --bg-inset: #272823;
+  --bg-panel: #20211E;
+
+  --border: #383931;
+  --border-subtle: rgba(242, 240, 233, 0.08);
+  --border-strong: rgba(242, 240, 233, 0.18);
+
+  --accent: #D6A64B;
+  --accent-linux: #D6A64B;
+  --accent-linux-bright: #D6A64B;
+  --accent-linux-soft: rgba(214, 166, 75, 0.12);
+  --accent-linux-border: rgba(214, 166, 75, 0.32);
+  --accent-linux-glow: transparent;
+  --accent-secondary: #96938A;
+  --accent-gradient: #D6A64B;
+
+  --text-primary: #F2F0E9;
+  --text-secondary: #C2BFB5;
+  --text-muted: #96938A;
+
+  --glass-bg: #20211E;
+  --glass-bg-strong: #272823;
+  --glass-bg-subtle: #272823;
+  --glass-border: #383931;
+  --glass-highlight: none;
+  --shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.5), 0 14px 38px rgba(0, 0, 0, 0.35);
+
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  color-scheme: dark;
 }

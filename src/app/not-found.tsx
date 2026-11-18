@@ -10,7 +10,7 @@ export default function NotFound() {
     <section className={styles.section} aria-labelledby="not-found-heading">
       <div className={styles.titleBar}>
         <span className={styles.dot} aria-hidden="true" />
-        <span>404 — Route Not Found :: /dev/null</span>
+        <span>404 — Route Not Found</span>
       </div>
 
       <div className={styles.frame}>
@@ -24,8 +24,8 @@ export default function NotFound() {
         />
 
         <p className={styles.description}>
-          The requested path does not match an available route or virtual window in
-          RISHI OS. Return to the Home welcome workspace or open Projects.
+          Nothing lives at this path. Head back to the portfolio home or
+          browse the projects directory.
         </p>
 
         <div className={styles.actions}>

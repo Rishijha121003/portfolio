@@ -8,7 +8,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background:
-    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.04), transparent 68%),
+    radial-gradient(circle at 50% 46%, var(--bg-inset), transparent 68%),
     var(--bg-surface);
   overflow: hidden;
 }

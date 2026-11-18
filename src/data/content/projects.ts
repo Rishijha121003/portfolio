@@ -120,12 +120,12 @@ export const PROJECT_RECORDS: readonly ProjectRecord[] = [
       'Bulk grade release.',
       'Instructor analytics.',
       'Student deadlines and agenda.',
-      'ZIP streaming and CSV formula-injection sanitization.',
+      'On-demand ZIP packaging of student submissions and CSV formula-injection sanitization.',
       'Database migrations and automated tests (Pytest documented in README; test count not independently verified in this repository).',
     ],
     technicalHighlights: [
       'Draft vs. Release grading state separation before publishing student marks.',
-      'Document preview and multi-format submission handling with ZIP streaming & CSV formula-injection sanitization.',
+      'Document preview and multi-format submission handling with on-demand ZIP packaging & CSV formula-injection sanitization.',
       'Strict submission ownership isolation per enrolled student.',
       'Concurrency control using PostgreSQL database row-level locking.',
     ],
@@ -490,7 +490,7 @@ export function getProjectMarkdownLines(project: ProjectRecord): readonly string
     '## Technology Stack',
     ...(project.technologies.length > 0
       ? [project.technologies.join(' · ')]
-      : [project.technologiesNote ?? 'Pending confirmation.']),
+      : [project.technologiesNote ?? 'Stack details pending confirmation.']),
     '',
     `## ${project.featuresHeading}`,
     ...project.features.map((f) => `- ${f}`),
@@ -527,6 +527,6 @@ export const DORMIQ_MARKDOWN_FILES = {
   links: [
     `# ${DORMIQ_CASE_STUDY.title} — Project Links`,
     `- Case Study Route: ${DORMIQ_RECORD.detailRoute}`,
-    '- Repository / Live Demo links: Not configured in this portfolio build.',
+    `- Repository: Not published publicly yet`,
   ],
 };

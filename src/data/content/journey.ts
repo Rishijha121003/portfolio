@@ -83,7 +83,7 @@ export const JOURNEY_ENTRIES: readonly JourneyRecord[] = [
     period: 'Future Vision',
     status: 'In Progress',
     title: 'Future Goal',
-    subtitle: 'Aspiring Full Stack Developer',
+    subtitle: 'Backend-Focused Full Stack Developer',
     iconType: 'rocket',
     detail:
       'My goal is to become a Full Stack Developer, build useful applications, and develop the skills to independently turn ideas into reliable software.',

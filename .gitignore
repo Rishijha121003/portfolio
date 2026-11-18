@@ -33,3 +33,7 @@ next-env.d.ts
 .env.local
 .env.*
 !.env.example
+
+# Vendored agent tooling & local preview config (not portfolio code)
+.agents/
+.claude/launch.json

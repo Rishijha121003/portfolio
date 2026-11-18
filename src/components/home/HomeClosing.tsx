@@ -17,8 +17,6 @@ export function HomeClosing() {
     >
       <Container>
         <div className={styles.ctaCard}>
-          <div className={styles.cardGlow} aria-hidden="true" />
-
           <div className={styles.topMeta}>
             <span className={styles.eyebrow}>
               <span className={styles.eyebrowDot} aria-hidden="true" />

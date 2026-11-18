@@ -11,8 +11,8 @@ interface AppShellProps {
 }
 
 /**
- * Modern layout shell for the developer portfolio, hosting the unified upper navigation bar,
- * atmospheric ambient background glows, and main content column.
+ * Editorial layout shell for the portfolio — hosts the unified upper navigation bar,
+ * the content column, and the footer. RISHI OS renders outside this shell.
  */
 export function AppShell({
   children,
@@ -25,13 +25,6 @@ export function AppShell({
         isExiting ? styles.shellExiting : ''
       }`}
     >
-      {/* Ambient background atmosphere for portfolio */}
-      <div className={styles.ambientBackdrop} aria-hidden="true">
-        <div className={styles.ambientBlobTop} />
-        <div className={styles.ambientBlobBottom} />
-        <div className={styles.ambientGrid} />
-      </div>
-
       <div className={styles.contentColumn}>
         <TopEdgeBar />
 

@@ -6,14 +6,14 @@ import { HomeHero } from '@/components/home/HomeHero';
 import { HomeIntroduction } from '@/components/home/HomeIntroduction';
 
 export const metadata: Metadata = {
-  title: 'Rishi Jha — Home',
+  title: 'Backend-Focused Full Stack Developer',
   alternates: { canonical: '/' },
   description:
-    'RISHI OS — A Developer’s Workspace & Monochrome Portfolio of Rishi Jha.',
+    'Backend-Focused Full Stack Developer building with Python, FastAPI, PostgreSQL and SQLAlchemy 2 — projects, case studies and journey of Rishi Jha.',
   openGraph: {
-    title: 'Rishi Jha — Portfolio & RISHI OS',
+    title: 'Rishi Jha — Backend-Focused Full Stack Developer',
     description:
-      'Linux-inspired RISHI OS workspace and multi-page developer portfolio of Rishi Jha.',
+      'Backend-Focused Full Stack Developer building with Python, FastAPI, PostgreSQL and SQLAlchemy 2 — projects and case studies of Rishi Jha.',
     type: 'website',
   },
 };

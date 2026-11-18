@@ -421,7 +421,7 @@ export const VIRTUAL_FS: Record<string, VirtualFsNode> = {
     path: '/home/rishi/Projects/DormiQ/tech-stack.md',
     fileType: 'text',
     sizeLabel: '210 B',
-    summary: 'Technology stack status (pending confirmation).',
+    summary: 'DormiQ technology stack reference document.',
     contentLines: DORMIQ_MARKDOWN_FILES.techStack,
     launchAction: {
       label: 'Open DormiQ Case Study',
@@ -481,7 +481,7 @@ export const VIRTUAL_FS: Record<string, VirtualFsNode> = {
     path: '/home/rishi/Projects/DormiQ/links.md',
     fileType: 'text',
     sizeLabel: '210 B',
-    summary: 'Repository & external links (pending verification).',
+    summary: 'Project repository & external links document.',
     contentLines: DORMIQ_MARKDOWN_FILES.links,
     launchAction: {
       label: 'Open DormiQ Case Study',

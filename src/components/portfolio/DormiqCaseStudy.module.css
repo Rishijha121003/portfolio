@@ -41,7 +41,7 @@
 }
 
 .backLink:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--bg-inset);
 }
 
 .statusPill {
@@ -92,10 +92,7 @@
   line-height: 1.02;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #f8fafc;
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
 }
 
 .subtitle {
@@ -125,7 +122,7 @@
   padding: 4px 9px;
   border-radius: var(--radius-xs);
   border: var(--border-thin) solid var(--border-subtle);
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--bg-inset);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   color: var(--text-secondary);
