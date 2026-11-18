@@ -12,6 +12,9 @@ export function QuickSettingsPanel() {
     quickSettingsOpen,
     setQuickSettingsOpen,
     themeId,
+    themeMode,
+    setThemeMode,
+    resolvedAppearance,
     wallpaperId,
     simulatedBrightness,
     setSimulatedBrightness,
@@ -62,18 +65,25 @@ export function QuickSettingsPanel() {
         </div>
 
         <div className={styles.tilesGrid}>
-          {/* Color Theme */}
+          {/* Appearance Mode */}
           <button
             type="button"
             className={`${styles.tile} ${styles.tileActive}`}
             onClick={() => {
-              setQuickSettingsOpen(false);
-              openSettings('appearance', 'theme');
+              const nextMode =
+                themeMode === 'system'
+                  ? 'light'
+                  : themeMode === 'light'
+                    ? 'dark'
+                    : 'system';
+              setThemeMode(nextMode);
             }}
-            title="Configure Color Theme"
+            title={`Toggle Theme Mode (Current: ${themeMode})`}
           >
             <div className={styles.tileTop}>
-              <span className={styles.tileIcon}>🎨</span>
+              <span className={styles.tileIcon}>
+                {themeMode === 'system' ? '💻' : resolvedAppearance === 'light' ? '☀️' : '🌙'}
+              </span>
               <span
                 style={{
                   width: '10px',
@@ -84,8 +94,12 @@ export function QuickSettingsPanel() {
                 }}
               />
             </div>
-            <span className={styles.tileLabel}>{currentTheme.name}</span>
-            <span className={styles.tileSub}>Color Theme</span>
+            <span className={styles.tileLabel}>
+              {themeMode === 'system' ? `Auto (${resolvedAppearance})` : currentTheme.shortName}
+            </span>
+            <span className={styles.tileSub}>
+              {themeMode === 'system' ? 'System Theme' : `${themeMode.toUpperCase()} Mode`}
+            </span>
           </button>
 
           {/* Wallpaper */}

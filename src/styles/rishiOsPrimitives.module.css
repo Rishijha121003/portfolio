@@ -1,0 +1,296 @@
+/* ===================================================================== */
+/* RISHI OS — Reusable Component Standards & Foundation Primitives      */
+/* Clean, subtle, modern minimal OS component visual specifications     */
+/* ===================================================================== */
+
+/* --- 1. Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 34px;
+  padding-inline: var(--space-3-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary Amber Button */
+.btnPrimary {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  font-weight: var(--font-semibold);
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btnPrimary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary Surface Button */
+.btnSecondary {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-strong);
+}
+
+/* Ghost / Subdued Button */
+.btnGhost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btnGhost:hover:not(:disabled) {
+  background-color: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+/* Destructive Button */
+.btnDestructive {
+  background-color: var(--color-error-soft);
+  color: var(--color-error);
+  border-color: var(--color-error-border);
+}
+
+.btnDestructive:hover:not(:disabled) {
+  background-color: var(--color-error);
+  color: #ffffff;
+}
+
+/* --- 2. Form Inputs --- */
+.input {
+  width: 100%;
+  height: 34px;
+  padding-inline: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-inset);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.input:focus-visible,
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- 3. Select Controls --- */
+.select {
+  height: 34px;
+  padding-left: var(--space-3);
+  padding-right: var(--space-8);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.select:hover {
+  border-color: var(--border-strong);
+}
+
+.select:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* --- 4. Toggles / Switches --- */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 42px;
+  height: 24px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-inset);
+  border: var(--border-thin) solid var(--border);
+  cursor: pointer;
+  padding: 2px;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.toggle[aria-checked="true"] {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.toggleThumb {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-fast);
+  transform: translateX(0);
+}
+
+.toggle[aria-checked="true"] .toggleThumb {
+  transform: translateX(18px);
+}
+
+/* --- 5. Menus & Popovers --- */
+.menu {
+  background-color: var(--bg-surface);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  padding: var(--space-1);
+  min-width: 180px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-xs);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menuItem:hover,
+.menuItem:focus-visible {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+  outline: none;
+}
+
+.menuDivider {
+  height: 1px;
+  background-color: var(--border);
+  margin: var(--space-1) 0;
+}
+
+/* --- 6. Tooltips --- */
+.tooltip {
+  position: absolute;
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-xs);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-lh);
+  box-shadow: var(--shadow-dropdown);
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+/* --- 7. Application Window Surface --- */
+.windowSurface {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--os-window-bg);
+  border: var(--border-thin) solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-window-active);
+  overflow: hidden;
+  transition:
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.windowSurfaceInactive {
+  background-color: var(--os-window-inactive-bg);
+  box-shadow: var(--shadow-window-inactive);
+}
+
+/* --- 8. Window Title Bar --- */
+.titleBar {
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--space-3);
+  background-color: var(--os-titlebar-bg);
+  border-bottom: var(--border-thin) solid var(--border);
+  user-select: none;
+  cursor: grab;
+}
+
+.titleBar:active {
+  cursor: grabbing;
+}

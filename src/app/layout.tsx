@@ -6,7 +6,7 @@ import {
   Plus_Jakarta_Sans,
 } from 'next/font/google';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { RishiDesktopShell } from '@/components/os/RishiDesktopShell';
+import { PortfolioRootShell } from '@/components/layout/PortfolioRootShell';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -49,19 +49,19 @@ export const metadata: Metadata = {
     apple: '/icon.svg',
   },
   title: {
-    default: 'Rishi Jha — Portfolio & RISHI OS Workspace',
-    template: '%s | RISHI OS',
+    default: 'Rishi Jha — Software Developer Portfolio',
+    template: '%s | Rishi Jha',
   },
   description:
-    'Interactive Unix-inspired developer workspace and portfolio of Rishi Jha — featuring DormiQ, LifeOS, AssignFlow, and full-stack systems engineering.',
+    'Software Developer portfolio of Rishi Jha — building scalable backends, clean API architectures, and modern web applications with FastAPI, React 19, and PostgreSQL.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: SITE_URL,
     siteName: 'Rishi Jha Portfolio',
-    title: 'Rishi Jha — Portfolio & RISHI OS Workspace',
+    title: 'Rishi Jha — Software Developer Portfolio',
     description:
-      'Interactive Unix-inspired developer workspace and portfolio of Rishi Jha — featuring DormiQ, LifeOS, AssignFlow, and full-stack systems engineering.',
+      'Software Developer portfolio of Rishi Jha — building scalable backends, clean API architectures, and modern web applications with FastAPI, React 19, and PostgreSQL.',
     images: [
       {
         url: '/images/hero-workspace.jpg',
@@ -73,9 +73,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rishi Jha — Portfolio & RISHI OS Workspace',
+    title: 'Rishi Jha — Software Developer Portfolio',
     description:
-      'Interactive Unix-inspired developer workspace and portfolio of Rishi Jha — featuring DormiQ, LifeOS, AssignFlow, and full-stack systems engineering.',
+      'Software Developer portfolio of Rishi Jha — building scalable backends, clean API architectures, and modern web applications with FastAPI, React 19, and PostgreSQL.',
     images: ['/images/hero-workspace.jpg'],
   },
 };
@@ -94,7 +94,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main workspace
         </a>
-        <RishiDesktopShell footer={<SiteFooter />}>{children}</RishiDesktopShell>
+        <PortfolioRootShell footer={<SiteFooter />}>{children}</PortfolioRootShell>
       </body>
     </html>
   );

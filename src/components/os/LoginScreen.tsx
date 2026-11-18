@@ -16,17 +16,28 @@ import styles from './LoginScreen.module.css';
  */
 export function LoginScreen() {
   const pathname = usePathname();
-  const { sessionPhase, startLogin, skipToPortfolio, themeId } = useDesktop();
+  const {
+    sessionPhase,
+    startLogin,
+    skipToPortfolio,
+    themeId,
+    themeMode,
+    resolvedAppearance,
+    activeAppId,
+  } = useDesktop();
   const clock = useOsClock();
   const loginButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const isAuthenticating = sessionPhase === 'authenticating';
   const launchTarget = resolveRouteLaunch(pathname);
-  const targetLabel = !launchTarget.isKnown
+  const targetAppId = activeAppId ?? (launchTarget.isKnown ? launchTarget.appId : null);
+  const targetLabel = !launchTarget.isKnown && !targetAppId
     ? '404 // Route Not Found'
-    : launchTarget.appId === 'projects' && launchTarget.projectsSubView === 'dormiq'
-      ? '~/projects/dormiq'
-      : OS_APPS[launchTarget.appId].pathLabel;
+    : targetAppId && OS_APPS[targetAppId]
+      ? OS_APPS[targetAppId].pathLabel
+      : launchTarget.appId === 'projects' && launchTarget.projectsSubView === 'dormiq'
+        ? '~/projects/dormiq'
+        : OS_APPS[launchTarget.appId].pathLabel;
 
   // Support pressing Enter from anywhere on the greeter to initiate simulated login.
   useEffect(() => {
@@ -45,7 +56,14 @@ export function LoginScreen() {
   }, [sessionPhase, startLogin]);
 
   return (
-    <div className={styles.screen} data-rishi-theme={themeId} aria-label="RISHI OS Login Screen">
+    <div
+      className={styles.screen}
+      data-rishi-os-login="true"
+      data-rishi-theme={themeId}
+      data-rishi-appearance={resolvedAppearance}
+      data-rishi-theme-mode={themeMode}
+      aria-label="RISHI OS Login Screen"
+    >
       {/* Dynamic Cyber Atmospheric Backdrop */}
       <div className={styles.wallpaper} aria-hidden="true">
         <div className={styles.wallpaperMesh} />
@@ -207,7 +225,7 @@ export function LoginScreen() {
       <footer className={styles.bottomBar}>
         <div className={styles.bottomLeft}>
           <span className={styles.shellPrompt}>~/$</span>
-          <span>RISHI OS v2.4 // WORKSPACE KERNEL 6.8</span>
+          <span>RISHI OS v2.4 // WEB WORKSPACE RUNTIME</span>
         </div>
         <div className={styles.bottomCenter}>
           <span>PUBLIC DEVELOPER SESSION · SANDBOXED</span>

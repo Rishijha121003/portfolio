@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useDesktop } from '@/components/os/DesktopContext';
 import { RishiOsBrandIcon } from '@/components/os/OsIcons';
 import { useOsClock } from '@/components/os/useOsClock';
@@ -132,6 +133,25 @@ export function TopSystemPanel() {
       </div>
 
       <div className={styles.rightGroup}>
+        <Link
+          href="/"
+          className={styles.backToPortfolioBtn}
+          title="Return to Editorial Portfolio (or press Escape)"
+          aria-label="Back to Portfolio"
+          onClick={() => {
+            try {
+              window.sessionStorage.setItem('rishi-os-mode', 'portfolio');
+            } catch {
+              // ignore
+            }
+          }}
+        >
+          <span className={styles.backArrow} aria-hidden="true">
+            ←
+          </span>
+          <span className={styles.backLabel}>Back to Portfolio</span>
+        </Link>
+
         {!isMobile ? (
           <button
             type="button"
@@ -201,11 +221,12 @@ export function TopSystemPanel() {
         {/* Quick Settings & Session Trigger */}
         <button
           type="button"
+          data-quick-settings-trigger="true"
           className={styles.quickSettingsTrigger}
           aria-expanded={quickSettingsOpen}
           aria-controls="rishi-os-quick-settings"
-          aria-label="Quick Settings &amp; System Control"
-          title="Quick Settings &amp; System Control"
+          aria-label="Quick Settings & System Control"
+          title="Quick Settings & System Control"
           onClick={() => {
             setNotificationCenterOpen(false);
             setQuickSettingsOpen(!quickSettingsOpen);

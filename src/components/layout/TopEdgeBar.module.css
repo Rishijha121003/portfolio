@@ -246,6 +246,16 @@
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
 }
 
+.arrow {
+  font-size: 0.8125rem;
+  color: #38bdf8;
+  transition: transform 180ms ease;
+}
+
+.osSwitchButton:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
 /* Mobile Menu Toggle */
 .menuButton {
   display: none;
@@ -365,6 +375,39 @@
 .mobileNavLink:hover .mobileNavArrow {
   color: #38bdf8;
   transform: translateX(3px);
+}
+
+.mobileOsItem {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobileOsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #f8fafc;
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 180ms ease;
+}
+
+.mobileOsBtn:hover {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.mobileOsIcon {
+  color: #38bdf8;
+  margin-right: 8px;
 }
 
 @keyframes slideDown {

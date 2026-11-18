@@ -208,6 +208,7 @@ export const DESKTOP_SHORTCUTS: readonly DesktopShortcutItem[] = [
 
 export const KNOWN_PORTFOLIO_ROUTES = new Set<string>([
   '/',
+  '/os',
   '/about',
   '/projects',
   ...PROJECT_RECORDS.map((p) => p.route),
@@ -215,6 +216,10 @@ export const KNOWN_PORTFOLIO_ROUTES = new Set<string>([
   '/skills',
   '/contact',
 ]);
+
+export function isValidOsAppId(id: unknown): id is OsAppId {
+  return typeof id === 'string' && id in OS_APPS;
+}
 
 export function resolveRouteLaunch(pathname: string): {
   isKnown: boolean;
@@ -232,6 +237,7 @@ export function resolveRouteLaunch(pathname: string): {
 
   switch (pathname) {
     case '/':
+    case '/os':
       return { isKnown: true, appId: 'home', projectsSubView: 'directory' };
     case '/about':
       return { isKnown: true, appId: 'about', projectsSubView: 'directory' };

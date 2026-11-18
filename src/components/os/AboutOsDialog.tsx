@@ -30,6 +30,9 @@ function SettingsDialogContent() {
     wallpaperId,
     setWallpaperId,
     themeId,
+    themeMode,
+    setThemeMode,
+    systemPreference,
     setThemeId,
     setPreviewThemeId,
   } = useDesktop();
@@ -425,7 +428,64 @@ function SettingsDialogContent() {
                     </div>
                   </section>
 
-                  {/* Curated 8 Color Themes Grid */}
+                  {/* Adaptive Theme Mode Selector (System, Light, Dark) */}
+                  <section className={styles.modeSection} aria-label="Appearance Mode">
+                    <div className={styles.galleryHeader}>
+                      <span className={styles.galleryLabel}>Appearance Mode</span>
+                      <span className={styles.galleryCount}>
+                        {themeMode === 'system' ? `Auto: ${systemPreference}` : themeMode.toUpperCase()}
+                      </span>
+                    </div>
+
+                    <div className={styles.modePillGroup} role="radiogroup" aria-label="Theme mode">
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={themeMode === 'system'}
+                        className={`${styles.modePillBtn} ${themeMode === 'system' ? styles.modePillActive : ''}`}
+                        onClick={() => {
+                          setThemeMode('system');
+                          setDraftThemeId(systemPreference === 'dark' ? 'minimal-dark' : 'minimal-light');
+                        }}
+                      >
+                        <span aria-hidden="true">💻</span>
+                        <span>System</span>
+                        {themeMode === 'system' && (
+                          <span className={styles.modeSubTag}>({systemPreference})</span>
+                        )}
+                      </button>
+
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={themeMode === 'light'}
+                        className={`${styles.modePillBtn} ${themeMode === 'light' ? styles.modePillActive : ''}`}
+                        onClick={() => {
+                          setThemeMode('light');
+                          setDraftThemeId('minimal-light');
+                        }}
+                      >
+                        <span aria-hidden="true">☀️</span>
+                        <span>Light</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={themeMode === 'dark'}
+                        className={`${styles.modePillBtn} ${themeMode === 'dark' ? styles.modePillActive : ''}`}
+                        onClick={() => {
+                          setThemeMode('dark');
+                          setDraftThemeId('minimal-dark');
+                        }}
+                      >
+                        <span aria-hidden="true">🌙</span>
+                        <span>Dark</span>
+                      </button>
+                    </div>
+                  </section>
+
+                  {/* Curated Color Themes Grid */}
                   <section className={styles.gallerySection} aria-label="Color themes">
                     <div className={styles.galleryHeader}>
                       <span className={styles.galleryLabel}>Preset Themes</span>

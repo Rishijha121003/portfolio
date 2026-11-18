@@ -1,6 +1,8 @@
+@import './rishiOsTokens.css';
+
 /* ===================================================================== */
 /* RISHI OS — Centralized Theme Engine Stylesheet                         */
-/* 8 Preset Themes Scoped Under [data-rishi-theme="<id>"]                 */
+/* Scoped Under [data-rishi-theme="<id>"] and [data-rishi-appearance]    */
 /* ===================================================================== */
 
 /* --- Theme 1: Midnight Cyan (Default) --- */

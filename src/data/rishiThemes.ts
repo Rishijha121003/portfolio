@@ -1,4 +1,9 @@
+export type ThemeMode = 'system' | 'light' | 'dark';
+export type ResolvedAppearance = 'light' | 'dark';
+
 export type ThemeId =
+  | 'minimal-dark'
+  | 'minimal-light'
   | 'midnight-cyan'
   | 'emerald-forest'
   | 'royal-purple'
@@ -47,12 +52,64 @@ export interface OsTheme {
   shortName: string;
   tagline: string;
   description: string;
+  appearance?: ResolvedAppearance;
   colors: ThemeColors;
 }
 
-export const DEFAULT_THEME_ID: ThemeId = 'midnight-cyan';
+export const DEFAULT_THEME_MODE: ThemeMode = 'system';
+export const DEFAULT_THEME_ID: ThemeId = 'minimal-dark';
 
 export const OS_THEMES: readonly OsTheme[] = [
+  {
+    id: 'minimal-dark',
+    name: 'Modern Minimal Dark',
+    shortName: 'Graphite Dark',
+    tagline: 'Adaptive Dark · Soft Graphite',
+    description: 'Soft graphite surfaces with clean neutral typography, subtle hairline borders, and muted amber accents.',
+    appearance: 'dark',
+    colors: {
+      background: '#141517',
+      surface: '#1F2023',
+      accent: '#F59E0B',
+      text: '#F4F4F5',
+      elevated: '#28292E',
+      inset: '#18191B',
+      secondaryText: '#A1A1AA',
+      mutedText: '#71717A',
+      accentInk: '#141517',
+      accentSecondary: '#FBBF24',
+      accentGlow: 'rgba(245, 158, 11, 0.18)',
+      accentBorder: 'rgba(245, 158, 11, 0.40)',
+      accentSoft: 'rgba(245, 158, 11, 0.12)',
+      border: 'rgba(255, 255, 255, 0.08)',
+      borderStrong: 'rgba(255, 255, 255, 0.16)',
+    },
+  },
+  {
+    id: 'minimal-light',
+    name: 'Modern Minimal Light',
+    shortName: 'Warm Light',
+    tagline: 'Adaptive Light · Warm Neutral',
+    description: 'Warm parchment neutral surfaces with clean stone typography and refined muted amber accents.',
+    appearance: 'light',
+    colors: {
+      background: '#F5F4F0',
+      surface: '#FFFFFF',
+      accent: '#D97706',
+      text: '#1C1917',
+      elevated: '#FFFFFF',
+      inset: '#EFEFEA',
+      secondaryText: '#57534E',
+      mutedText: '#78716C',
+      accentInk: '#FFFFFF',
+      accentSecondary: '#B45309',
+      accentGlow: 'rgba(217, 119, 6, 0.15)',
+      accentBorder: 'rgba(217, 119, 6, 0.35)',
+      accentSoft: 'rgba(217, 119, 6, 0.10)',
+      border: 'rgba(28, 25, 23, 0.09)',
+      borderStrong: 'rgba(28, 25, 23, 0.18)',
+    },
+  },
   {
     id: 'midnight-cyan',
     name: 'Midnight Cyan',
@@ -247,11 +304,46 @@ export const OS_THEMES: readonly OsTheme[] = [
   },
 ];
 
+export function isValidThemeMode(value: unknown): value is ThemeMode {
+  return value === 'system' || value === 'light' || value === 'dark';
+}
+
 export function isValidThemeId(value: unknown): value is ThemeId {
   return (
     typeof value === 'string' &&
     OS_THEMES.some((theme) => theme.id === value)
   );
+}
+
+export function resolveThemeFromMode(
+  mode: ThemeMode,
+  systemPref: ResolvedAppearance,
+  customThemeId?: ThemeId | null
+): ThemeId {
+  if (customThemeId && isValidThemeId(customThemeId)) {
+    return customThemeId;
+  }
+  if (mode === 'light') {
+    return 'minimal-light';
+  }
+  if (mode === 'dark') {
+    return 'minimal-dark';
+  }
+  return systemPref === 'dark' ? 'minimal-dark' : 'minimal-light';
+}
+
+export function getResolvedAppearance(
+  mode: ThemeMode,
+  systemPref: ResolvedAppearance,
+  activeThemeId?: ThemeId
+): ResolvedAppearance {
+  if (activeThemeId) {
+    const theme = getThemeConfig(activeThemeId);
+    if (theme.appearance) return theme.appearance;
+  }
+  if (mode === 'light') return 'light';
+  if (mode === 'dark') return 'dark';
+  return systemPref;
 }
 
 export function getThemeConfig(id: ThemeId): OsTheme {

@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/journey',
     '/skills',
     '/contact',
+    '/os',
   ];
 
   return routes.map((route) => ({

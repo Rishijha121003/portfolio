@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
-import { AppShell } from '@/components/layout/AppShell';
+import { useRouter } from 'next/navigation';
 import { AboutAppView } from '@/components/os/apps/AboutAppView';
 import { ContactAppView } from '@/components/os/apps/ContactAppView';
 import { FileManagerApp } from '@/components/os/apps/FileManagerApp';
@@ -68,6 +68,8 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
     openApp,
     themeId,
     previewThemeId,
+    themeMode,
+    resolvedAppearance,
     simulatedBrightness,
   } = useDesktop();
 
@@ -114,7 +116,13 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
     (mobileAllAppsOpen || !activeAppId || windows[activeAppId]?.isMinimized);
 
   return (
-    <div className={styles.shell} data-rishi-theme={effectiveThemeId}>
+    <div
+      className={styles.shell}
+      data-rishi-os-desktop="true"
+      data-rishi-theme={effectiveThemeId}
+      data-rishi-appearance={resolvedAppearance}
+      data-rishi-theme-mode={themeMode}
+    >
       <TopSystemPanel />
 
       <main
@@ -214,47 +222,84 @@ function DesktopWorkspace({ routeFallback }: { routeFallback: ReactNode }) {
   );
 }
 
-function SessionGate({
-  children,
-  footer,
-}: {
-  children: ReactNode;
-  footer: ReactNode;
-}) {
+function SessionGate() {
+  const router = useRouter();
   const {
     sessionPhase,
-    enterDesktopFromPortfolio,
-    isBootingToOs,
     isBootingToPortfolio,
-    handleBootComplete,
-    handleBootFinish,
     handlePortfolioBootComplete,
     handlePortfolioBootFinish,
+    launcherOpen,
+    quickSettingsOpen,
+    notificationCenterOpen,
+    shortcutsHelpOpen,
+    aboutOsOpen,
+    logoutDialogOpen,
+    altTabOpen,
   } = useDesktop();
+
+  // Escape key returns to Portfolio from RISHI OS, unless active inside an input or terminal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+
+      // If any modal/dialog/menu is open, let that component handle Escape or close it
+      if (
+        launcherOpen ||
+        quickSettingsOpen ||
+        notificationCenterOpen ||
+        shortcutsHelpOpen ||
+        aboutOsOpen ||
+        logoutDialogOpen ||
+        altTabOpen
+      ) {
+        return;
+      }
+
+      // Check if focused element is an input, textarea, select, or inside terminal
+      const activeEl = document.activeElement;
+      if (activeEl) {
+        const tagName = activeEl.tagName.toLowerCase();
+        if (
+          tagName === 'input' ||
+          tagName === 'textarea' ||
+          tagName === 'select' ||
+          activeEl.closest('[data-terminal="true"]') ||
+          activeEl.closest('[contenteditable="true"]')
+        ) {
+          return;
+        }
+      }
+
+      // Return to editorial portfolio cleanly
+      try {
+        window.sessionStorage.setItem('rishi-os-mode', 'portfolio');
+      } catch {
+        // ignore
+      }
+      router.push('/');
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    router,
+    launcherOpen,
+    quickSettingsOpen,
+    notificationCenterOpen,
+    shortcutsHelpOpen,
+    aboutOsOpen,
+    logoutDialogOpen,
+    altTabOpen,
+  ]);
 
   return (
     <>
-      {sessionPhase === 'portfolio' ? (
-        <AppShell
-          footer={footer}
-          onEnterOs={enterDesktopFromPortfolio}
-          isExiting={isBootingToOs}
-        >
-          {children}
-        </AppShell>
-      ) : sessionPhase === 'desktop' ? (
-        <DesktopWorkspace routeFallback={children} />
+      {sessionPhase === 'desktop' ? (
+        <DesktopWorkspace routeFallback={null} />
       ) : (
         <LoginScreen />
       )}
-
-      {isBootingToOs ? (
-        <OsBootTransition
-          target="os"
-          onComplete={handleBootComplete}
-          onFinished={handleBootFinish}
-        />
-      ) : null}
 
       {isBootingToPortfolio ? (
         <OsBootTransition
@@ -268,18 +313,12 @@ function SessionGate({
 }
 
 /**
- * Controlled client shell coordinating Login Greeter, Classic Portfolio Mode, and RISHI OS Desktop Mode.
+ * Isolated RISHI OS client shell rendered exclusively on the dedicated '/os' route.
  */
-export function RishiDesktopShell({
-  children,
-  footer,
-}: {
-  children: ReactNode;
-  footer: ReactNode;
-}) {
+export function RishiDesktopShell() {
   return (
     <DesktopProvider>
-      <SessionGate footer={footer}>{children}</SessionGate>
+      <SessionGate />
     </DesktopProvider>
   );
 }

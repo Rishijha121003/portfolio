@@ -8,10 +8,6 @@ import { Container } from '@/components/ui/Container';
 import { PRIMARY_ROUTES, SITE_IDENTITY } from '@/data/portfolio';
 import styles from './TopEdgeBar.module.css';
 
-interface TopEdgeBarProps {
-  onEnterOs?: () => void;
-}
-
 function isRouteActive(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/';
   if (href === '/projects') {
@@ -24,7 +20,7 @@ function isRouteActive(pathname: string, href: string): boolean {
  * Modern floating capsule navigation bar with refined typography,
  * smooth hover transitions, live status beacon, and RISHI OS launcher.
  */
-export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
+export function TopEdgeBar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -111,19 +107,20 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
               <span className={styles.availabilityText}>Available</span>
             </div>
 
-            {onEnterOs ? (
-              <button
-                type="button"
-                className={styles.osSwitchButton}
-                onClick={onEnterOs}
-                title="Switch to RISHI OS simulated desktop environment"
-              >
-                <span className={styles.osIcon} aria-hidden="true">
-                  ❖
-                </span>
-                <span>RISHI OS</span>
-              </button>
-            ) : null}
+            <Link
+              href="/os"
+              className={styles.osSwitchButton}
+              title="Open RISHI OS simulated interactive workspace"
+              aria-label="Open RISHI OS"
+            >
+              <span className={styles.osIcon} aria-hidden="true">
+                ❖
+              </span>
+              <span>Open RISHI OS</span>
+              <span className={styles.arrow} aria-hidden="true">
+                ↗
+              </span>
+            </Link>
 
             {/* Mobile menu toggle */}
             <button
@@ -223,6 +220,23 @@ export function TopEdgeBar({ onEnterOs }: TopEdgeBarProps) {
                       </li>
                     );
                   })}
+
+                  <li className={styles.mobileOsItem}>
+                    <Link
+                      href="/os"
+                      className={styles.mobileOsBtn}
+                      onClick={() => setMobileMenuOpen(false)}
+                      aria-label="Open RISHI OS Workspace"
+                    >
+                      <span className={styles.mobileOsIcon} aria-hidden="true">
+                        ❖
+                      </span>
+                      <span>Open RISHI OS Workspace</span>
+                      <span className={styles.mobileNavArrow} aria-hidden="true">
+                        ↗
+                      </span>
+                    </Link>
+                  </li>
                 </ul>
               </nav>
             </Container>

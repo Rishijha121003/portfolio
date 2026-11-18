@@ -10,23 +10,27 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { OsAppId, ProjectsSubView, WallpaperId } from '@/data/rishiOs';
 import {
   DEFAULT_WALLPAPER_ID,
   getRouteForApp,
   getWallpaperConfig,
+  isValidOsAppId,
   isValidWallpaperId,
   OS_APP_ORDER,
   OS_APPS,
   resolveRouteLaunch,
   VIRTUAL_ROOT,
 } from '@/data/rishiOs';
-import type { ThemeId } from '@/data/rishiThemes';
+import type { ResolvedAppearance, ThemeId, ThemeMode } from '@/data/rishiThemes';
 import {
-  DEFAULT_THEME_ID,
+  DEFAULT_THEME_MODE,
+  getResolvedAppearance,
   getThemeConfig,
   isValidThemeId,
+  isValidThemeMode,
+  resolveThemeFromMode,
 } from '@/data/rishiThemes';
 
 export interface WindowRect {
@@ -115,6 +119,8 @@ interface OsStoreState {
   topZ: number;
   nextCascade: number;
   observedPathname: string;
+  observedAppParam: string | null;
+  observedSlugParam: string | null;
 }
 
 interface DesktopContextValue {
@@ -124,6 +130,9 @@ interface DesktopContextValue {
   settingsTab: SettingsTab;
   appearanceSubTab: AppearanceSubTab;
   wallpaperId: WallpaperId;
+  themeMode: ThemeMode;
+  resolvedAppearance: ResolvedAppearance;
+  systemPreference: ResolvedAppearance;
   themeId: ThemeId;
   previewThemeId: ThemeId | null;
   liveAnnouncement: string;
@@ -162,6 +171,7 @@ interface DesktopContextValue {
   openSettings: (tab?: SettingsTab, subTab?: AppearanceSubTab) => void;
   setAppearanceSubTab: (subTab: AppearanceSubTab) => void;
   setWallpaperId: (id: WallpaperId, announce?: boolean) => void;
+  setThemeMode: (mode: ThemeMode, announce?: boolean) => void;
   setThemeId: (id: ThemeId, announce?: boolean) => void;
   setPreviewThemeId: (id: ThemeId | null) => void;
   setStageBounds: (bounds: StageBounds) => void;
@@ -234,6 +244,78 @@ function writePersistedWallpaper(id: WallpaperId): void {
   wallpaperListeners.forEach((cb) => cb());
 }
 
+const THEME_MODE_STORAGE_KEY = 'rishi-os-theme-mode';
+
+const themeModeListeners = new Set<() => void>();
+const systemPrefListeners = new Set<() => void>();
+
+function subscribeThemeMode(listener: () => void): () => void {
+  themeModeListeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === THEME_MODE_STORAGE_KEY || event.key === THEME_STORAGE_KEY) {
+      listener();
+    }
+  };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    themeModeListeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
+}
+
+function getThemeModeSnapshot(): ThemeMode {
+  try {
+    const mode = window.localStorage.getItem(THEME_MODE_STORAGE_KEY);
+    if (isValidThemeMode(mode)) return mode;
+
+    // Safe migration from legacy theme key if present
+    const legacy = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (legacy && isValidThemeId(legacy)) {
+      if (legacy === 'minimal-light') return 'light';
+      if (legacy === 'minimal-dark') return 'dark';
+    }
+    return DEFAULT_THEME_MODE;
+  } catch {
+    return DEFAULT_THEME_MODE;
+  }
+}
+
+function getThemeModeServerSnapshot(): ThemeMode {
+  return DEFAULT_THEME_MODE;
+}
+
+function writePersistedThemeMode(mode: ThemeMode): void {
+  try {
+    window.localStorage.setItem(THEME_MODE_STORAGE_KEY, mode);
+  } catch {
+    // Ignore storage unavailability
+  }
+  themeModeListeners.forEach((cb) => cb());
+}
+
+function subscribeSystemPref(listener: () => void): () => void {
+  systemPrefListeners.add(listener);
+  if (typeof window === 'undefined') return () => {};
+  const mql = window.matchMedia('(prefers-color-scheme: dark)');
+  const onChange = () => {
+    systemPrefListeners.forEach((cb) => cb());
+  };
+  mql.addEventListener('change', onChange);
+  return () => {
+    systemPrefListeners.delete(listener);
+    mql.removeEventListener('change', onChange);
+  };
+}
+
+function getSystemPrefSnapshot(): ResolvedAppearance {
+  if (typeof window === 'undefined') return 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function getSystemPrefServerSnapshot(): ResolvedAppearance {
+  return 'dark';
+}
+
 function subscribeTheme(listener: () => void): () => void {
   themeListeners.add(listener);
   const onStorage = (event: StorageEvent) => {
@@ -246,17 +328,17 @@ function subscribeTheme(listener: () => void): () => void {
   };
 }
 
-function getThemeSnapshot(): ThemeId {
+function getThemeSnapshot(): ThemeId | null {
   try {
     const val = window.localStorage.getItem(THEME_STORAGE_KEY);
-    return isValidThemeId(val) ? val : DEFAULT_THEME_ID;
+    return isValidThemeId(val) ? val : null;
   } catch {
-    return DEFAULT_THEME_ID;
+    return null;
   }
 }
 
-function getThemeServerSnapshot(): ThemeId {
-  return DEFAULT_THEME_ID;
+function getThemeServerSnapshot(): ThemeId | null {
+  return null;
 }
 
 function writePersistedTheme(id: ThemeId): void {
@@ -471,10 +553,15 @@ function createInitialWindows(
 
 function createInitialStore(
   pathname: string,
-  initialPhase: 'login' | 'desktop' = 'login'
+  initialPhase: 'login' | 'desktop' = 'login',
+  initialAppOverride?: OsAppId | null,
+  initialSlugOverride?: ProjectsSubView,
+  initialAppParam?: string | null,
+  initialSlugParam?: string | null
 ): OsStoreState {
   const launch = resolveRouteLaunch(pathname);
-  const initialApp = launch.isKnown ? launch.appId : null;
+  const initialApp = initialAppOverride ?? (launch.isKnown ? launch.appId : null);
+  const initialSubView = initialSlugOverride ?? launch.projectsSubView;
 
   return {
     sessionPhase: initialPhase,
@@ -485,7 +572,7 @@ function createInitialStore(
     liveAnnouncement: '',
     windows: createInitialWindows(initialApp),
     activeAppId: initialApp,
-    projectsSubView: launch.projectsSubView,
+    projectsSubView: initialSubView,
     filesTargetPath: VIRTUAL_ROOT,
     launcherOpen: false,
     mobileAllAppsOpen: false,
@@ -501,6 +588,8 @@ function createInitialStore(
     topZ: 24,
     nextCascade: 1,
     observedPathname: pathname,
+    observedAppParam: initialAppParam ?? null,
+    observedSlugParam: initialSlugParam ?? null,
   };
 }
 
@@ -555,6 +644,12 @@ export function useDesktop(): DesktopContextValue {
 export function DesktopProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const appParam = searchParams?.get('app');
+  const slugParam = searchParams?.get('slug');
+  const requestedApp = isValidOsAppId(appParam) ? appParam : null;
+  const requestedSlug = (slugParam as ProjectsSubView) || undefined;
 
   const isMobile = useSyncExternalStore(
     subscribeToMobile,
@@ -574,7 +669,19 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
     getWallpaperServerSnapshot
   );
 
-  const themeId = useSyncExternalStore(
+  const themeMode = useSyncExternalStore(
+    subscribeThemeMode,
+    getThemeModeSnapshot,
+    getThemeModeServerSnapshot
+  );
+
+  const systemPreference = useSyncExternalStore(
+    subscribeSystemPref,
+    getSystemPrefSnapshot,
+    getSystemPrefServerSnapshot
+  );
+
+  const storedThemeId = useSyncExternalStore(
     subscribeTheme,
     getThemeSnapshot,
     getThemeServerSnapshot
@@ -582,73 +689,142 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
 
   const [previewThemeId, setPreviewThemeId] = useState<ThemeId | null>(null);
 
+  // Compute adaptive theme and appearance
+  const effectiveThemeId: ThemeId = useMemo(() => {
+    if (previewThemeId) return previewThemeId;
+    if (
+      storedThemeId &&
+      storedThemeId !== 'minimal-dark' &&
+      storedThemeId !== 'minimal-light'
+    ) {
+      return storedThemeId;
+    }
+    return resolveThemeFromMode(themeMode, systemPreference, storedThemeId);
+  }, [previewThemeId, storedThemeId, themeMode, systemPreference]);
+
+  const resolvedAppearance: ResolvedAppearance = useMemo(() => {
+    return getResolvedAppearance(themeMode, systemPreference, effectiveThemeId);
+  }, [themeMode, systemPreference, effectiveThemeId]);
+
+  const themeId = effectiveThemeId;
+
+  // Keep DOM root attributes synchronized without full reload
+  useEffect(() => {
+    try {
+      document.documentElement.setAttribute('data-rishi-theme', effectiveThemeId);
+      document.documentElement.setAttribute('data-rishi-appearance', resolvedAppearance);
+      document.documentElement.setAttribute('data-rishi-theme-mode', themeMode);
+    } catch {
+      // ignore
+    }
+  }, [effectiveThemeId, resolvedAppearance, themeMode]);
+
   const [store, setStore] = useState<OsStoreState>(() =>
-    createInitialStore(pathname, 'login')
+    createInitialStore(
+      pathname,
+      requestedApp ? 'desktop' : 'login',
+      requestedApp,
+      requestedSlug,
+      appParam,
+      slugParam
+    )
   );
   const [stageBounds, setStageBoundsState] = useState<StageBounds>({
     width: 1280,
     height: 760,
   });
 
-  // Reconcile App Router pathname changes (Link clicks, router.push, Back/Forward) cleanly during render.
-  if (pathname !== store.observedPathname) {
-    const launch = resolveRouteLaunch(pathname);
-    if (!launch.isKnown || pathname === '/') {
-      setStore((prev) => ({
-        ...prev,
-        activeAppId: null,
-        launcherOpen: false,
-        mobileAllAppsOpen: false,
-        observedPathname: pathname,
-      }));
-    } else {
+  // Reconcile App Router pathname and deep-link query parameter changes cleanly during render.
+  if (
+    pathname !== store.observedPathname ||
+    appParam !== store.observedAppParam ||
+    slugParam !== store.observedSlugParam
+  ) {
+    if (pathname === '/os' && requestedApp) {
       setStore((prev) => {
-        const current = prev.windows[launch.appId];
+        const win = prev.windows[requestedApp];
         const nextZ = prev.topZ + 1;
-        const nextCascade = current.isOpen
-          ? current.cascadeIndex
-          : prev.nextCascade;
-        const bumpCascade = current.isOpen
-          ? prev.nextCascade
-          : prev.nextCascade + 1;
-
         return {
           ...prev,
+          sessionPhase: 'desktop',
           topZ: nextZ,
-          nextCascade: bumpCascade,
-          activeAppId: launch.appId,
-          projectsSubView: launch.projectsSubView,
-          launcherOpen: false,
-          mobileAllAppsOpen: false,
+          activeAppId: requestedApp,
+          projectsSubView: requestedSlug ?? prev.projectsSubView,
           observedPathname: pathname,
+          observedAppParam: appParam,
+          observedSlugParam: slugParam,
           windows: {
             ...prev.windows,
-            [launch.appId]: {
-              ...current,
+            [requestedApp]: {
+              ...win,
               isOpen: true,
               isMinimized: false,
               zIndex: nextZ,
-              cascadeIndex: nextCascade,
             },
           },
         };
       });
+    } else {
+      const launch = resolveRouteLaunch(pathname);
+      if (!launch.isKnown || pathname === '/' || pathname === '/os') {
+        setStore((prev) => ({
+          ...prev,
+          activeAppId: requestedApp ?? null,
+          launcherOpen: false,
+          mobileAllAppsOpen: false,
+          observedPathname: pathname,
+          observedAppParam: appParam,
+          observedSlugParam: slugParam,
+        }));
+      } else {
+        setStore((prev) => {
+          const current = prev.windows[launch.appId];
+          const nextZ = prev.topZ + 1;
+          const nextCascade = current.isOpen
+            ? current.cascadeIndex
+            : prev.nextCascade;
+          const bumpCascade = current.isOpen
+            ? prev.nextCascade
+            : prev.nextCascade + 1;
+
+          return {
+            ...prev,
+            topZ: nextZ,
+            nextCascade: bumpCascade,
+            activeAppId: launch.appId,
+            projectsSubView: launch.projectsSubView,
+            launcherOpen: false,
+            mobileAllAppsOpen: false,
+            observedPathname: pathname,
+            observedAppParam: appParam,
+            observedSlugParam: slugParam,
+            windows: {
+              ...prev.windows,
+              [launch.appId]: {
+                ...current,
+                isOpen: true,
+                isMinimized: false,
+                zIndex: nextZ,
+                cascadeIndex: nextCascade,
+              },
+            },
+          };
+        });
+      }
     }
   }
 
-  const defaultSubRoutePhase: OsSessionPhase =
-    pathname === '/' ? 'login' : 'portfolio';
-
+  // When DesktopProvider is mounted, the user is inside the RISHI OS experience (/os).
+  // If requestedApp is present or persistedMode is 'desktop' or sessionPhase is 'desktop', they are in the desktop workspace.
+  // Otherwise, they see the greeter login screen.
   const effectiveSessionPhase: OsSessionPhase =
-    persistedMode === 'portfolio'
-      ? 'portfolio'
-      : persistedMode === 'desktop'
-        ? store.sessionPhase === 'authenticating'
-          ? 'authenticating'
-          : 'desktop'
-        : store.sessionPhase === 'authenticating' || store.sessionPhase === 'desktop'
-          ? store.sessionPhase
-          : defaultSubRoutePhase;
+    store.sessionPhase === 'authenticating'
+      ? 'authenticating'
+      : Boolean(requestedApp) ||
+        store.sessionPhase === 'desktop' ||
+        persistedMode === 'desktop'
+        ? 'desktop'
+        : 'login';
   const activeRouteKnown = resolveRouteLaunch(pathname).isKnown;
 
   // Async timer transition from authenticating state into RISHI OS desktop.
@@ -702,7 +878,8 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
 
   const handlePortfolioBootFinish = useCallback(() => {
     setIsBootingToPortfolio(false);
-  }, []);
+    router.push('/');
+  }, [router]);
 
   const [isBootingToOs, setIsBootingToOs] = useState(false);
 
@@ -712,9 +889,9 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
 
   const handleBootComplete = useCallback(() => {
     setPersistedSessionMode('none');
-    setStore(createInitialStore('/', 'login'));
-    if (pathname !== '/') {
-      router.replace('/', { scroll: false });
+    setStore(createInitialStore('/os', 'login'));
+    if (pathname !== '/os') {
+      router.replace('/os', { scroll: false });
     }
   }, [pathname, router]);
 
@@ -736,9 +913,9 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
 
   const confirmLogout = useCallback(() => {
     setPersistedSessionMode('none');
-    setStore(createInitialStore('/', 'login'));
-    if (pathname !== '/') {
-      router.replace('/', { scroll: false });
+    setStore(createInitialStore('/os', 'login'));
+    if (pathname !== '/os') {
+      router.replace('/os', { scroll: false });
     }
   }, [pathname, router]);
 
@@ -824,9 +1001,44 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const setThemeMode = useCallback(
+    (mode: ThemeMode, announce = true) => {
+      if (!isValidThemeMode(mode)) return;
+      writePersistedThemeMode(mode);
+      if (mode === 'light') {
+        writePersistedTheme('minimal-light');
+      } else if (mode === 'dark') {
+        writePersistedTheme('minimal-dark');
+      } else {
+        const autoTheme =
+          systemPreference === 'dark' ? 'minimal-dark' : 'minimal-light';
+        writePersistedTheme(autoTheme);
+      }
+      setPreviewThemeId(null);
+      if (announce) {
+        const modeLabel =
+          mode === 'system'
+            ? `System (${systemPreference})`
+            : mode === 'light'
+              ? 'Light'
+              : 'Dark';
+        setStore((prev) => ({
+          ...prev,
+          liveAnnouncement: `Appearance mode set to ${modeLabel}`,
+        }));
+      }
+    },
+    [systemPreference]
+  );
+
   const setThemeId = useCallback((id: ThemeId, announce = true) => {
     if (!isValidThemeId(id)) return;
     writePersistedTheme(id);
+    if (id === 'minimal-light') {
+      writePersistedThemeMode('light');
+    } else if (id === 'minimal-dark') {
+      writePersistedThemeMode('dark');
+    }
     setPreviewThemeId(null);
     if (announce) {
       const name = getThemeConfig(id).name;
@@ -896,7 +1108,12 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
         };
       });
 
-      if (targetRoute && pathname !== targetRoute) {
+      if (pathname === '/os' || pathname.startsWith('/os')) {
+        const query = appId === 'home'
+          ? '/os'
+          : `/os?app=${appId}${appId === 'projects' && options?.projectSubView && options.projectSubView !== 'directory' ? `&slug=${options.projectSubView}` : ''}`;
+        window.history.replaceState(null, '', query);
+      } else if (targetRoute && pathname !== targetRoute) {
         router.push(targetRoute, { scroll: false });
       }
     },
@@ -930,7 +1147,12 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
         },
       }));
 
-      if (targetRoute && pathname !== targetRoute) {
+      if (pathname === '/os' || pathname.startsWith('/os')) {
+        const query = appId === 'home'
+          ? '/os'
+          : `/os?app=${appId}${appId === 'projects' && store.projectsSubView !== 'directory' ? `&slug=${store.projectsSubView}` : ''}`;
+        window.history.replaceState(null, '', query);
+      } else if (targetRoute && pathname !== targetRoute) {
         router.push(targetRoute, { scroll: false });
       }
     },
@@ -965,7 +1187,10 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
         },
       }));
 
-      if (shouldSyncRoute && nextRoute && pathname !== nextRoute) {
+      if (pathname === '/os' || pathname.startsWith('/os')) {
+        const query = nextTop && nextTop !== 'home' ? `/os?app=${nextTop}` : '/os';
+        window.history.replaceState(null, '', query);
+      } else if (shouldSyncRoute && nextRoute && pathname !== nextRoute) {
         router.replace(nextRoute, { scroll: false });
       }
     },
@@ -1029,13 +1254,20 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
 
   const setProjectsSubView = useCallback(
     (view: ProjectsSubView, syncUrl = true) => {
-      const nextRoute = syncUrl ? getRouteForApp('projects', view) : null;
       setStore((prev) => ({
         ...prev,
         projectsSubView: view,
       }));
-      if (nextRoute && pathname !== nextRoute) {
-        router.push(nextRoute, { scroll: false });
+      if (syncUrl) {
+        if (pathname === '/os' || pathname.startsWith('/os')) {
+          const query = view === 'directory' ? '/os?app=projects' : `/os?app=projects&slug=${view}`;
+          window.history.replaceState(null, '', query);
+        } else {
+          const nextRoute = getRouteForApp('projects', view);
+          if (nextRoute && pathname !== nextRoute) {
+            router.push(nextRoute, { scroll: false });
+          }
+        }
       }
     },
     [pathname, router]
@@ -1401,6 +1633,9 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       settingsTab: store.settingsTab,
       appearanceSubTab: store.appearanceSubTab,
       wallpaperId,
+      themeMode,
+      resolvedAppearance,
+      systemPreference,
       themeId,
       previewThemeId,
       windows: store.windows,
@@ -1439,6 +1674,7 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       openSettings,
       setAppearanceSubTab,
       setWallpaperId,
+      setThemeMode,
       setThemeId,
       setPreviewThemeId,
       setStageBounds,
@@ -1508,6 +1744,8 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       setSimulatedSoundMuted,
       setSnapPreview,
       setStageBounds,
+      resolvedAppearance,
+      setThemeMode,
       setThemeId,
       setWallpaperId,
       showDesktop,
@@ -1516,7 +1754,9 @@ export function DesktopProvider({ children }: { children: ReactNode }) {
       stageBounds,
       startLogin,
       store,
+      systemPreference,
       themeId,
+      themeMode,
       toggleMaximizeApp,
       unreadNotificationsCount,
       unsnapWindow,

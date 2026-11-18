@@ -7,7 +7,6 @@ import styles from './AppShell.module.css';
 interface AppShellProps {
   children: ReactNode;
   footer: ReactNode;
-  onEnterOs?: () => void;
   isExiting?: boolean;
 }
 
@@ -18,7 +17,6 @@ interface AppShellProps {
 export function AppShell({
   children,
   footer,
-  onEnterOs,
   isExiting = false,
 }: AppShellProps) {
   return (
@@ -35,7 +33,7 @@ export function AppShell({
       </div>
 
       <div className={styles.contentColumn}>
-        <TopEdgeBar onEnterOs={onEnterOs} />
+        <TopEdgeBar />
 
         <main id="main-content" className={styles.main}>
           {children}

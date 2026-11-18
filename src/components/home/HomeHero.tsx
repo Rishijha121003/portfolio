@@ -1,10 +1,7 @@
 'use client';
 
-import { useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useDesktop } from '@/components/os/DesktopContext';
 import styles from './HomeHero.module.css';
 
 /**
@@ -13,28 +10,6 @@ import styles from './HomeHero.module.css';
  * and clean systems architecture.
  */
 export function HomeHero() {
-  const router = useRouter();
-  let enterDesktop: (() => void) | undefined;
-  try {
-    const desktop = useDesktop();
-    enterDesktop = desktop.enterDesktopFromPortfolio;
-  } catch {
-    // Graceful fallback if rendered outside DesktopProvider
-  }
-
-  const handleOpenOs = useCallback(() => {
-    if (enterDesktop) {
-      enterDesktop();
-    } else {
-      try {
-        window.sessionStorage.removeItem('rishi-os-mode');
-      } catch {
-        // ignore
-      }
-      router.push('/');
-    }
-  }, [enterDesktop, router]);
-
   return (
     <section className={styles.section} aria-labelledby="home-hero-heading">
       {/* Background depth & ambient glow */}
@@ -91,10 +66,10 @@ export function HomeHero() {
               <div className={styles.taglineRow} aria-label="Core technologies">
                 <span className={styles.taglinePill}>FastAPI</span>
                 <span className={styles.taglinePill}>React 19</span>
+                <span className={styles.taglinePill}>Next.js</span>
                 <span className={styles.taglinePill}>PostgreSQL</span>
                 <span className={styles.taglinePill}>TypeScript</span>
                 <span className={styles.taglinePill}>Python</span>
-                <span className={styles.taglinePill}>TailwindCSS</span>
               </div>
             </div>
 
@@ -107,11 +82,10 @@ export function HomeHero() {
                 </span>
               </a>
 
-              <button
-                type="button"
+              <Link
+                href="/os"
                 className={styles.secondaryCta}
-                onClick={handleOpenOs}
-                title="Launch RISHI OS simulated desktop environment"
+                title="Launch RISHI OS simulated developer workspace"
               >
                 <span className={styles.osWindowIcon} aria-hidden="true">
                   ❖
@@ -120,7 +94,7 @@ export function HomeHero() {
                 <span className={styles.ctaArrow} aria-hidden="true">
                   ↗
                 </span>
-              </button>
+              </Link>
 
               <Link href="/contact" className={styles.tertiaryCta}>
                 <span>Contact Me</span>
